@@ -9,7 +9,7 @@ install:
   - npm install -g istanbul
   - npm install
 script:
-  - istanbul cover node_modules\jasmine\bin\jasmine.js
+  - istanbul cover node_modules/jasmine/bin/jasmine.js
   - codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)
