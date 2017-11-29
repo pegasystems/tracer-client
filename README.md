@@ -8,3 +8,35 @@
 # tracer-client
 
 This is a javascript API for interacting with the Pega Tracer servlet API
+
+## Development Tasks
+- After cloning the project use `npm install` to install all dependencies. See the following links to lean more
+	- [webpack](https://webpack.github.io/)
+	- [jasmine](https://jasmine.github.io/)
+	- [jquery](http://jquery.com/)
+- Build the project using `npm run build` which will run tests and generate build artifacts
+- Run tests using `npm test`
+- Launch a sample tracer viewer with a mock Events service using `npm run dev`
+
+## Usage
+This usage is currently a burden, but this is how it works right now. We'll work on improving it.
+
+##### For use in a browser window
+- There is a single rule pre-requisite for this code to work. An activity *pzGetOptionsAsJSON* exists in a branch which must first be loaded. (Contact [feenr](rfeeney0802@gmail.com))
+  - Working on some code that if will fall back to default options if this activity is not found, but it's not working properly yet.
+- Load the contents of *dist/index.bundle.js* into a Pega session in some way. I use Chrome Dev tools but it could be embedded in a Text rule.
+- Create a tracer instance using `var tracer = new Tracer([ConnectionID])` where ConnectionID is equal to pxRequestor.pxClientConnection
+- Start the tracer using `tracer.start()`
+  - Be careful not to leave the headless tracer running in the background, as it will impact system performance, just like the normal tracer
+- By default, tracer tasks will start to display in the browser console. Custom event handlers can be added using the 'registerEventCallback' function.
+##### For use as a nodejs module
+- Add the following require statement to your code `Tracer = require "/src/client"`
+- Once this project is moved to GitHub I will consider pushing to npm
+
+## Module Functions
+- start
+- stop
+- registerEventCallback
+- clear
+- displayTraceEvent
+- getEventHeader

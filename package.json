@@ -1,0 +1,31 @@
+{
+  "name": "tracer-client",
+  "version": "0.0.1",
+  "description": "Javascript API for connecting to the PRPC tracer servlet and retrieving events.",
+  "main": "./dist/module.bundle.js",
+  "scripts": {
+    "build": "npm test && webpack",
+    "test": "jasmine",
+    "dev": "npm run build && npm run copy-test-server && npm run hot-server",
+    "copy-test-server": "cp ./tools/client-mock-servlet.html ./dist/client-mock-servlet.html",
+    "open-hot-server": "npm run hot-server",
+    "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
+    "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"
+  },
+  "keywords": [
+    "pega",
+    "tracer"
+  ],
+  "author": "Ryan.Feeney@pega.com",
+  "license": "MIT",
+  "dependencies": {
+    "dot": "^1.1.2",
+    "open": "0.0.5"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0",
+    "jquery": "^3.2.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
+  }
+}

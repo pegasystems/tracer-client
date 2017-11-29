@@ -1,0 +1,207 @@
+.screen-layout-region.screen-layout-region-main.screen-layout-region-main-sidebar1 {
+	width: 55%;
+}
+.screen-layout-header_left > .screen-layout-region-main-middle {
+	left: 55%;
+}
+
+.screen-layout-region.screen-layout-region-main.screen-layout-region-main-middle.not-nav {
+	background-color: rgb(175, 175, 175);
+}
+
+
+
+.toolbarButton, button {
+    width:100%;
+    cursor: pointer;
+}
+.treeRuleClass{
+    color:rgb(194, 194, 194);
+}
+.TracerTreeNode, .TracerTreeNode a {
+    color:white;
+    padding-left:12px;
+    font-size:12px;
+    border-left:2px solid gray;
+    overflow:hidden;
+}
+
+.toolbarButton div, button div {
+    float:left;
+}
+
+.eventData{
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.eventDataCenter{
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.eventElementDataSelect{
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.eventDataCenter{
+
+}
+.toolbarButton{
+    color:white;
+}
+
+table{
+    width:100%;
+  	margin:0px;
+}
+
+table .highlighted td{
+    background-color:RGB(217,241,247);
+}
+
+.tracertop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.eventSequenceNumber{
+    display:none;
+}
+
+.eventSelectIcon{
+    border-top:1px solid white;
+}
+.eventTitleBarStyle{
+    text-transform:none;
+}
+
+.jstree-default > .jstree-container-ul > .jstree-node{
+    border-top: 2px solid rgb(132, 170, 218);
+}
+
+.treeRuleName{
+    color:white;
+}
+
+.treeRuleSetAndVersionTag, .treeStepPageTag, .treeThreadTag {
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+.treeRuleSetAndVersion, .treeStepPage, .treeThread {
+	padding-left: 2px;
+	color: rgb(199, 199, 199);;
+}
+
+
+.treeActivityTag, .treeStreamTag, .treeDataTransformTag {
+	color: orange;
+}
+
+
+
+.stepLabelSkip {
+	text-decoration: line-through;
+	color: rgb(199, 199, 199);;																					
+}
+
+.stepLabelShowJump {
+    display: inherit;
+    padding: 1px 2px 1px 2px;
+	background-color: #444444;
+	border-radius: 3px;
+    margin-left: 10px;																							
+}
+
+.stepLabelHideJump {
+	display: none;																
+}
+
+.stepMethod {
+	padding-left: 10px;
+	color: rgb(199, 199, 199);;
+}
+
+
+
+
+
+
+
+
+
+#property-panel{
+	font-family: OpenSans, sans-serif;
+	font-size: 13px;
+	padding: 10px;
+}
+
+.property-page{
+	border: 1px solid rgb(95, 157, 223);
+	background-color: #cccddd;
+  	padding: 10px;
+}
+.property-name{
+	padding: 2px;
+	font-weight:bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.property-value{
+	padding: 2px;
+}
+
+.tree-node-content-primary{
+	float:left;
+}
+
+.tree-node-content-secondary{
+	float:right;
+	margin-right: 10px;
+}
+
+
+a.jstree-anchor{
+	width:100%;
+}
+
+.tree-node-content-ruleset{
+	width: 170px;
+	float:right;
+	overflow: hidden;
+}
+.tree-node-content-steppage{
+	width: 150px;
+	float:right;
+	overflow: hidden;
+}
+.tree-node-content-thread{
+	width: 120px;
+	float:right;
+	overflow: hidden;
+}
+
+.whenEventNameHeader, .whenMethodHeader, .whenStatusHeader, .whenExpandHeader {
+	font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    text-decoration: underline;
+}
+
+
+A:link {
+    color: rgb(139,223,255);
+}
+
+A:Visited {
+    color: rgb(139,223,255);
+}
+
+.screen-layout-region.screen-layout-region-main.screen-layout-region-main-middle.not-nav > .screen-layout-region-content{
+	height:auto !important;
+}
