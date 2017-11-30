@@ -14,6 +14,7 @@ This is a javascript API for interacting with the Pega Tracer servlet API
 	- [webpack](https://webpack.github.io/)
 	- [jasmine](https://jasmine.github.io/)
 	- [jquery](http://jquery.com/)
+	- [istanbul](https://github.com/istanbuljs)
 - Build the project using `npm run build` which will run tests and generate build artifacts
 - Run tests using `npm test`
 - Launch a sample tracer viewer with a mock Events service using `npm run dev`
