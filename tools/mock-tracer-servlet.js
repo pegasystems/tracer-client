@@ -5,7 +5,9 @@ module.exports = function(){
   function connect(callbacks){
     callbacks.success();
   }
-  function clear(){}
+  function clear(){
+    sequenceNumber = 1;
+  }
   function getTraceEvents(callbacks){
     setTimeout(function(){
       eventList = new Array();

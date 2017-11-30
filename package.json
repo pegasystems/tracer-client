@@ -7,7 +7,7 @@
     "build": "npm test && webpack",
     "test": "jasmine",
     "dev": "npm run build && npm run copy-test-server && npm run hot-server",
-    "copy-test-server": "cp ./tools/client-mock-servlet.html ./dist/client-mock-servlet.html",
+    "copy-test-server": "cp ./tools/client-mock-servlet.html ./dist/index.html",
     "open-hot-server": "npm run hot-server",
     "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
     "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"

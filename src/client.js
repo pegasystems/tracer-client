@@ -178,8 +178,8 @@ module.exports = function(aConnectionId) {
     for(var key in args){
       var value = args[key];
       switch(key) {
-        case "eventsService":
-          eventsService = value;
+        case "EventsService":
+          EventsService = value;
           break;
         case "TraceEvent":
           TraceEvent = value;

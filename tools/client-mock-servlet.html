@@ -5,11 +5,11 @@
 </head>
 <body>
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
-    <script src="index.bundle.js"></script>
-    <script>
+    <script src="indexmockserver.bundle.js"></script>
+    <script>var tracer;
         window.onload = function(){
-            var tracer = new Tracer("HZIFXUHZBN51NUATLG3POTUR3I92SFZGR");
-            tracer._injectDependencies({"TracerServlet" : MockServer});
+            tracer = new Tracer("HZIFXUHZBN51NUATLG3POTUR3I92SFZGR");
+            tracer._injectDependencies({"EventsService" : MockServer});
             tracer.registerEventCallback(function(event){
                 var table = document.getElementById("events-table");
                 var row = document.createElement("tr")
@@ -56,7 +56,11 @@
             tracer.start();
         };
     </script>
-    <div></div>
+    <div>
+        <input onclick="tracer.stop()" type="button" value="Pause">
+        <input onclick="tracer.start()" type="button" value="Play">
+        <input onclick="tracer.clear()" type="button" value="Clear">
+    </div>
     <div>
         <table id="events-table">
             <tr>
