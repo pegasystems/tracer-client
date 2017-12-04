@@ -4,8 +4,8 @@ module.exports = function(aConnectionID, aHostName, aNodeId){
   let $ = require('jquery');
   let connectionID = aConnectionID;
   let debugConnectionID = connectionID;
-  let nodeId = aNodeId;
-  let hostName = aHostName;
+  let nodeId = aNodeId | "";
+  let hostName = aHostName | "";
   let options = null;
   let gTracerInitialized = false;
   let connectCallbackObj = null;
@@ -21,7 +21,7 @@ module.exports = function(aConnectionID, aHostName, aNodeId){
     if(!gTracerInitialized) {
       initSettings(callbacks);
     } else {
-      connectCallbackObj.succuss();
+      connectCallbackObj.success();
     }
   }
 
@@ -38,6 +38,9 @@ module.exports = function(aConnectionID, aHostName, aNodeId){
         } catch (exception){
           options.applyDefaults();
         }
+        //nodeId = options.getOption("nOptNodeId");
+        setConnection(options.getOption("nOptConnectionId"));
+        //connectionId = options.getOption("nOptConnectionId");
         connect2(callbacks);
       },
       fail:function(){
@@ -250,7 +253,7 @@ module.exports = function(aConnectionID, aHostName, aNodeId){
     if(excludeServlet){
       return queryString;
     }
-    return hostName + servletUrl + queryString;
+    return servletUrl + queryString;
   }
 
 

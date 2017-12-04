@@ -32,6 +32,7 @@ module.exports = function (aConnectionID) {
     optionArray["nOptAbbreviateEvents"] = jo.pyAbbreviateEvents;
     optionArray["nOptMaxTraceEventsDisplayed"] = jo.pyMaxTraceEventsDisplayed == "" ? 5000 : jo.pyMaxTraceEventsDisplayed;
     optionArray["nOptLocalVariables"] = jo.pyLocalVariables;
+    optionArray["nOptConnectionId"] = jo.pxConnectionID;
 
     for (var i in optionArray) {
       if (!optionArray[i]) {
@@ -116,8 +117,12 @@ module.exports = function (aConnectionID) {
     return strPostData;
   }
 
-  function clear() {
+  function getOption(optionName){
+    return optionArray[optionName];
+  }
 
+  function clear() {
+    optionArray = [];
   }
 
   function applyDefaults() {
@@ -178,6 +183,7 @@ module.exports = function (aConnectionID) {
   let publicAPI = {};
   publicAPI.clear = clear;
   publicAPI.getQueryString = getQueryString;
+  publicAPI.getOption = getOption;
   publicAPI.parseValuesFromJSON = parseValuesFromJSON;
   publicAPI.applyDefaults = applyDefaults;
   return publicAPI;
