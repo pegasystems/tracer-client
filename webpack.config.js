@@ -4,7 +4,10 @@ module.exports = {
     indexmockserver: './tools/client-with-mock-servlet.js',
     module: './src/client.js'
   },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
+  },
   output: {
-    filename: 'dist/[name].bundle.js'
+    filename: '[name].bundle.js'
   }
 }

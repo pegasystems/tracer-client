@@ -282,7 +282,7 @@ module.exports = function(aConnectionID, aHostName, aNodeId){
     debugConnectionID = connectionID;
   }
 
-  let publicAPI = {}
+  let publicAPI = {};
   publicAPI._injectDependencies = injectDependencies;
   publicAPI.connect = connect;
   publicAPI.getConnectionList = getConnectionList;
