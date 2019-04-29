@@ -1,8 +1,8 @@
-import * as TraceEvent from '../trace-event';
-import * as Filter from '../filter';
-import * as EventsService from '../events-service';
-import * as Options from '../options';
-import * as Utils from '../utils';
+import {TraceEvent} from './trace-event';
+import {Filter} from './filter';
+import {EventsService} from './events-service';
+import {Options} from './options';
+import {Utils} from './utils';
 
 class Client {
     /**
@@ -10,12 +10,7 @@ class Client {
      * tracer session, poll for new events, and store those events in memory for client side retrieval.
      */
 
-        // Dependencies
-    traceEvent = TraceEvent;
-    filter = Filter;
-    eventsService = EventsService;
-    options = Options;
-    utils = Utils;
+
 
     // Instance variables
     connectionID: string = "";
@@ -24,7 +19,7 @@ class Client {
     filters: Array<Filter> = [];
     eventsList: Array<TraceEvent> = [];
     traceEventArray : Array<TraceEvent> = [];
-    eventCallbacks = [
+    eventCallbacks: any = [
         function(currentEvent: TraceEvent){
             // This is the default event callback which writes event details to the log.
             console.log(currentEvent.sequenceNumber + " " +
@@ -35,6 +30,12 @@ class Client {
                 currentEvent.stepStatus);
         }
     ];
+
+    // Dependencies
+    filter = Filter;
+    eventsService: EventsService = new EventsService(this.connectionID);
+    options = Options;
+    utils = Utils;
 
     constructor(connectionId: string) {
         this.connectionID = connectionId;
@@ -64,7 +65,7 @@ class Client {
      */
     mainTracerLoop(){
         if(this.tracerEnabled) {
-            this.eventsService.getTraceEvents({
+            this.eventsService.requestTraceEvents({
                 success : this.parseTraceResponse,
                 error : function(aMessage: string){
                     throw {
@@ -100,7 +101,7 @@ class Client {
                     }
                 }
                 if (currentEvent) {
-                    this.eventCallbacks.forEach(eventCallback => {eventCallback(currentEvent)});
+                    this.eventCallbacks.forEach((eventCallback: (arg0: TraceEvent) => void) => {eventCallback(currentEvent)});
                 }
             }
         }
@@ -110,7 +111,7 @@ class Client {
      * End the session with the events service
      * @param bForceDisconnect
      */
-    disconnect(bForceDisconnect) {
+    disconnect(bForceDisconnect?: boolean) {
         this.eventsService.disconnect(bForceDisconnect);
     }
 
@@ -175,7 +176,7 @@ class Client {
      * @param callbacks
      */
     displayTraceEvent(eventNumber: number, callbacks: object){
-        this.eventsService.getTraceEvent(eventNumber, callbacks);
+        this.eventsService.getTraceEvent(eventNumber);
     }
 
     /**
@@ -183,37 +184,26 @@ class Client {
      * jasmine tests, or providing alternate implementations.
      * @param args
      */
-    injectDependencies(args){
-        for(var key in args){
-            var value = args[key];
-            switch(key) {
-                case "EventsService":
-                    EventsService = value;
-                    break;
-                case "TraceEvent":
-                    TraceEvent = value;
-                    break;
-                case "Filter":
-                    Filter = value;
-                    break;
-                case "Options":
-                    Options = value;
-                    break;
-                case "Utils":
-                    Utils = value;
-                    break;
-            }
-        }
+    injectDependencies(args: any){
+        // for(var key in args){
+        //     var value = args[key];
+        //     switch(key) {
+        //         case "EventsService":
+        //             EventsService = value;
+        //             break;
+        //         case "TraceEvent":
+        //             TraceEvent = value;
+        //             break;
+        //         case "Filter":
+        //             Filter = value;
+        //             break;
+        //         case "Options":
+        //             Options = value;
+        //             break;
+        //         case "Utils":
+        //             Utils = value;
+        //             break;
+        //     }
+        // }
     }
-
-    //public functions
-    // var publicAPI = {};
-    // publicAPI._injectDependencies = injectDependencies;
-    // publicAPI.start = start;
-    // publicAPI.stop = stop;
-    // publicAPI.registerEventCallback = registerEventCallback;
-    // publicAPI.clear = deleteTraceEvents;
-    // publicAPI.displayTraceEvent = displayTraceEvent;
-    // publicAPI.getEventHeader = getEventHeader;
-    // return publicAPI;
 }
