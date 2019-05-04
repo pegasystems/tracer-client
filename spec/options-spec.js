@@ -1,5 +1,5 @@
 describe("Options", function() {
-  var Options = require('../src/options');
+  var Options = require('../backup/options');
   var filter;
 
   beforeEach(function() {

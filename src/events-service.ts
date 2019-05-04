@@ -1,6 +1,3 @@
-// Options = require('./options');
-// Utils = require('./utils');
-// $ = require('jquery');
 import {Options} from './options'
 import {Utils} from './utils'
 
@@ -50,7 +47,7 @@ export class EventsService {
         }, true);
         this.xmlHttpRequest({
             url:strURL,
-            success:function(response: any){
+            success:(response: any) => {
                 this.options = new Options(this.connectionID);
                 try {
                     this.options.parseValuesFromJSON(response);
@@ -62,7 +59,7 @@ export class EventsService {
                 //connectionId = options.getOption("nOptConnectionId");
                 this.connect2(callbacks);
             },
-            fail:function(){
+            fail: () => {
                 this.options = new Options(this.connectionID);
                 this.options.applyDefaults();
                 this.connect2(callbacks);
@@ -74,7 +71,7 @@ export class EventsService {
     connect2(callbacks: any){
         this.xmlHttpRequest({
             url: this.getURL(),
-            success: function(data: any, textStatus: string, jqXHR: any){
+            success: (data: any, textStatus: string, jqXHR: any) => {
                 this.connect3(callbacks);
             },
             error: callbacks.error,
@@ -104,7 +101,7 @@ export class EventsService {
 
         this.xmlHttpRequest({
             url: strURL,
-            success: function (data: any, textStatus: string, jqXHR: any) {
+            success: (data: any, textStatus: string, jqXHR: any) => {
                 this.connect4(callbacks);
             },
             error: callbacks.error,
@@ -122,7 +119,7 @@ export class EventsService {
         });
         this.xmlHttpRequest({
             url: strURL,
-            success: function () {
+            success: () => {
                 this.postOptions(callbacks);
             },
             error: callbacks.error,
@@ -138,7 +135,7 @@ export class EventsService {
             data: strPostData,
             url: this.servletUrl,
             cache: false,
-            success: function(){
+            success: ()=>{
                 this.gTracerInitialized = true;
                 callbacks.success();
             },
@@ -190,8 +187,8 @@ export class EventsService {
         });
         this.xmlHttpRequest({
             url:strURL,
-            success:function(){this.requestTraceEvents();},
-            fail:function(){},
+            success:()=>{this.requestTraceEvents({});},
+            fail:()=>{},
             cache: false
         })
     }
@@ -207,7 +204,7 @@ export class EventsService {
 
         this.xmlHttpRequest({
             url: strURL,
-            success: function(data: any, textStatus: string, jqXHR: any){
+            success: (data: any, textStatus: string, jqXHR: any) => {
                 let cmdStatus = this.utils.getNodeValue(data,"CmdStatus");
                 if (cmdStatus.indexOf("error") >= 0) {
                     let cmdResponse = this.utils.getNodeValue(data,"CmdResponse");
@@ -220,7 +217,7 @@ export class EventsService {
                 for(let i=0; i<traceEventNodes.length; i++){
                     let traceEvent = new TraceEvent(traceEventNodes[i]);
                     eventsToAppend.push(traceEvent);
-                    this.traceEventArray[traceEvent.sequenceNumber]=traceEvent;
+                    //this.traceEventArray[traceEvent.sequenceNumber]=traceEvent;
                 }
                 callbacks.success(eventsToAppend);
             },

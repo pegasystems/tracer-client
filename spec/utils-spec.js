@@ -1,5 +1,5 @@
 describe("Utils", function() {
-  var Utils = require('../src/utils');
+  var Utils = require('../backup/utils');
 
   beforeEach(function() {
 

@@ -1,13 +1,23 @@
 module.exports = {
   entry: {
-    index: './src/index.js',
-    indexmockserver: './tools/client-with-mock-servlet.js',
-    module: './src/client.js'
+    index: './src/index.ts',
+    indexmockserver: './tools/client-with-mock-servlet.ts',
+    module: './src/client.ts'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.ts', '.js' ]
   },
   output: {
     filename: '[name].bundle.js'
-  }
-}
+  },
+  devtool: "source-map"
+};

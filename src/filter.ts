@@ -1,8 +1,5 @@
 
 export class Filter {
-
-
-
     constructor(aField: Field, aOperator: Operator, aValue:string){
         this.field = aField;
         this.operator = aOperator;

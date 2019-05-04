@@ -1,5 +1,5 @@
 describe("Event", function() {
-  var Event = require('../src/trace-event');
+  var Event = require('../backup/trace-event');
   var event;
 
   beforeEach(function() {

@@ -1,5 +1,5 @@
 describe("Client", function() {
-  var Tracer = require('../src/client');
+  var Tracer = require('../backup/client');
   var tracer;
   var apiContents = [
     "_injectDependencies",

@@ -20,6 +20,7 @@ export class TraceEvent {
     threadname: string;
     interactionBytes: string;
     interactionQueryParam: string;
+    methodName: string;
     stepStatus: string;
     stepMethod: string;
     stepNumber: string;
@@ -29,17 +30,17 @@ export class TraceEvent {
     sRSName: string;
     sRSVersion: string;
     timeStamp: string;
-    sequenceNumber: string;
+    sequenceNumber: number;
     endSequenceNumber: string;
     childEvents: Array<TraceEvent>;
     parentEvent: TraceEvent;
 
     applyFilter(filter: Filter){
-        var filterResult = true;
-        var field = filter.getField();
-        var operator = filter.getOperator();
-        var value = filter.getValue();
-        var targetValue = "";
+        let filterResult = true;
+        let field = filter.getField();
+        let operator = filter.getOperator();
+        let value = filter.getValue();
+        let targetValue = "";
         switch (field){
             case Field.THREAD:
                 targetValue = this.threadname;

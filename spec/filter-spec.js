@@ -1,5 +1,5 @@
 describe("Filter", function() {
-  var Filter = require('../src/filter');
+  var Filter = require('../backup/filter');
   var filter;
 
   beforeEach(function() {

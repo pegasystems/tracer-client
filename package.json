@@ -19,8 +19,10 @@
   "author": "Ryan.Feeney@pega.com",
   "license": "MIT",
   "dependencies": {
+    "@types/reflect-metadata": "^0.1.0",
     "dot": "^1.1.2",
-    "open": "0.0.5"
+    "open": "0.0.5",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",

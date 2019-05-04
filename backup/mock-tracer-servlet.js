@@ -1,4 +1,4 @@
-TraceEvent = require("../src/trace-event")
+TraceEvent = require("./trace-event")
 
 module.exports = function(){
   var sequenceNumber = 1;

@@ -4,13 +4,11 @@ import {EventsService} from './events-service';
 import {Options} from './options';
 import {Utils} from './utils';
 
-class Client {
+export class Client {
     /**
      * This module provides an interface for interacting with an events-service. It's primary function is to initialize a
      * tracer session, poll for new events, and store those events in memory for client side retrieval.
      */
-
-
 
     // Instance variables
     connectionID: string = "";
@@ -50,12 +48,12 @@ class Client {
         }
 
         if(!this.tracerInitialized){
-            this.eventsService = new EventsService(this.connectionID);
+            //this.eventsService = new EventsService(this.connectionID);
             this.tracerInitialized = true;
         }
 
         this.eventsService.connect({
-            success : this.mainTracerLoop,
+            success : ()=>{this.mainTracerLoop()},
             fail : function(){}
         });
     }
@@ -66,8 +64,8 @@ class Client {
     mainTracerLoop(){
         if(this.tracerEnabled) {
             this.eventsService.requestTraceEvents({
-                success : this.parseTraceResponse,
-                error : function(aMessage: string){
+                success : (args:any)=>{this.parseTraceResponse(args)},
+                error : (aMessage: string) => {
                     throw {
                         name : "EventsServiceException",
                         message : aMessage
@@ -80,7 +78,7 @@ class Client {
     parseTraceResponse(eventsToAppend: Array<TraceEvent>){
         if(eventsToAppend.length > 0) {
             this.appendEvents(eventsToAppend);
-            setTimeout(this.mainTracerLoop, 10);
+            setTimeout(()=>{this.mainTracerLoop()}, 10);
         } else {
             setTimeout(this.mainTracerLoop, 1000);
         }
@@ -184,26 +182,14 @@ class Client {
      * jasmine tests, or providing alternate implementations.
      * @param args
      */
-    injectDependencies(args: any){
-        // for(var key in args){
-        //     var value = args[key];
-        //     switch(key) {
-        //         case "EventsService":
-        //             EventsService = value;
-        //             break;
-        //         case "TraceEvent":
-        //             TraceEvent = value;
-        //             break;
-        //         case "Filter":
-        //             Filter = value;
-        //             break;
-        //         case "Options":
-        //             Options = value;
-        //             break;
-        //         case "Utils":
-        //             Utils = value;
-        //             break;
-        //     }
-        // }
+    _injectDependencies(args: any){
+        for(let key in args){
+            let value = args[key];
+            switch(key) {
+                case "EventsService":
+                    this.eventsService = value;
+                    break;
+            }
+        }
     }
 }

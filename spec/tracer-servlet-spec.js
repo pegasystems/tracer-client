@@ -1,5 +1,5 @@
 describe("TracerServlet", function() {
-  var TracerServlet = require('../src/events-service');
+  var TracerServlet = require('../backup/events-service');
   var tracerServlet;
 
   beforeEach(function() {
