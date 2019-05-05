@@ -1,9 +1,10 @@
+import {TraceEvent} from '../src/trace-event';
+
 describe("Event", function() {
-  var Event = require('../backup/trace-event');
-  var event;
+  let event: TraceEvent;
 
   beforeEach(function() {
-    event = new Event();
+    event = new TraceEvent();
   });
 
   /** This now blows up **/

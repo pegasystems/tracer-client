@@ -2,7 +2,6 @@ import {TraceEvent} from './trace-event';
 import {Filter} from './filter';
 import {EventsService} from './events-service';
 import {Options} from './options';
-import {Utils} from './utils';
 
 export class Client {
     /**
@@ -14,7 +13,6 @@ export class Client {
     connectionID: string = "";
     tracerInitialized: boolean = false;
     tracerEnabled: boolean = false;
-    filters: Array<Filter> = [];
     eventsList: Array<TraceEvent> = [];
     traceEventArray : Array<TraceEvent> = [];
     eventCallbacks: any = [
@@ -30,13 +28,13 @@ export class Client {
     ];
 
     // Dependencies
-    filter = Filter;
-    eventsService: EventsService = new EventsService(this.connectionID);
     options = Options;
-    utils = Utils;
+    eventsService: EventsService
 
     constructor(connectionId: string) {
         this.connectionID = connectionId;
+        this.eventsService = new EventsService(this.connectionID);
+
     }
 
     /**
@@ -65,7 +63,7 @@ export class Client {
         if(this.tracerEnabled) {
             this.eventsService.requestTraceEvents({
                 success : (args:any)=>{this.parseTraceResponse(args)},
-                error : (aMessage: string) => {
+                fail : (aMessage: string) => {
                     throw {
                         name : "EventsServiceException",
                         message : aMessage
@@ -93,14 +91,7 @@ export class Client {
             let currentEvent = eventArray[i];
             if(currentEvent) {
                 this.eventsList.push(currentEvent);
-                for (let k = 0; k < this.filters.length; k++) {
-                    if (!currentEvent.applyFilter(this.filters[k])) {
-                        return;
-                    }
-                }
-                if (currentEvent) {
-                    this.eventCallbacks.forEach((eventCallback: (arg0: TraceEvent) => void) => {eventCallback(currentEvent)});
-                }
+                this.eventCallbacks.forEach((eventCallback: (arg0: TraceEvent) => void) => {eventCallback(currentEvent)});
             }
         }
     }

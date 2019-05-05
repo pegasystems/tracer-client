@@ -39,5 +39,4 @@ This usage is currently a burden, but this is how it works right now. We'll work
 - stop
 - registerEventCallback
 - clear
-- displayTraceEvent
 - getEventHeader

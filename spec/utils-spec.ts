@@ -1,5 +1,5 @@
+import {Utils} from '../src/utils'
 describe("Utils", function() {
-  var Utils = require('../backup/utils');
 
   beforeEach(function() {
 
@@ -11,6 +11,7 @@ describe("Utils", function() {
 
   describe("getQueryString function", function(){
     it("combines an array of parameters into a query", function(){
+      let args : any;
       args = {
         param1 : "value1",
         param2 : "value2",

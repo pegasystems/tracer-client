@@ -6,10 +6,10 @@ export class Options {
     pyRuleSetsList:string;
     pyPageNameList:string;
     connectionID:string;
-    utils = new Utils();
 
     constructor(aConnectionID: string){
         this.connectionID = aConnectionID;
+        this.optionArray = {};
     }
 
     parseValuesFromJSON(json: string) {
@@ -89,7 +89,7 @@ export class Options {
     }
 
     getQueryString() {
-        let strPostData = this.utils.getQueryString({
+        let strPostData = Utils.getQueryString({
             pzDebugRequest: "settings",
             pzSetCmd: "SetOptions",
             pzOptTraceClassLoad: this.optionArray["nOptTraceClassLoad"],

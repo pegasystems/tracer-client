@@ -1,9 +1,10 @@
+import {EventsService} from '../src/events-service';
+
 describe("TracerServlet", function() {
-  var TracerServlet = require('../backup/events-service');
-  var tracerServlet;
+  let tracerServlet: EventsService;
 
   beforeEach(function() {
-    tracerServlet = new TracerServlet();
+    tracerServlet = new EventsService("");
   });
 
   it("can be initialised", function(){

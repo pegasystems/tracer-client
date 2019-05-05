@@ -1,10 +1,18 @@
 {
   "spec_dir" : "spec",
   "spec_files" : [
-    "*-spec.js"
+    "*-specx.ts"
   ],
   "helpers" : [
     "helpers/*.js"
+  ],
+  "reporters": [
+    {
+      "name": "jasmine-spec-reporter#SpecReporter",
+      "options": {
+        "displayStacktrace": "all"
+      }
+    }
   ]
 }
 

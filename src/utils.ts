@@ -1,5 +1,5 @@
 export class Utils {
-    getQueryString(queryParameters: any): string{
+    static getQueryString(queryParameters: any): string{
         let first = true;
         let queryString = "";
         Object.keys(queryParameters).forEach(name=>{
@@ -14,7 +14,7 @@ export class Utils {
         return queryString;
     }
 
-    getNodeValue(data: any, nodeName: string){
+    static getNodeValue(data: any, nodeName: string){
         let matchingNode = data.getElementsByTagName(nodeName);
         if(matchingNode.length>0 && matchingNode[0]!= undefined) {
             return (matchingNode[0].textContent || matchingNode[0].text || "").trim();

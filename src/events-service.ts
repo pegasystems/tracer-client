@@ -14,9 +14,9 @@ export class EventsService {
     maxEventsPerRequest: number;
     pyWatchInsKey: string;
     pyWatchClassName: string;
+    serverUrl: string;
     servletUrl: string;
     SESSION_TYPE: string;
-    utils: Utils = new Utils();
 
     constructor(aConnectionID: string, aHostName?: string, aNodeId?: string){
         this.connectionID= aConnectionID;
@@ -29,186 +29,140 @@ export class EventsService {
         this.maxEventsPerRequest = 200;
         this.pyWatchInsKey = "";
         this.pyWatchClassName = "";
-        this.servletUrl = "/prweb/PRTraceServlet";
+        this.serverUrl = "http://localhost:1080/prweb";
+        this.servletUrl = "/PRTraceServlet";
         this.SESSION_TYPE = "STANDARD";
     }
 
     connect(callbacks: StandardCallback){
         this.connectCallbackObj = callbacks;
         if(!this.gTracerInitialized) {
-            this.initSettings(callbacks);
+            //this.initSettings(callbacks);
+            this.getSettings()
+                .then((res)=>{
+                    return this.initializeRequestor();
+                })
+                .then(() => {
+                    return this.startConnection();
+                })
+                .then(()=>{
+                    return this.startTrace();
+                })
+                .then(()=>{
+                    return this.postOptions();
+                })
+                .catch(()=>{
+                    console.log("Something went wrong");
+                })
         } else {
             this.connectCallbackObj.success();
         }
     }
 
-    initSettings(callbacks: StandardCallback) {
-        let strURL = this.getURL({
-            pyActivity : "Data-TRACERSettings.pzGetOptionsAsJSON"
-        }, true);
-        this.xmlHttpRequest({
-            url:strURL,
-            success:(response: any) => {
-                this.options = new Options(this.connectionID);
-                try {
-                    this.options.parseValuesFromJSON(response);
-                } catch (exception){
-                    this.options.applyDefaults();
+    getSettings(): Promise<Options> {
+        return new Promise((resolve,reject) => {
+            let options = new Options(this.connectionID);
+            options.applyDefaults();
+            resolve(options);
+        });
+    }
+
+    initializeRequestor(): Promise<any> {
+        return new Promise<any>((resolve, reject)=>{
+            this.traceServletRequest({
+                url: this.getURL(),
+                success: (data: any, textStatus: string, jqXHR: any) => {
+                    resolve()
+                },
+                error: ()=>{reject()}
+            });
+        });
+    }
+
+    startConnection(): Promise<any> {
+        return new Promise<any>((resolve, fail)=>{
+            let params = {};
+            if (this.SESSION_TYPE=="RULEWATCH"){
+                params = {
+                    pzDebugRequest : "connect",
+                    pzCommandSession : this.connectionID,
+                    pzDebugConnection : this.connectionID,
+                    pySessionType : this.SESSION_TYPE,
+                    pyWatchInsKey : escape(this.pyWatchInsKey),
+                    pyWatchClassName : escape(this.pyWatchClassName)
                 }
-                //nodeId = options.getOption("nOptNodeId");
-                this.setConnection(this.options.getOption("nOptConnectionId"));
-                //connectionId = options.getOption("nOptConnectionId");
-                this.connect2(callbacks);
-            },
-            fail: () => {
-                this.options = new Options(this.connectionID);
-                this.options.applyDefaults();
-                this.connect2(callbacks);
-            },
-            cache: false
-        })
-    }
-
-    connect2(callbacks: StandardCallback){
-        this.xmlHttpRequest({
-            url: this.getURL(),
-            success: (data: any, textStatus: string, jqXHR: any) => {
-                this.connect3(callbacks);
-            },
-            error: ()=>{callbacks.fail()},
-            cache:false
+            } else {
+                params = {
+                    pzDebugRequest : "connect",
+                    pzCommandSession : this.connectionID,
+                    pzDebugConnection : this.connectionID,
+                    pySessionType : this.SESSION_TYPE
+                }
+            }
+            this.traceServletRequest({
+                queryParams: params,
+                success: (data: any, textStatus: string, jqXHR: any) => {
+                    resolve()
+                },
+                error: ()=>{fail()}
+            });
         });
     }
 
-    connect3(callbacks: StandardCallback) {
-        let strURL = "";
-        if (this.SESSION_TYPE=="RULEWATCH"){
-            strURL = this.getURL({
-                pzDebugRequest : "connect",
-                pzCommandSession : this.connectionID,
-                pzDebugConnection : this.connectionID,
-                pySessionType : this.SESSION_TYPE,
-                pyWatchInsKey : escape(this.pyWatchInsKey),
-                pyWatchClassName : escape(this.pyWatchClassName)
-            })
-        } else {
-            strURL = this.getURL({
-                pzDebugRequest : "connect",
-                pzCommandSession : this.connectionID,
-                pzDebugConnection : this.connectionID,
-                pySessionType : this.SESSION_TYPE
-            })
-        }
-
-        this.xmlHttpRequest({
-            url: strURL,
-            success: (data: any, textStatus: string, jqXHR: any) => {
-                this.connect4(callbacks);
-            },
-            error: ()=>{callbacks.fail()},
-            cache: false
+    startTrace(): Promise<any>{
+        return new Promise<any>((resolve, fail)=>{
+            this.traceServletRequest({
+                queryParams: {
+                    pzDebugRequest : "TraceApp",
+                    pzMaxEvents : this.maxEventsPerRequest,
+                    pzForceDisconnect : "Y",
+                    pzCommandSession : this.connectionID,
+                    pzDebugConnection : this.connectionID
+                },
+                success: () => {resolve()},
+                error: ()=>{fail()}
+            });
         });
     }
 
-    connect4(callbacks: StandardCallback) {
-        let strURL = this.getURL({
-            pzDebugRequest : "TraceApp",
-            pzMaxEvents : this.maxEventsPerRequest,
-            pzForceDisconnect : "Y",
-            pzCommandSession : this.connectionID,
-            pzDebugConnection : this.connectionID
+    postOptions(): Promise<any> {
+        return new Promise<any>((resolve, fail)=>{
+            let strPostData = this.options.getQueryString();
+            this.traceServletRequest({
+                method: "POST",
+                data: strPostData,
+                success: ()=>{resolve()},
+                error: ()=>{fail()},
+            });
         });
-        this.xmlHttpRequest({
-            url: strURL,
-            success: () => {
-                this.postOptions(callbacks);
-            },
-            error: ()=>{callbacks.fail()},
-            cache: false
-        });
-
-    }
-
-    postOptions(callbacks: StandardCallback) {
-        let strPostData = this.options.getQueryString();
-        this.xmlHttpRequest({
-            type: "POST",
-            data: strPostData,
-            url: this.servletUrl,
-            cache: false,
-            success: ()=>{
-                this.gTracerInitialized = true;
-                callbacks.success();
-            },
-            error: ()=>{callbacks.fail()},
-        });
-    }
+    };
 
     getTraceEvent(sequenceNumber: number){
-        let strURL = this.getURL({
-            pzDebugRequest : "getEvent",
-            pzCommandSession : this.debugConnectionID,
-            pzDebugConnection : this.connectionID,
-            pzEvent : sequenceNumber
-        });
-        this.xmlHttpRequest({
-            type: "GET",
-            url: strURL,
-            cache: false,
+        this.traceServletRequest({
+            queryParams: {
+                pzDebugRequest : "getEvent",
+                pzCommandSession : this.debugConnectionID,
+                pzDebugConnection : this.connectionID,
+                pzEvent : sequenceNumber
+            },
             success: ()=>{},
             error: ()=>{},
         });
     }
 
-    // No idea what this does...
-    displayTraceEvent(eventNumber: number){
-        let strURL = this.getURL({
-            pzDebugRequest : "getEvent",
-            pzCommandSession : "",
-            pzDebugConnection : this.connectionID,
-            pzEvent : eventNumber
-        });
-        this.xmlHttpRequest({
-            type: "GET",
-            url: strURL,
-            cache: false,
-            success: function(response: any){
-                let traceEvent = response.childNodes[0];
-            },
-            error: function(){}
-        });
-    }
-
-    autocontinue() {
-        let strURL = this.getURL({
-            pzDebugRequest : "autocontinue",
-            pzCommandSession : this.connectionID,
-            pzDebugConnection : this.connectionID,
-            pzXmlOnly : "true"
-        });
-        this.xmlHttpRequest({
-            url:strURL,
-            success:()=>{this.requestTraceEvents(new StandardCallback());},
-            fail:()=>{},
-            cache: false
-        })
-    }
-
     requestTraceEvents(callbacks: StandardCallback){
-        let strURL = this.getURL({
-            pzDebugRequest : "Trace",
-            MaxEvents : "200",
-            pzCommandSession : this.debugConnectionID,
-            pzDebugConnection : this.connectionID,
-            pzXmlOnly : "true"
-        });
-
-        this.xmlHttpRequest({
-            url: strURL,
+        this.traceServletRequest({
+            queryParams: {
+                pzDebugRequest : "Trace",
+                MaxEvents : "200",
+                pzCommandSession : this.debugConnectionID,
+                pzDebugConnection : this.connectionID,
+                pzXmlOnly : "true"
+            },
             success: (data: any, textStatus: string, jqXHR: any) => {
-                let cmdStatus = this.utils.getNodeValue(data,"CmdStatus");
+                let cmdStatus = Utils.getNodeValue(data,"CmdStatus");
                 if (cmdStatus.indexOf("error") >= 0) {
-                    let cmdResponse = this.utils.getNodeValue(data,"CmdResponse");
+                    let cmdResponse = Utils.getNodeValue(data,"CmdResponse");
                     let aMessage =  "Please restart Tracer because " + cmdResponse;
                     callbacks.fail(aMessage);
                     return;
@@ -224,40 +178,32 @@ export class EventsService {
             },
             error: function(){
                 callbacks.fail("Error");
-            },
-            cache: false
+            }
         });
-    }
-
-    setOptions(){
-
     }
 
     clear(){
         // send a request to server to reset activity counter.
-        let strURL  = this.getURL({
-            pzDebugRequest : "settings",
-            pzSetCmd : "ResetCounter",
-            pzDebugConnection : this.connectionID
-        });
-        this.xmlHttpRequest({
-            url:strURL,
-            success:function(){},
-            fail:function(){}
+        this.traceServletRequest({
+            queryParams: {
+                pzDebugRequest : "settings",
+                pzSetCmd : "ResetCounter",
+                pzDebugConnection : this.connectionID
+            }
         });
     }
 
     disconnect(force:boolean){
-        let strURL = this.getURL({
+        let params: any = {
             pzDebugRequest : "disconnect",
             pzDebugConnection : this.connectionID,
             pzXmlOnly : "true"
-        });
+        };
         if(force){
-            strURL += "&pzForceDisconnect=Y"
+            params["pzForceDisconnect"] = "Y"
         }
-        this.xmlHttpRequest({
-            url: strURL,
+        this.traceServletRequest({
+            queryParams: params,
             success: function(){},
             fail: function(){}
         });
@@ -266,42 +212,30 @@ export class EventsService {
     getURL(queryParameters?: Object, excludeServlet?:boolean){
         let queryString = "";
         if(queryParameters){
-            queryString = this.utils.getQueryString(queryParameters)
+            queryString = Utils.getQueryString(queryParameters)
         }
         if(excludeServlet){
-            return queryString;
+            return this.serverUrl + queryString;
         }
-        return this.servletUrl + queryString;
+        return this.serverUrl + this.servletUrl + queryString;
     }
 
-    xmlHttpRequest(request: any){
-        // perform request
-    }
+    traceServletRequest(request: any): Promise<any>{
+        let queryParams = request.queryParams;
+        let url = this.getURL(queryParams, false);
+        let method =  request.method || "GET";
+        let body = request.body;
 
-    injectDependencies(){
+        return new Promise<any>((resolve, fail)=>{
+            // perform request
+            const request = new XMLHttpRequest();
 
-    }
-
-    getConnectionList(callbacks: StandardCallback){
-        let strURL = this.getURL({
-            pzDebugRequest : "GetConnectionList",
-            pzXmlOnly : "true",
-            pzNodeID : this.nodeId
+            request.onload = function(e) {
+                var response = request.responseText;
+                resolve(response);
+            };
+            request.open(method, url);
+            request.send();
         });
-
-        this.xmlHttpRequest({
-            url: strURL,
-            success: ()=>{
-                callbacks.success();
-            },
-            fail: ()=>{
-                callbacks.fail();
-            }
-        });
-    }
-
-    setConnection(aConnectionID: string){
-        this.connectionID = aConnectionID;
-        this.debugConnectionID = aConnectionID;
     }
 }
