@@ -23,6 +23,7 @@
     "open": "0.0.5"
   },
   "devDependencies": {
+    "cors-anywhere": "^0.4.1",
     "istanbul": "^0.4.5",
     "jasmine": "^2.8.0",
     "jquery": "^3.2.1",
