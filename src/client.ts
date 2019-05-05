@@ -89,11 +89,11 @@ export class Client {
      * @param eventArray
      */
     appendEvents(eventArray: Array<TraceEvent>){
-        for(var i =0; i< eventArray.length; i++){
-            var currentEvent = eventArray[i];
+        for(let i =0; i< eventArray.length; i++){
+            let currentEvent = eventArray[i];
             if(currentEvent) {
                 this.eventsList.push(currentEvent);
-                for (var k = 0; k < this.filters.length; k++) {
+                for (let k = 0; k < this.filters.length; k++) {
                     if (!currentEvent.applyFilter(this.filters[k])) {
                         return;
                     }

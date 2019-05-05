@@ -1,5 +1,6 @@
 import {Options} from './options'
 import {Utils} from './utils'
+import {StandardCallback} from "./standard-callback";
 
 export class EventsService {
 
@@ -9,7 +10,7 @@ export class EventsService {
     hostName: string;
     options: Options;
     gTracerInitialized: boolean;
-    connectCallbackObj: any;
+    connectCallbackObj: StandardCallback;
     maxEventsPerRequest: number;
     pyWatchInsKey: string;
     pyWatchClassName: string;
@@ -32,7 +33,7 @@ export class EventsService {
         this.SESSION_TYPE = "STANDARD";
     }
 
-    connect(callbacks: object){
+    connect(callbacks: StandardCallback){
         this.connectCallbackObj = callbacks;
         if(!this.gTracerInitialized) {
             this.initSettings(callbacks);
@@ -41,7 +42,7 @@ export class EventsService {
         }
     }
 
-    initSettings(callbacks: object) {
+    initSettings(callbacks: StandardCallback) {
         let strURL = this.getURL({
             pyActivity : "Data-TRACERSettings.pzGetOptionsAsJSON"
         }, true);
@@ -68,18 +69,18 @@ export class EventsService {
         })
     }
 
-    connect2(callbacks: any){
+    connect2(callbacks: StandardCallback){
         this.xmlHttpRequest({
             url: this.getURL(),
             success: (data: any, textStatus: string, jqXHR: any) => {
                 this.connect3(callbacks);
             },
-            error: callbacks.error,
+            error: ()=>{callbacks.fail()},
             cache:false
         });
     }
 
-    connect3(callbacks: any) {
+    connect3(callbacks: StandardCallback) {
         let strURL = "";
         if (this.SESSION_TYPE=="RULEWATCH"){
             strURL = this.getURL({
@@ -104,12 +105,12 @@ export class EventsService {
             success: (data: any, textStatus: string, jqXHR: any) => {
                 this.connect4(callbacks);
             },
-            error: callbacks.error,
+            error: ()=>{callbacks.fail()},
             cache: false
         });
     }
 
-    connect4(callbacks: any) {
+    connect4(callbacks: StandardCallback) {
         let strURL = this.getURL({
             pzDebugRequest : "TraceApp",
             pzMaxEvents : this.maxEventsPerRequest,
@@ -122,13 +123,13 @@ export class EventsService {
             success: () => {
                 this.postOptions(callbacks);
             },
-            error: callbacks.error,
+            error: ()=>{callbacks.fail()},
             cache: false
         });
 
     }
 
-    postOptions(callbacks: any) {
+    postOptions(callbacks: StandardCallback) {
         let strPostData = this.options.getQueryString();
         this.xmlHttpRequest({
             type: "POST",
@@ -139,7 +140,7 @@ export class EventsService {
                 this.gTracerInitialized = true;
                 callbacks.success();
             },
-            error: callbacks.error
+            error: ()=>{callbacks.fail()},
         });
     }
 
@@ -154,8 +155,8 @@ export class EventsService {
             type: "GET",
             url: strURL,
             cache: false,
-            success: function(){},
-            error: function(){}
+            success: ()=>{},
+            error: ()=>{},
         });
     }
 
@@ -187,13 +188,13 @@ export class EventsService {
         });
         this.xmlHttpRequest({
             url:strURL,
-            success:()=>{this.requestTraceEvents({});},
+            success:()=>{this.requestTraceEvents(new StandardCallback());},
             fail:()=>{},
             cache: false
         })
     }
 
-    requestTraceEvents(callbacks: any){
+    requestTraceEvents(callbacks: StandardCallback){
         let strURL = this.getURL({
             pzDebugRequest : "Trace",
             MaxEvents : "200",
@@ -209,7 +210,7 @@ export class EventsService {
                 if (cmdStatus.indexOf("error") >= 0) {
                     let cmdResponse = this.utils.getNodeValue(data,"CmdResponse");
                     let aMessage =  "Please restart Tracer because " + cmdResponse;
-                    callbacks.error(aMessage);
+                    callbacks.fail(aMessage);
                     return;
                 }
                 let traceEventNodes = data.getElementsByTagName("TraceEventHeader");
@@ -222,7 +223,7 @@ export class EventsService {
                 callbacks.success(eventsToAppend);
             },
             error: function(){
-                callbacks.error("Error");
+                callbacks.fail("Error");
             },
             cache: false
         });
@@ -258,7 +259,7 @@ export class EventsService {
         this.xmlHttpRequest({
             url: strURL,
             success: function(){},
-            error: function(){}
+            fail: function(){}
         });
     }
 
@@ -281,7 +282,7 @@ export class EventsService {
 
     }
 
-    getConnectionList(callbacks: any){
+    getConnectionList(callbacks: StandardCallback){
         let strURL = this.getURL({
             pzDebugRequest : "GetConnectionList",
             pzXmlOnly : "true",
@@ -290,10 +291,12 @@ export class EventsService {
 
         this.xmlHttpRequest({
             url: strURL,
-            success: function(){
+            success: ()=>{
                 callbacks.success();
             },
-            error: callbacks.error
+            fail: ()=>{
+                callbacks.fail();
+            }
         });
     }
 
