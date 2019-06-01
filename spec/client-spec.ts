@@ -13,7 +13,7 @@ describe("Client", function() {
   ]
   
   beforeEach(function() {
-    tracer = new Client("");
+    tracer = new Client("", "");
   });
   
   it("has the expected public API", function(){

@@ -11,6 +11,7 @@
     "copy-test-serve-pega": "copyfiles ./tools/client-pega-servlet.html -u 1 ./dist/",
     "open-hot-server": "npm run hot-server",
     "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
+    "start-proxy-server": "node tools/tracer-proxy-server",
     "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"
   },
   "keywords": [
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",
+    "cors-anywhere": "^0.4.1",
     "istanbul": "^0.4.5",
     "jasmine": "^2.8.0",
     "jasmine-spec-reporter": "^4.2.1",

@@ -37,9 +37,9 @@ export class TraceEvent {
 
     applyFilter(filter: Filter){
         let filterResult = true;
-        let field = filter.getField();
-        let operator = filter.getOperator();
-        let value = filter.getValue();
+        let field = filter.field;
+        let operator = filter.operator;
+        let value = filter.value;
         let targetValue = "";
         switch (field){
             case Field.THREAD:

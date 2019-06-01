@@ -9,19 +9,6 @@ export class Filter {
     operator: Operator;
     value: string;
     id: string;
-
-    getField(): Field{
-        return this.field;
-    }
-    getOperator(): Operator{
-        return this.operator;
-    }
-    getValue(): string{
-        return this.value;
-    }
-    getID(): string{
-        return this.id;
-    }
 }
 export enum Field {
     THREAD,

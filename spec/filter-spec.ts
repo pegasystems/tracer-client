@@ -13,8 +13,8 @@ describe("Filter", function() {
 
   it("can be initialized using it's constant fields", function(){
       filter = new Filter(Field.THREAD, Operator.EQUAL, "Test");
-    expect(filter.getField()).toEqual(Field.THREAD);
-    expect(filter.getOperator()).toEqual(Operator.EQUAL);
-    expect(filter.getValue()).toEqual("Test");
+    expect(filter.field).toEqual(Field.THREAD);
+    expect(filter.operator).toEqual(Operator.EQUAL);
+    expect(filter.value).toEqual("Test");
   });
 });

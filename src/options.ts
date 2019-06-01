@@ -120,6 +120,36 @@ export class Options {
         return strPostData;
     }
 
+    getQueryFormData(): FormData {
+        let formData = new FormData();
+        formData.append("pzDebugRequest", "settings");
+        formData.append("pzSetCmd", "SetOptions");
+        formData.append("pzOptTraceClassLoad", this.optionArray["nOptTraceClassLoad"]);
+        formData.append("pzOptTraceException", this.optionArray["nOptTraceException"]);
+        formData.append("pzOptTraceJContextBegin", this.optionArray["nOptTraceJContextBegin"]);
+        formData.append("pzOptTraceActivityBegin", this.optionArray["nOptTraceActivityBegin"]);
+        formData.append("pzOptTraceActivityEnd", this.optionArray["nOptTraceActivityEnd"]);
+        formData.append("pzOptTraceStepBegin", this.optionArray["nOptTraceStepBegin"]);
+        formData.append("pzOptTraceStepEnd", this.optionArray["nOptTraceStepEnd"]);
+        formData.append("pzOptTraceWhenBegin", this.optionArray["nOptTraceWhenBegin"]);
+        formData.append("pzOptTraceWhenEnd", this.optionArray["nOptTraceWhenEnd"]);
+        formData.append("pzOptTraceInputEditBegin", this.optionArray["nOptTraceInputEditBegin"]);
+        formData.append("pzOptTraceInputEditEnd", this.optionArray["nOptTraceInputEditEnd"]);
+        formData.append("pzOptTraceModelBegin", this.optionArray["nOptTraceModelBegin"]);
+        formData.append("pzOptTraceModelEnd", this.optionArray["nOptTraceModelEnd"]);
+        formData.append("pzOptExceptionBreak", this.optionArray["nOptExceptionBreak"]);
+        formData.append("pzOptStatusFailBreak", this.optionArray["nOptStatusFailBreak"]);
+        formData.append("pzOptStatusWarnBreak", this.optionArray["nOptStatusWarnBreak"]);
+        formData.append("pzOptTraceAccessDenied", this.optionArray["nOptTraceAccessDenied"]);
+        formData.append("pzOptExpandJavaPage", this.optionArray["nOptExpandJavaPage"]);
+        formData.append("pzOptAbbreviateEvents", this.optionArray["nOptAbbreviateEvents"]);
+        formData.append("pzOptCollectLocalVars", this.optionArray["nOptLocalVariables"]);
+        formData.append("pzOptSetPageNames", this.pyPageNameList);
+        formData.append("pzDebugConnection", this.connectionID);
+        formData.append("ruleSet1", "Pega-Desktop");
+        return formData;
+    }
+
     getOption(optionName: string){
         return this.optionArray[optionName];
     }

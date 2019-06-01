@@ -11,6 +11,7 @@ export class Client {
 
     // Instance variables
     connectionID: string = "";
+    nodeId: string = "";
     tracerInitialized: boolean = false;
     tracerEnabled: boolean = false;
     eventsList: Array<TraceEvent> = [];
@@ -29,11 +30,12 @@ export class Client {
 
     // Dependencies
     options = Options;
-    eventsService: EventsService
+    eventsService: EventsService;
 
-    constructor(connectionId: string) {
+    constructor(connectionId: string, nodeId: string) {
         this.connectionID = connectionId;
-        this.eventsService = new EventsService(this.connectionID);
+        this.nodeId = nodeId;
+        this.eventsService = new EventsService(this.connectionID, this.nodeId);
 
     }
 
@@ -50,27 +52,31 @@ export class Client {
             this.tracerInitialized = true;
         }
 
-        this.eventsService.connect({
-            success : ()=>{this.mainTracerLoop()},
-            fail : function(){}
-        });
+        this.eventsService.connect()
+            .then(()=>{
+                console.log("Connected!");
+                this.mainTracerLoop()
+            }).catch(()=>{});
     }
 
     /**
      * poll events service for trace events
      */
     mainTracerLoop(){
+        console.log("Main tracer loop: "+ this.tracerEnabled);
         if(this.tracerEnabled) {
-            this.eventsService.requestTraceEvents({
-                success : (args:any)=>{this.parseTraceResponse(args)},
-                fail : (aMessage: string) => {
+            this.eventsService.requestTraceEvents()
+                .then((res)=>{
+                    this.parseTraceResponse(res)
+                })
+                .catch((e)=>{
                     throw {
                         name : "EventsServiceException",
-                        message : aMessage
+                        message : e
                     }
-                }
-            });
+                });
         }
+
     }
 
     parseTraceResponse(eventsToAppend: Array<TraceEvent>){
@@ -78,7 +84,7 @@ export class Client {
             this.appendEvents(eventsToAppend);
             setTimeout(()=>{this.mainTracerLoop()}, 10);
         } else {
-            setTimeout(this.mainTracerLoop, 1000);
+            setTimeout(()=>{this.mainTracerLoop()}, 1000);
         }
     }
 
