@@ -1,10 +1,10 @@
-import {EventsService} from '../src/events-service';
+import {EventsServicePega8} from '../src/events-service-pega8';
 
 describe("TracerServlet", function() {
-  let tracerServlet: EventsService;
+  let tracerServlet: EventsServicePega8;
 
   beforeEach(function() {
-    tracerServlet = new EventsService("");
+    tracerServlet = new EventsServicePega8("");
   });
 
   it("can be initialised", function(){

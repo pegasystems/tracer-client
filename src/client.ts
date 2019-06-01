@@ -1,7 +1,7 @@
 import {TraceEvent} from './trace-event';
-import {Filter} from './filter';
-import {EventsService} from './events-service';
+import {EventsServicePega8} from './events-service-pega8';
 import {Options} from './options';
+import {EventsService} from "./events-service";
 
 export class Client {
     /**
@@ -16,17 +16,7 @@ export class Client {
     tracerEnabled: boolean = false;
     eventsList: Array<TraceEvent> = [];
     traceEventArray : Array<TraceEvent> = [];
-    eventCallbacks: any = [
-        function(currentEvent: TraceEvent){
-            // This is the default event callback which writes event details to the log.
-            console.log(currentEvent.sequenceNumber + " " +
-                currentEvent.activityName + " " +
-                currentEvent.stepNumber + " " +
-                currentEvent.eventType + " " +
-                currentEvent.stepMethod + " " +
-                currentEvent.stepStatus);
-        }
-    ];
+    eventCallbacks: any = this.getDefaultCallback();
 
     // Dependencies
     options = Options;
@@ -35,20 +25,20 @@ export class Client {
     constructor(connectionId: string, nodeId: string) {
         this.connectionID = connectionId;
         this.nodeId = nodeId;
-        this.eventsService = new EventsService(this.connectionID, this.nodeId);
+        this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
 
     }
 
     /**
      * Start a event service session and begin polling for new trace events
      */
-    initializeTracer(){
+    private initializeTracer(){
         if (this.connectionID == "") {
             throw "EmptyConnectionID";
         }
 
         if(!this.tracerInitialized){
-            //this.eventsService = new EventsService(this.connectionID);
+            //this.eventsService = new EventsServicePega8(this.connectionID);
             this.tracerInitialized = true;
         }
 
@@ -62,8 +52,7 @@ export class Client {
     /**
      * poll events service for trace events
      */
-    mainTracerLoop(){
-        console.log("Main tracer loop: "+ this.tracerEnabled);
+    private mainTracerLoop(){
         if(this.tracerEnabled) {
             this.eventsService.requestTraceEvents()
                 .then((res)=>{
@@ -79,12 +68,13 @@ export class Client {
 
     }
 
-    parseTraceResponse(eventsToAppend: Array<TraceEvent>){
+    private parseTraceResponse(eventsToAppend: Array<TraceEvent>){
         if(eventsToAppend.length > 0) {
             this.appendEvents(eventsToAppend);
             setTimeout(()=>{this.mainTracerLoop()}, 10);
         } else {
-            setTimeout(()=>{this.mainTracerLoop()}, 1000);
+            console.log("No events");
+            setTimeout(()=>{this.mainTracerLoop()}, 4000);
         }
     }
 
@@ -92,7 +82,7 @@ export class Client {
      * Invoke any registered events callbacks for each event in an array.
      * @param eventArray
      */
-    appendEvents(eventArray: Array<TraceEvent>){
+    private appendEvents(eventArray: Array<TraceEvent>){
         for(let i =0; i< eventArray.length; i++){
             let currentEvent = eventArray[i];
             if(currentEvent) {
@@ -113,7 +103,7 @@ export class Client {
     /**
      * Test the events service that it can delete all of it's stored events
      */
-    deleteTraceEvents() {
+    private deleteTraceEvents() {
         this.eventsService.clear();
     }
 
@@ -156,7 +146,7 @@ export class Client {
      * @param eventNumber
      * @returns {*}
      */
-    getEventHeader(eventNumber: number){
+    private getEventHeader(eventNumber: number){
         if(this.traceEventArray[eventNumber]) {
             return this.traceEventArray[eventNumber];
         } else {
@@ -188,5 +178,22 @@ export class Client {
                     break;
             }
         }
+    }
+
+    /**
+     * Gets an array with a default callback function
+     */
+    private getDefaultCallback(): any{
+        return [
+            function(currentEvent: TraceEvent){
+                // This is the default event callback which writes event details to the log.
+                console.log(currentEvent.sequenceNumber + " " +
+                    currentEvent.activityName + " " +
+                    currentEvent.stepNumber + " " +
+                    currentEvent.eventType + " " +
+                    currentEvent.stepMethod + " " +
+                    currentEvent.stepStatus);
+            }
+        ]
     }
 }

@@ -22,4 +22,18 @@ export class Utils {
             return "";
         }
     }
+
+    static getNodeIntValue(data: any, nodeName: string){
+        let matchingNode = data.getElementsByTagName(nodeName);
+        if(matchingNode.length>0 && matchingNode[0]!= undefined) {
+            let stringVal = (matchingNode[0].textContent || matchingNode[0].text || "").trim();
+            try{
+                return parseInt(stringVal);
+            } catch (e) {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
 }

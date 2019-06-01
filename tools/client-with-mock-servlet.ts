@@ -1,6 +1,6 @@
 import {Client as Tracer} from '../src/client'
-import {MockTracerServlet} from './mock-tracer-servlet';
+import {EventsServiceSimpleMock} from '../src/events-service-simple-mock';
 // @ts-ignore
 window.Tracer = Tracer;
 // @ts-ignore
-window.MockTracerServlet = MockTracerServlet;
+window.MockTracerServlet = EventsServiceSimpleMock;
