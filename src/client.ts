@@ -1,5 +1,6 @@
 import {TraceEvent} from './trace-event';
 import {EventsServicePega8} from './events-service-pega8';
+import {EventsServiceFromFile} from "./events-service-from-file";
 import {Options} from './options';
 import {EventsService} from "./events-service";
 
@@ -26,7 +27,7 @@ export class Client {
         this.connectionID = connectionId;
         this.nodeId = nodeId;
         this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
-
+        //this.eventsService = new EventsServiceFromFile();
     }
 
     /**

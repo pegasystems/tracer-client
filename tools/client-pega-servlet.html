@@ -6,13 +6,18 @@
 <body>
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
     <script src="index.bundle.js"></script>
+    <style>
+        td {
+            overflow: hidden;
+        }
+    </style>
     <script>
         var tracer;
         window.onload = function(){
             //let connectionId = window.prompt("Connection id", "HZLII280ZPEO7SDYSSOCUXO3TVT6AP86XA");
             tracer = new Tracer("HZLII280ZPEO7SDYSSOCUXO3TVT6AP86XA");
             tracer.registerEventCallback(function(event){
-                let table = document.getElementById("events-table");
+                let table = document.getElementById("events-table-body");
                 let row = document.createElement("tr");
                 let col1 = document.createElement("td");
                 col1.innerHTML = event.sequenceNumber;
@@ -24,32 +29,26 @@
                 col3.innerHTML = event.interaction;
                 row.appendChild(col3);
                 let col4 = document.createElement("td");
-                col4.innerHTML = event.intNumber;
+                col4.innerHTML = event.stepMethod;
                 row.appendChild(col4);
                 let col5 = document.createElement("td");
-                col5.innerHTML = event.ruleNumber;
+                col5.innerHTML = event.primaryPageName;
                 row.appendChild(col5);
                 let col6 = document.createElement("td");
-                col6.innerHTML = event.stepMethod;
+                col6.innerHTML = event.stepNumber;
                 row.appendChild(col6);
                 let col7 = document.createElement("td");
-                col7.innerHTML = event.primaryPageName;
+                col7.innerHTML = event.eventType;
                 row.appendChild(col7);
                 let col8 = document.createElement("td");
-                col8.innerHTML = event.stepNumber;
+                col8.innerHTML = event.timeStamp;
                 row.appendChild(col8);
                 let col9 = document.createElement("td");
-                col9.innerHTML = event.eventType;
+                col9.innerHTML = event.activityName;
                 row.appendChild(col9);
                 let col10 = document.createElement("td");
-                col10.innerHTML = event.timeStamp;
+                col10.innerHTML = event.sRSName + " " + event.sRSVersion;
                 row.appendChild(col10);
-                let col11 = document.createElement("td");
-                col11.innerHTML = event.activityName;
-                row.appendChild(col11);
-                let col12 = document.createElement("td");
-                col12.innerHTML = event.sRSName + " " + event.sRSVersion;
-                row.appendChild(col12);
 
                 table.append(row);
 
@@ -64,20 +63,23 @@
     </div>
     <div>
         <table id="events-table">
-            <tr>
-                <th>line</th>
-                <th>thread</th>
-                <th>int</th>
-                <th>rule#</th>
-                <th>step method</th>
-                <th>step page</th>
-                <th>step</th>
-                <th>status</th>
-                <th>event type</th>
-                <th>elapsed</th>
-                <th>name</th>
-                <th>ruleset</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>line</th>
+                    <th>thread</th>
+                    <th>int</th>
+                    <th WIDTH="30PX">step method</th>
+                    <th WIDTH="30PX">step page</th>
+                    <th>step</th>
+                    <th>event type</th>
+                    <th>elapsed</th>
+                    <th>name</th>
+                    <th>ruleset</th>
+                </tr>
+            </thead>
+            <tbody id="events-table-body">
+
+            </tbody>
         </table>
     </div>
 </body>

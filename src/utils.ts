@@ -23,6 +23,15 @@ export class Utils {
         }
     }
 
+    static getAttributeValue(node: Element, attrName: string){
+        let attrNode = node.getAttributeNode(attrName);
+        if(attrNode){
+            return attrNode.value;
+        } else {
+            return "";
+        }
+    }
+
     static getNodeIntValue(data: any, nodeName: string){
         let matchingNode = data.getElementsByTagName(nodeName);
         if(matchingNode.length>0 && matchingNode[0]!= undefined) {
