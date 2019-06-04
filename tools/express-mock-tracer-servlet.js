@@ -7,7 +7,7 @@ const cors = require('cors');
 
 
 app.get('/', cors(), (req, res) => {
-    fs.readFile( './resources/HSTZS707FMTX1STU84URRPISWH8HYOIUF.xml', function(err, data) {
+    fs.readFile( './resources/TraceOutput.xml', function(err, data) {
         res.send(data)
     });
 })
