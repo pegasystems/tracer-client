@@ -34,6 +34,16 @@ This is a javascript API for interacting with the Pega Tracer servlet API.
 - Add the following require statement to your code `Tracer = require "/src/client"`
 - Once this project is moved to GitHub I will consider pushing to npm
 
+##### To view a sample tracer client
+- Update `src/client.ts` as follows:
+```
+//this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
+this.eventsService = new EventsServiceFromFile();
+```
+- Run the command `npm run-script start-file-server`
+- Run the command `npm run-script build`
+- Launch the file `client-pega-servlet` in a browser
+
 ## Module Functions
 - start
 - stop

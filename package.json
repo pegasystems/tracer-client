@@ -12,6 +12,7 @@
     "open-hot-server": "npm run hot-server",
     "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
     "start-proxy-server": "node tools/tracer-proxy-server",
+    "start-file-server": "node tools/express-mock-tracer-servlet",
     "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"
   },
   "keywords": [
