@@ -18,17 +18,16 @@ export class EventsServicePega8 implements EventsService {
     servletUrl: string;
     SESSION_TYPE: string;
 
-    constructor(aConnectionID: string, aHostName?: string, aNodeId?: string){
+    constructor(aConnectionID: string, aNodeId?: string){
         this.connectionID= aConnectionID;
         this.debugConnectionID = aConnectionID;
-        this.nodeId = aNodeId || "662295838901f81008580ba98984fb2e";
-        this.hostName = aHostName || "";
+        this.nodeId = aNodeId || "";
+        this.hostName = "";
         this.options = null;
         this.gTracerInitialized = false;
         this.maxEventsPerRequest = 200;
         this.pyWatchInsKey = "";
         this.pyWatchClassName = "";
-        //this.serverUrl = "http://localhost:8080/http://lu-83-cam.eng.pega.com/prweb";
         this.serverUrl = "/prweb";
         this.serverUrl = "/prweb";
         this.servletUrl = "/PRTraceServlet";

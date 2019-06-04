@@ -38,11 +38,6 @@ export class Client {
             throw "EmptyConnectionID";
         }
 
-        if(!this.tracerInitialized){
-            //this.eventsService = new EventsServicePega8(this.connectionID);
-            this.tracerInitialized = true;
-        }
-
         this.eventsService.connect()
             .then(()=>{
                 console.log("Connected!");
@@ -139,30 +134,6 @@ export class Client {
      */
     registerEventCallback(callback: object){
         this.eventCallbacks.push(callback)
-    }
-
-    /**
-     * TODO Untested, likely works.
-     * Request a single trace event.
-     * @param eventNumber
-     * @returns {*}
-     */
-    private getEventHeader(eventNumber: number){
-        if(this.traceEventArray[eventNumber]) {
-            return this.traceEventArray[eventNumber];
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * TODO Untested, likely doesn't work.
-     * Request the full content of a trace event from the events service, including primary page, parameter page, and
-     * local variables.
-     * @param callbacks
-     */
-    displayTraceEvent(eventNumber: number, callbacks: object){
-        this.eventsService.getTraceEvent(eventNumber);
     }
 
     /**
