@@ -6,10 +6,13 @@
 <body>
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
     <script src="indexmockserver.bundle.js"></script>
-    <script>var tracer;
+    <script>
+        //import {EventsServiceSimpleMock} from "./mock-tracer-servlet";
+
+        var tracer;
         window.onload = function(){
             tracer = new Tracer("HZIFXUHZBN51NUATLG3POTUR3I92SFZGR");
-            tracer._injectDependencies({"EventsService" : MockServer});
+            tracer._injectDependencies({"EventsService" : new MockTracerServlet()});
             tracer.registerEventCallback(function(event){
                 var table = document.getElementById("events-table");
                 var row = document.createElement("tr")
@@ -47,7 +50,7 @@
                 col11.innerHTML = event.activityName;
                 row.appendChild(col11);
                 var col12 = document.createElement("td");
-                col12.innerHTML = event.rulesetName + " " + event.rulesetVersion;
+                col12.innerHTML = event.sRSName + " " + event.sRSVersion;
                 row.appendChild(col12);
 
                 table.append(row);

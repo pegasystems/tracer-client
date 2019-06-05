@@ -1,9 +1,10 @@
+const {TraceEvent} = require('./build/trace-event');
+
 describe("Event", function() {
-  var Event = require('../src/trace-event');
-  var event;
+  let event;
 
   beforeEach(function() {
-    event = new Event();
+    event = new TraceEvent();
   });
 
   /** This now blows up **/

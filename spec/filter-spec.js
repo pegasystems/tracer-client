@@ -1,19 +1,20 @@
+const {Field, Filter, Operator} = require ('./build/filter');
+
 describe("Filter", function() {
-  var Filter = require('../src/filter');
-  var filter;
+  let filter;
 
   beforeEach(function() {
-    filter = new Filter();
   });
 
   it("can be initialised", function(){
-    expect(typeof filter).toEqual("object");
+      filter = new Filter(Field.PAGENAME, Operator.EQUAL,"");
+      expect(typeof filter).toEqual("object");
   });
 
   it("can be initialized using it's constant fields", function(){
-    filter = new Filter(Filter.fields.THREAD, Filter.operators.EQUAL, "Test");
-    expect(filter.getField()).toEqual(Filter.fields.THREAD);
-    expect(filter.getOperator()).toEqual(Filter.operators.EQUAL);
-    expect(filter.getValue()).toEqual("Test");
+      filter = new Filter(Field.THREAD, Operator.EQUAL, "Test");
+    expect(filter.field).toEqual(Field.THREAD);
+    expect(filter.operator).toEqual(Operator.EQUAL);
+    expect(filter.value).toEqual("Test");
   });
 });

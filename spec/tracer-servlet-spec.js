@@ -1,9 +1,10 @@
+const {EventsServicePega8} = require('./build/events-service-pega8');
+
 describe("TracerServlet", function() {
-  var TracerServlet = require('../src/events-service');
-  var tracerServlet;
+  let tracerServlet;
 
   beforeEach(function() {
-    tracerServlet = new TracerServlet();
+    tracerServlet = new EventsServicePega8("");
   });
 
   it("can be initialised", function(){
