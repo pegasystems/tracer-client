@@ -1,7 +1,7 @@
-import {Field, Filter, Operator} from '../src/filter';
+const {Field, Filter, Operator} = require ('./build/filter');
 
 describe("Filter", function() {
-  let filter: Filter;
+  let filter;
 
   beforeEach(function() {
   });

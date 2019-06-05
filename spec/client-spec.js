@@ -1,7 +1,7 @@
-import {Client} from '../src/client';
+const {Client} = require('./build/client');
 
 describe("Client", function() {
-  let tracer: Client;
+  let tracer;
   let apiContents = [
     "_injectDependencies",
     "start",

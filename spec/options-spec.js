@@ -1,6 +1,6 @@
-import {Options} from '../src/options'
+const { Options } = require('./build/options');
 describe("Options", function() {
-    let options: Options;
+    let options;
 
     beforeEach(function() {
         options = new Options("");

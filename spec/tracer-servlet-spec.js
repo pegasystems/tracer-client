@@ -1,7 +1,7 @@
-import {EventsServicePega8} from '../src/events-service-pega8';
+const {EventsServicePega8} = require('./build/events-service-pega8');
 
 describe("TracerServlet", function() {
-  let tracerServlet: EventsServicePega8;
+  let tracerServlet;
 
   beforeEach(function() {
     tracerServlet = new EventsServicePega8("");

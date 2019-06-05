@@ -1,7 +1,7 @@
-import {TraceEvent} from '../src/trace-event';
+const {TraceEvent} = require('./build/trace-event');
 
 describe("Event", function() {
-  let event: TraceEvent;
+  let event;
 
   beforeEach(function() {
     event = new TraceEvent();
