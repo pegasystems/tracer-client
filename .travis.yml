@@ -7,9 +7,10 @@ cache:
 install:
   - npm install -g codecov
   - npm install -g istanbul
+  - npm install -g typescript
   - npm install
 script:
-  - npm tsc
+  - tsc
   - istanbul cover node_modules/jasmine/bin/jasmine.js
   - codecov
 after_success:
