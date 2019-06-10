@@ -1,0 +1,35 @@
+<div ID="traceEvent-TABLE">
+  <div ngClass="header">
+    <div style="width:15px;" >&nbsp;</div>
+    <div style="width:75px;"  ngClass="event-column" TITLE="Line">Line</div>
+    <div style="width:75px;"  ngClass="event-column" TITLE="Thread">Thread</div>
+    <div style="width:50px;"  ngClass="event-column" TITLE="Int">Int</div>
+    <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >Rule#</div>
+    <div style="width:20%;" ngClass="event-column" TITLE="Step Method">Step Method</div>
+    <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">Step Page</div>
+    <div style="width:50px;"  ngClass="event-column" TITLE="Step">Step</div>
+    <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">Status</div>
+    <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">Event Type</div>
+    <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">Elapsed</div>
+    <div style="width:20%;"   ngClass="event-column" TITLE="Name">Name</div>
+    <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">RuleSet</div>
+  </div>
+  <div ngClass="table-body">
+    <div *ngFor="let event of events">
+      <div style="width:15px;" >&nbsp;</div>
+      <div style="width:75px;"  ngClass="event-column" TITLE="Line">{{event.line}}</div>
+      <div style="width:75px;"  ngClass="event-column" TITLE="Thread">{{event.thread}}</div>
+      <div style="width:50px;"  ngClass="event-column" TITLE="Int">{{event.interaction}}</div>
+      <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.rulesNumber}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</div>
+      <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">{{event.stepPage}}</div>
+      <div style="width:50px;"  ngClass="event-column" TITLE="Step">{{event.stepNumber}}</div>
+      <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">{{event.stepStatus}}</div>
+      <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">{{event.eventType}}</div>
+      <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">{{event.elapsed}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="Name">{{event.ruleName}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">{{event.ruleset}}</div>
+    </div>
+  </div>
+</div>
+
