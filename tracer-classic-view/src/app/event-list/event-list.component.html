@@ -1,0 +1,116 @@
+<!--div ID="traceEvent-TABLE">
+  <div ngClass="header">
+    <div style="width:15px;" >&nbsp;</div>
+    <div style="width:75px;"  ngClass="event-column" TITLE="Line">Line</div>
+    <div style="width:75px;"  ngClass="event-column" TITLE="Thread">Thread</div>
+    <div style="width:50px;"  ngClass="event-column" TITLE="Int">Int</div>
+    <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >Rule#</div>
+    <div style="width:20%;" ngClass="event-column" TITLE="Step Method">Step Method</div>
+    <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">Step Page</div>
+    <div style="width:50px;"  ngClass="event-column" TITLE="Step">Step</div>
+    <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">Status</div>
+    <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">Event Type</div>
+    <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">Elapsed</div>
+    <div style="width:20%;"   ngClass="event-column" TITLE="Name">Name</div>
+    <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">RuleSet</div>
+  </div>
+  <div ngClass="table-body">
+    <div *ngFor="let event of events">
+      <div style="width:15px;" >&nbsp;</div>
+      <div style="width:75px;"  ngClass="event-column" TITLE="Line">{{event.line}}</div>
+      <div style="width:75px;"  ngClass="event-column" TITLE="Thread">{{event.thread}}</div>
+      <div style="width:50px;"  ngClass="event-column" TITLE="Int">{{event.interaction}}</div>
+      <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.rulesNumber}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</div>
+      <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">{{event.stepPage}}</div>
+      <div style="width:50px;"  ngClass="event-column" TITLE="Step">{{event.stepNumber}}</div>
+      <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">{{event.stepStatus}}</div>
+      <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">{{event.eventType}}</div>
+      <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">{{event.elapsed}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="Name">{{event.ruleName}}</div>
+      <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">{{event.ruleset}}</div>
+    </div>
+  </div>
+</div-->
+
+
+<table mat-table [dataSource]="events" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="line">
+    <th mat-header-cell *matHeaderCellDef> Line </th>
+    <td mat-cell *matCellDef="let event"> {{event.line}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="thread">
+    <th mat-header-cell *matHeaderCellDef> Thread </th>
+    <td mat-cell *matCellDef="let event"> {{event.thread}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="interaction">
+    <th mat-header-cell *matHeaderCellDef> Interaction </th>
+    <td mat-cell *matCellDef="let event"> {{event.interaction}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="rulesNumber">
+    <th mat-header-cell *matHeaderCellDef> Rule# </th>
+    <td mat-cell *matCellDef="let event"> {{event.rulesNumber}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="stepMethod">
+    <th mat-header-cell *matHeaderCellDef> Step method </th>
+    <td mat-cell *matCellDef="let event"> {{event.stepMethod}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="stepPage">
+    <th mat-header-cell *matHeaderCellDef> Step page </th>
+    <td mat-cell *matCellDef="let event"> {{event.stepPage}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="stepNumber">
+    <th mat-header-cell *matHeaderCellDef> Step# </th>
+    <td mat-cell *matCellDef="let event"> {{event.stepNumber}} </td>
+
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="stepStatus">
+    <th mat-header-cell *matHeaderCellDef> Step status </th>
+    <td mat-cell *matCellDef="let event"> {{event.stepStatus}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="eventType">
+    <th mat-header-cell *matHeaderCellDef> Event type </th>
+    <td mat-cell *matCellDef="let event"> {{event.eventType}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="elapsed">
+    <th mat-header-cell *matHeaderCellDef> Elapsed </th>
+    <td mat-cell *matCellDef="let event"> {{event.elapsed}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="ruleName">
+    <th mat-header-cell *matHeaderCellDef> Rule name </th>
+    <td mat-cell *matCellDef="let event"> {{event.ruleName}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="ruleset">
+    <th mat-header-cell *matHeaderCellDef> Ruleset </th>
+    <td mat-cell *matCellDef="let event"> {{event.ruleset}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+

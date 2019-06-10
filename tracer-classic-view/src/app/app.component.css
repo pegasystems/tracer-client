@@ -1,0 +1,20 @@
+app-toolbar {
+  height: 44px;
+  background-color: black;
+  color: white;
+  display: block;
+}
+
+app-status-bar {
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  height: 110px;
+  width: 100%;
+  border-top: 1px solid black;
+}
+
+app-event-list {
+  display:block;
+  height: calc(100% - 154px);
+}

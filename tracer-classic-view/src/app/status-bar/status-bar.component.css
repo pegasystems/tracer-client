@@ -1,0 +1,16 @@
+app-status-bar-left {
+  width: 60%;
+  float:left;
+}
+
+app-status-bar-right {
+  width: 30%;
+  float:right;
+  border-left: 1px solid black;
+}
+
+app-status-bar-left, app-status-bar-right {
+  height: 100%;
+  display: block;
+  padding: 10px;
+}
