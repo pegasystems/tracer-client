@@ -1,35 +1,37 @@
-<div ID="traceEvent-TABLE">
-  <div ngClass="header">
-    <div style="width:15px;" >&nbsp;</div>
-    <div style="width:75px;"  ngClass="event-column" TITLE="Line">Line</div>
-    <div style="width:75px;"  ngClass="event-column" TITLE="Thread">Thread</div>
-    <div style="width:50px;"  ngClass="event-column" TITLE="Int">Int</div>
-    <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >Rule#</div>
-    <div style="width:20%;" ngClass="event-column" TITLE="Step Method">Step Method</div>
-    <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">Step Page</div>
-    <div style="width:50px;"  ngClass="event-column" TITLE="Step">Step</div>
-    <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">Status</div>
-    <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">Event Type</div>
-    <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">Elapsed</div>
-    <div style="width:20%;"   ngClass="event-column" TITLE="Name">Name</div>
-    <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">RuleSet</div>
-  </div>
-  <div ngClass="table-body">
-    <div *ngFor="let event of events">
-      <div style="width:15px;" >&nbsp;</div>
-      <div style="width:75px;"  ngClass="event-column" TITLE="Line">{{event.line}}</div>
-      <div style="width:75px;"  ngClass="event-column" TITLE="Thread">{{event.thread}}</div>
-      <div style="width:50px;"  ngClass="event-column" TITLE="Int">{{event.interaction}}</div>
-      <div style="width:50px;"  ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.rulesNumber}}</div>
-      <div style="width:20%;"   ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</div>
-      <div style="width:30%;"    ngClass="event-column" TITLE="Step Page">{{event.stepPage}}</div>
-      <div style="width:50px;"  ngClass="event-column" TITLE="Step">{{event.stepNumber}}</div>
-      <div style="width:10%; max-width:75px;"  ngClass="event-column" TITLE="Status">{{event.stepStatus}}</div>
-      <div style="width:110px;"  ngClass="event-column" TITLE="Event Type">{{event.eventType}}</div>
-      <div style="width:100px;"  ngClass="event-column" TITLE="Elapsed">{{event.elapsed}}</div>
-      <div style="width:20%;"   ngClass="event-column" TITLE="Name">{{event.ruleName}}</div>
-      <div style="width:20%;"   ngClass="event-column" TITLE="RuleSet">{{event.ruleset}}</div>
-    </div>
-  </div>
-</div>
+<table ID="traceEvent-TABLE">
+  <thead ngClass="header">
+  <tr>
+    <td>&nbsp;</td>
+    <td ngClass="event-column" TITLE="Line">Line</td>
+    <td ngClass="event-column" TITLE="Thread">Thread</td>
+    <td ngClass="event-column" TITLE="Int">Int</td>
+    <td ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >Rule#</td>
+    <td ngClass="event-column" TITLE="Step Method">Step Method</td>
+    <td ngClass="event-column" TITLE="Step Page">Step Page</td>
+    <td ngClass="event-column" TITLE="Step">Step</td>
+    <td ngClass="event-column" TITLE="Status">Status</td>
+    <td ngClass="event-column" TITLE="Event Type">Event Type</td>
+    <td ngClass="event-column" TITLE="Elapsed">Elapsed</td>
+    <td ngClass="event-column" TITLE="Name">Name</td>
+    <td ngClass="event-column" TITLE="RuleSet">RuleSet</td>
+  </tr>
+  </thead>
+  <tbody ngClass="table-body">
+    <tr *ngFor="let event of events">
+      <td style="width:15px;" >&nbsp;</td>
+      <td style="width:75px;" (click)="openStepDetail()"  ngClass="event-column" TITLE="Line">{{event.line}}</td>
+      <td style="width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Thread">{{event.thread}}</td>
+      <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Int">{{event.interaction}}</td>
+      <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.rulesNumber}}</td>
+      <td style="width:20%;" (click)="openStepDetail()"  ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</td>
+      <td style="width:30%;" (click)="openStepPage()"    ngClass="event-column" TITLE="Step Page">{{event.stepPage}}</td>
+      <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Step">{{event.stepNumber}}</td>
+      <td style="width:10%; max-width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Status">{{event.stepStatus}}</td>
+      <td style="width:110px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Event Type">{{event.eventType}}</td>
+      <td style="width:100px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Elapsed">{{event.elapsed}}</td>
+      <td style="width:20%;" (click)="openRule()" ngClass="event-column" TITLE="Name">{{event.ruleName}}</td>
+      <td style="width:20%;" (click)="openStepDetail()" ngClass="event-column" TITLE="RuleSet">{{event.ruleset}}</td>
+    </tr>
+  </tbody>
+</table>
 

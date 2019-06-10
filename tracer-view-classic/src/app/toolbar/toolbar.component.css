@@ -1,5 +1,24 @@
 .toolbarButton {
-  float: right;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 3px;
+  margin-right: 12px;
+}
+
+.tracer-actions {
+  display:flex;
+  justify-content: flex-end;
+  margin-top: 7px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  font-size: 10pt;
+
+  font-family: arial;
+  text-align: left;
+}
+
+.toolbarIcon, .toolbarButton {
+  float: left;
 }

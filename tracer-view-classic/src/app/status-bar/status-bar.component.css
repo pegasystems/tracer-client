@@ -13,4 +13,5 @@ app-status-bar-left, app-status-bar-right {
   height: 100%;
   display: block;
   padding: 10px;
+  background-color: white;
 }

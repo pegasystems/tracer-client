@@ -3,18 +3,22 @@ app-toolbar {
   background-color: black;
   color: white;
   display: block;
+  position: fixed;
+  width: 100%;
 }
 
 app-status-bar {
   display: block;
-  position: absolute;
+  position: fixed;
   bottom: 0px;
-  height: 110px;
+  top: calc(100% - 110px);
   width: 100%;
   border-top: 1px solid black;
 }
 
 app-event-list {
-  display:block;
-  height: calc(100% - 154px);
+  position: fixed;
+  bottom: 110px;
+  top: 44px;
+  overflow-y: scroll;
 }

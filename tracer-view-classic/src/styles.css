@@ -1,1 +1,131 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  height: 100%;
+  margin: 0px;
+}
+
+html {
+  height: 100%;
+}
+
+app-root {
+  display: block;
+  height: 100%;
+}
+/******* Tracer Icon (with hovers) *******/
+.tracerLogoImage {
+  background:url('./assets/pz-tracer-icons.png') no-repeat 0 0 transparent;
+  width: 163px;
+  height: 32px;
+  background-position:-195px 0;
+}
+
+.iconToolbarConnection,
+.iconToolbarConnection_disabled{
+  background-position:0 0 !important;
+}
+.iconToolbarConnection:hover,.iconToolbarConnection_on{
+  background-position:0 -14px !important;
+}
+.iconToolbarConnection_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+
+.iconToolbarSettings,
+.iconToolbarSettings_disabled{
+  background-position:-14px 0 !important;
+}
+.iconToolbarSettings_on{
+  background-position:-14px -14px !important;
+}
+.iconToolbarSettings_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarPause,
+.iconToolbarPause_disabled {
+  background-position:-28px 0 !important;
+}
+.iconToolbarPause_on {
+  background-position:-28px -14px !important;
+}
+.iconToolbarPause_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarPlay,
+.iconToolbarPlay_disabled{
+  background-position:-42px 0 !important;
+}
+.iconToolbarPlay_on {
+  background-position:-42px -14px !important;
+}
+.iconToolbarPlay_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarClear,
+.iconToolbarClear_disabled {
+  background-position:-56px 0 !important;
+}
+.iconToolbarClear_on {
+  background-position:-56px -14px !important;
+}
+.iconToolbarClear_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarSetBreak,
+.iconToolbarSetBreak_disabled  {
+  background-position:-70px 0 !important;
+}
+.iconToolbarSetBreak_on {
+  background-position:-70px -14px !important;
+}
+.iconToolbarSetBreak_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarSetWatch,
+.iconToolbarSetWatch_disabled {
+  background-position:-84px 0 !important;
+}
+.iconToolbarSetWatch_on {
+  background-position:-84px -14px !important;
+}
+.iconToolbarSetWatch_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+.iconToolbarTracerSave,
+.iconToolbarTracerSave_disabled{
+  background-position:-98px 0 !important;
+}
+.iconToolbarTracerSave_on {
+  background-position:-98px -14px !important;
+}
+.iconToolbarTracerSave_disabled{
+  filter: progid:DXImageTransform.Microsoft.BasicImage(opacity=0.25, grayscale=1);
+}
+
+.iconToolbarConnection,
+.iconToolbarConnection_on,
+.iconToolbarConnection_disabled,
+.iconToolbarSettings,
+.iconToolbarSettings_on,
+.iconToolbarSettings_disabled,
+.iconToolbarPause,
+.iconToolbarPause_on,
+.iconToolbarPause_disabled,
+.iconToolbarPlay,
+.iconToolbarPlay_on,
+.iconToolbarPlay_disabled,
+.iconToolbarSetBreak,
+.iconToolbarSetBreak_on,
+.iconToolbarSetBreak_disabled,
+.iconToolbarSetWatch,
+.iconToolbarSetWatch_on,
+.iconToolbarSetWatch_disabled,
+.iconToolbarClear,
+.iconToolbarClear_on,
+.iconToolbarClear_disabled,
+.iconToolbarTracerSave,
+.iconToolbarTracerSave_on,
+.iconToolbarTracerSave_disabled{
+  background:url('./assets/pz-tracer-icons.png') no-repeat 0 0 transparent;
+  height: 14px;
+  width: 14px;
+}

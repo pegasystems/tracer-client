@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TraceEvent } from '../trace-event'
+import {TracerEventsService} from "../tracer-events.service";
 
 @Component({
   selector: 'app-event-list',
@@ -20,16 +21,27 @@ export class EventListComponent implements OnInit {
   'elapsed',
   'ruleName',
   'ruleset'];
-  constructor() {
+  constructor(eventsService: TracerEventsService) {
     this.events = [];
-    for(let i = 0; i < 100; i++){
-      let event = new TraceEvent();
-      event.line = ""+i;
-      this.events.push(event);
-    }
+    eventsService.getTraceEvents().subscribe((result)=>{
+      result.forEach((traceEvent)=>{
+        this.events.push(traceEvent);
+      });
+    });
   }
 
   ngOnInit() {
   }
 
+  openStepPage(){
+    alert("openStepPage")
+  }
+
+  openStepDetail(){
+    alert("openStepDetail")
+  }
+
+  openRule(){
+    alert("openRule")
+  }
 }

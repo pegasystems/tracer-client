@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TracerLocalStatusService} from "../../tracer-local-status.service";
 
 @Component({
   selector: 'app-status-bar-left',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusBarLeftComponent implements OnInit {
 
-  constructor() { }
+  statusMessage : string;
+
+  constructor(private statusService: TracerLocalStatusService) { }
 
   ngOnInit() {
+    this.update();
   }
 
+  update(){
+    this.statusMessage = this.statusService.getStatusMessage();
+  }
 }
