@@ -1,4 +1,5 @@
 import {Utils} from './utils' ;
+import set = Reflect.set;
 
 export class Options {
     optionArray: any;
@@ -14,28 +15,24 @@ export class Options {
 
     parseValuesFromJSON(json: string) {
         let jo = JSON.parse(json);
-        this.optionArray["nOptTraceClassLoad"] = "N";
-        this.optionArray["nOptTraceException"] = jo.pyTraceException;
-        this.optionArray["nOptTraceJContextBegin"] = jo.pyTraceJContextBegin;
-        this.optionArray["nOptTraceActivityBegin"] = jo.pyTraceActivityBegin;
-        this.optionArray["nOptTraceActivityEnd"] = jo.pyTraceActivityEnd;
-        this.optionArray["nOptTraceStepBegin"] = jo.pyTraceStepBegin;
-        this.optionArray["nOptTraceStepEnd"] = jo.pyTraceStepEnd;
-        this.optionArray["nOptTraceWhenBegin"] = jo.pyTraceWhenBegin;
-        this.optionArray["nOptTraceWhenEnd"] = jo.pyTraceWhenEnd;
-        this.optionArray["nOptTraceInputEditBegin"] = jo.pyTraceInputEditBegin;
-        this.optionArray["nOptTraceInputEditEnd"] = jo.pyTraceInputEditEnd;
-        this.optionArray["nOptTraceModelBegin"] = jo.pyTraceModelBegin;
-        this.optionArray["nOptTraceModelEnd"] = jo.pyTraceModelEnd;
-        this.optionArray["nOptExceptionBreak"] = jo.pyExceptionBreak;
-        this.optionArray["nOptStatusFailBreak"] = jo.pyStatusFailBreak;
-        this.optionArray["nOptStatusWarnBreak"] = jo.pyStatusWarnBreak;
-        this.optionArray["nOptTraceAccessDenied"] = jo.pyTraceAccessDenied;
-        this.optionArray["nOptExpandJavaPage"] = jo.pyExpandJavaPage;
-        this.optionArray["nOptAbbreviateEvents"] = jo.pyAbbreviateEvents;
-        this.optionArray["nOptMaxTraceEventsDisplayed"] = jo.pyMaxTraceEventsDisplayed == "" ? 5000 : jo.pyMaxTraceEventsDisplayed;
-        this.optionArray["nOptLocalVariables"] = jo.pyLocalVariables;
-        this.optionArray["nOptConnectionId"] = jo.pxConnectionID;
+
+        const keys = this.getKeys();
+
+
+        for(let key of keys){
+            let index = 0;
+            let settingName = key.substring(2,key.length);
+
+            for(let jsonObject in jo){
+                if(key === Object.keys(jo)[index]){
+                    this.setOption("nOpt" +settingName, jo[jsonObject]);
+                }
+                index++;
+            }
+        }
+
+        this.setOption("nOptTraceClassLoad", "N");
+
 
         for (var i in this.optionArray) {
             if (!this.optionArray[i]) {
@@ -89,32 +86,25 @@ export class Options {
     }
 
     getQueryString() {
-        let strPostData = Utils.getQueryString({
-            pzDebugRequest: "settings",
-            pzSetCmd: "SetOptions",
-            pzOptTraceClassLoad: this.optionArray["nOptTraceClassLoad"],
-            pzOptTraceException: this.optionArray["nOptTraceException"],
-            pzOptTraceJContextBegin: this.optionArray["nOptTraceJContextBegin"],
-            pzOptTraceActivityBegin: this.optionArray["nOptTraceActivityBegin"],
-            pzOptTraceActivityEnd: this.optionArray["nOptTraceActivityEnd"],
-            pzOptTraceStepBegin: this.optionArray["nOptTraceStepBegin"],
-            pzOptTraceStepEnd: this.optionArray["nOptTraceStepEnd"],
-            pzOptTraceWhenBegin: this.optionArray["nOptTraceWhenBegin"],
-            pzOptTraceWhenEnd: this.optionArray["nOptTraceWhenEnd"],
-            pzOptTraceInputEditBegin: this.optionArray["nOptTraceInputEditBegin"],
-            pzOptTraceInputEditEnd: this.optionArray["nOptTraceInputEditEnd"],
-            pzOptTraceModelBegin: this.optionArray["nOptTraceModelBegin"],
-            pzOptTraceModelEnd: this.optionArray["nOptTraceModelEnd"],
-            pzOptExceptionBreak: this.optionArray["nOptExceptionBreak"],
-            pzOptStatusFailBreak: this.optionArray["nOptStatusFailBreak"],
-            pzOptStatusWarnBreak: this.optionArray["nOptStatusWarnBreak"],
-            pzOptTraceAccessDenied: this.optionArray["nOptTraceAccessDenied"],
-            pzOptExpandJavaPage: this.optionArray["nOptExpandJavaPage"],
-            pzOptAbbreviateEvents: this.optionArray["nOptAbbreviateEvents"],
-            pzOptCollectLocalVars: this.optionArray["nOptLocalVariables"],
-            pzOptSetPageNames: this.pyPageNameList,
-            pzDebugConnection: this.connectionID
-        });
+        let data: any  = {};
+
+        const keys = this.getKeys();
+
+        for(let key of keys){
+            let settingName = key.substring(2,key.length);
+            if(settingName !== "ConnectionID")
+                data["pzOpt" + settingName] = this.getOption("nOpt" + settingName);
+            else
+                data["pzDebugConnection"] = this.connectionID;
+        }
+
+
+        data["pzDebugRequest"] = "settings";
+        data["pzSetCmd"] = "SetOptions";
+        data["pzOptSetPageName"] = this.pyPageNameList;
+
+        let strPostData = Utils.getQueryString({data});
+
         strPostData += this.pyEventTypesList;
         strPostData += this.pyRuleSetsList;
         return strPostData;
@@ -122,31 +112,17 @@ export class Options {
 
     getQueryFormData(): FormData {
         let formData = new FormData();
+
+        const keys = this.getKeys();
+
+        for(let key of keys){
+            let settingName = key.substring(2,key.length);
+            formData.append("pzOpt" + settingName, this.getOption("nOpt" + settingName));
+        }
         formData.append("pzDebugRequest", "settings");
         formData.append("pzSetCmd", "SetOptions");
-        formData.append("pzOptTraceClassLoad", this.optionArray["nOptTraceClassLoad"]);
-        formData.append("pzOptTraceException", this.optionArray["nOptTraceException"]);
-        formData.append("pzOptTraceJContextBegin", this.optionArray["nOptTraceJContextBegin"]);
-        formData.append("pzOptTraceActivityBegin", this.optionArray["nOptTraceActivityBegin"]);
-        formData.append("pzOptTraceActivityEnd", this.optionArray["nOptTraceActivityEnd"]);
-        formData.append("pzOptTraceStepBegin", this.optionArray["nOptTraceStepBegin"]);
-        formData.append("pzOptTraceStepEnd", this.optionArray["nOptTraceStepEnd"]);
-        formData.append("pzOptTraceWhenBegin", this.optionArray["nOptTraceWhenBegin"]);
-        formData.append("pzOptTraceWhenEnd", this.optionArray["nOptTraceWhenEnd"]);
-        formData.append("pzOptTraceInputEditBegin", this.optionArray["nOptTraceInputEditBegin"]);
-        formData.append("pzOptTraceInputEditEnd", this.optionArray["nOptTraceInputEditEnd"]);
-        formData.append("pzOptTraceModelBegin", this.optionArray["nOptTraceModelBegin"]);
-        formData.append("pzOptTraceModelEnd", this.optionArray["nOptTraceModelEnd"]);
-        formData.append("pzOptExceptionBreak", this.optionArray["nOptExceptionBreak"]);
-        formData.append("pzOptStatusFailBreak", this.optionArray["nOptStatusFailBreak"]);
-        formData.append("pzOptStatusWarnBreak", this.optionArray["nOptStatusWarnBreak"]);
-        formData.append("pzOptTraceAccessDenied", this.optionArray["nOptTraceAccessDenied"]);
-        formData.append("pzOptExpandJavaPage", this.optionArray["nOptExpandJavaPage"]);
-        formData.append("pzOptAbbreviateEvents", this.optionArray["nOptAbbreviateEvents"]);
-        formData.append("pzOptCollectLocalVars", this.optionArray["nOptLocalVariables"]);
-        formData.append("pzOptSetPageNames", this.pyPageNameList);
-        formData.append("pzDebugConnection", this.connectionID);
         formData.append("ruleSet1", "Pega-Desktop");
+
         return formData;
     }
 
@@ -154,8 +130,20 @@ export class Options {
         return this.optionArray[optionName];
     }
 
+    setOption(optionName: string, optionValue:string){
+        this.optionArray[optionName] = optionValue;
+
+    }
+
     clear() {
         this.optionArray = [];
+    }
+
+
+
+    getKeys(){
+        const keys = Object.keys(this.defaults);
+        return keys;
     }
 
     applyDefaults() {

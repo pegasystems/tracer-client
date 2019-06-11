@@ -5,7 +5,9 @@ const {Options} = require('./build/options');
 
 describe("Options Class", function () {
 
-    var filter;
+
+
+    let filter;
 
     beforeEach(function () {
         options = new Options();
@@ -44,7 +46,7 @@ describe("Options Class", function () {
         options.parseValuesFromJSON(json);
 
         expect(options.getOption("nOptExceptionBreak")).toEqual("Y");
-        expect(options.getOption("nOptConnectionId")).toEqual("HZIFXUHZBN51NUATLG3POTUR3I92SFZGR");
+        expect(options.getOption("nOptConnectionID")).toEqual("HZIFXUHZBN51NUATLG3POTUR3I92SFZGR");
     });
 
 
@@ -56,6 +58,17 @@ describe("Options Class", function () {
         expect(optionsString).toBe("N");
     });
 
+
+    it("Set Option Returns Right Value", function(){
+        options.setOption("TestOption", "True");
+        expect(options.getOption("TestOption")).toBe("True");
+    });
+
+
+    it("Gets Correct Keys", function(){
+        const keys = options.getKeys();
+        expect(keys[2]).toBe("pxConnectionID");
+    });
 
     it("Query Value equal OptionsArray Value", function () {
         let queryObject = options.getQueryString();
