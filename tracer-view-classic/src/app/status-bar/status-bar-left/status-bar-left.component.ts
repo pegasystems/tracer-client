@@ -10,13 +10,18 @@ export class StatusBarLeftComponent implements OnInit {
 
   statusMessage : string;
 
-  constructor(private statusService: TracerLocalStatusService) { }
-
-  ngOnInit() {
-    this.update();
+  constructor(private statusService: TracerLocalStatusService) {
+    this.statusMessage = "xz,cxzmcmxzcmzx";
   }
 
-  update(){
-    this.statusMessage = this.statusService.getStatusMessage();
+  ngOnInit() {
+
+    this.statusService.onStatusMessageUpdate().subscribe((statusMessage)=>{
+      this.update(statusMessage);
+    });
+  }
+
+  update(value: string){
+    this.statusMessage = value;
   }
 }

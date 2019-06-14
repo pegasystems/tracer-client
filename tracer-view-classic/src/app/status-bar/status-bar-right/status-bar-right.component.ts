@@ -10,14 +10,18 @@ export class StatusBarRightComponent implements OnInit {
 
   status: string;
 
-  constructor(private statusService: TracerLocalStatusService) { }
-
-  ngOnInit() {
-    this.update();
+  constructor(private statusService: TracerLocalStatusService) {
+    this.status = "asdsada"
   }
 
-  update(){
-    this.status = this.statusService.getStatus();
+  ngOnInit() {
 
+    this.statusService.onStatusUpdate().subscribe((status)=>{
+      this.update(status);
+    });
+  }
+
+  update(value: string){
+    this.status = value;
   }
 }
