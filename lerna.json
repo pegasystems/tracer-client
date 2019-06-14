@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "tools",
+    "tracer-client",
+    "tracer-view-classic"
+  ],
+  "version": "0.0.1"
+}
