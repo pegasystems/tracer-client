@@ -2,13 +2,14 @@
   "name": "pega-tracer",
   "version": "1.0.0",
   "description": "[![Build Status](https://travis-ci.org/pegasystems/tracer-client.svg?branch=master)](https://travis-ci.org/pegasystems/tracer-client) [![codecov](https://codecov.io/gh/pegasystems/tracer-client/branch/master/graph/badge.svg)](https://codecov.io/gh/pegasystems/tracer-client)",
-  "main": "webpack.config.js",
+  "main": "tracer-client/webpack.config.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install-all": "lerna bootstrap"
+    "install-all": "lerna bootstrap",
+    "build-all": "lerna exec npm run-script build"
   },
   "repository": {
     "type": "git",

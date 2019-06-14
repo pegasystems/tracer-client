@@ -1,7 +1,7 @@
 module.exports = {
   entry: {
     index: './src/index.ts',
-    indexmockserver: './tools/client-with-mock-servlet.ts',
+    indexmockserver: '../tools/client-with-mock-servlet.ts',
     module: './src/client.ts'
   },
   module: {

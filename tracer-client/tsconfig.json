@@ -5,9 +5,9 @@
     "target": "es6",
     "allowJs": true,
     "sourceMap": true,
-    "outDir": "tracer-client/spec/build/"
+    "outDir": "./spec/build/"
   },
   "include": [
-    "tracer-client/src/*"
+    "./src/*"
   ]
 }

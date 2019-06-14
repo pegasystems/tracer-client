@@ -4,7 +4,7 @@
   "description": "Javascript API for connecting to the PRPC tracer servlet and retrieving events.",
   "main": "./dist/module.bundle.js",
   "scripts": {
-    "build": "npm test && webpack",
+    "build": "",
     "test": "",
     "copy-test-server": "copyfiles ./tools/client-mock-servlet.html -u 1 ./dist/",
     "copy-test-serve-pega": "copyfiles ./tools/client-pega-servlet.html -u 1 ./dist/",
