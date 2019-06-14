@@ -19,11 +19,11 @@ comment:
 
 
 fixes:
- - "spec/helpers/SpecHelper.js::src/*"
+ - "spec/helpers/SpecHelper.js::src/.*"
 
 ignore:
- -spec/*
- -tools/*
- -lib/*
- -tracer-view-classic/*
+ -spec/.*
+ -tools/.*
+ -lib/.*
+ -tracer-view-classic/.*
 
