@@ -17,6 +17,10 @@ comment:
  behavior: default
  require_changes: no
 
+
+fixes:
+ - "spec/helpers/SpecHelper.js::src/*"
+
 ignore:
  -spec/*
  -tools/*
