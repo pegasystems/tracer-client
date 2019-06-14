@@ -19,4 +19,4 @@ comment:
  
  
 fixes:
- "spec/" => "src/" 
+ spec/ => src/

@@ -21,5 +21,4 @@ export enum Operator {
     EQUAL,
     CONTAINS
 }
-
-console.log("hi"); 
+ 
