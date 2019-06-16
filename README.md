@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/pegasystems/tracer-client.svg?branch=master)](https://travis-ci.org/pegasystems/tracer-client)
 [![codecov](https://codecov.io/gh/pegasystems/tracer-client/branch/master/graph/badge.svg)](https://codecov.io/gh/pegasystems/tracer-client)
 
-#Tracer
+# Tracer
 
 This repository now contains multiple sub-projects which support a modern 
 web experience for the Tracer rule profiling tool.
@@ -28,12 +28,12 @@ This is roughly how the sub projects are structured
 
 
 
-#tracer-client
+## tracer-client
 The tracer client project provides 
 
 [README](https://github.com/pegasystems/tracer-client/tree/master/tracer-client)
 
-#dev-tools 
+## dev-tools 
 Development tools to facilitate Tracer development, specifically without
 a running Pega application server.
 
