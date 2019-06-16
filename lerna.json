@@ -1,6 +1,6 @@
 {
   "packages": [
-    "tools",
+    "dev-tools",
     "tracer-client",
     "tracer-view-classic"
   ],

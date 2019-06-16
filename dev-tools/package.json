@@ -1,16 +1,14 @@
 {
-  "name": "tracer-tools",
+  "name": "tracer-dev-tools",
   "version": "0.0.1",
   "description": "Javascript API for connecting to the PRPC tracer servlet and retrieving events.",
   "main": "./dist/module.bundle.js",
   "scripts": {
     "build": "",
     "test": "",
-    "copy-test-server": "copyfiles ./tools/client-mock-servlet.html -u 1 ./dist/",
-    "copy-test-serve-pega": "copyfiles ./tools/client-pega-servlet.html -u 1 ./dist/",
-    "open-hot-server": "npm run hot-server",
+    "copy-sample": "copyfiles ./client-sample.html -u 1 ./dist/",
     "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
-    "start-file-server": "node tools/express-mock-tracer-servlet",
+    "start-file-server": "node express-mock-tracer-servlet",
     "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"
   },
   "keywords": [
@@ -30,7 +28,8 @@
     "http-proxy": "^1.17.0",
     "open": "^6.3.0",
     "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.2.0"
+    "ts-node": "^8.2.0",
+    "tracer-client":"0.0.1"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",

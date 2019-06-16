@@ -21,7 +21,7 @@ This is a javascript API for interacting with the Pega Tracer servlet API.
 
 ##### For use in an active Pega requestor session
 - Load the contents of *dist/index.bundle.js* into a Pega session in some way. I use Chrome Dev tools but it could be embedded in a Text rule.
-- Create a tracer instance using `var tracer = new Tracer([ConnectionID], [NodeID])` where ConnectionID is equal to pxRequestor.pxClientConnection
+- Create a tracer instance using `var tracer = new Tracer("PEGA", [ConnectionID], [NodeID])` where ConnectionID is equal to pxRequestor.pxClientConnection
 - Start the tracer using `tracer.start()`
   - Be careful not to leave the headless tracer running in the background, as it will impact system performance, just like the normal tracer
 - By default, tracer tasks will start to display in the browser console. Custom event handlers can be added using the 'registerEventCallback' function.
