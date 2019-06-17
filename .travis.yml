@@ -8,10 +8,11 @@ install:
   - npm install -g codecov
   - npm install -g istanbul
   - npm install -g typescript
-  - npm install
+  - npm ci
+  - npm run install-all
 script:
-  - tsc
-  - istanbul cover node_modules/jasmine/bin/jasmine.js
+  - npm run build-all
+  - istanbul cover tracer-client/node_modules/jasmine/bin/jasmine.js
   - codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)
