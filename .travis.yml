@@ -9,9 +9,9 @@ install:
   - npm install -g istanbul
   - npm install -g typescript
   - npm install
-  - npm install-all
+  - npm run install-all
 script:
-  - npm build-all
+  - npm run build-all
   - istanbul cover node_modules/jasmine/bin/jasmine.js
   - codecov
 after_success:
