@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install-all": "lerna bootstrap",
-    "build-all": "lerna exec npm run-script build",
+    "build-all": "lerna run build",
     "start-sample": "npm run copy-index-js && npm run copy-client-sample && npm run start-trace-file-server",
     "start-trace-file-server": "lerna run start-file-server",
     "copy-index-js": "copyfiles ./tracer-client/dist/index.bundle.js* -u 2 ./dist/",
