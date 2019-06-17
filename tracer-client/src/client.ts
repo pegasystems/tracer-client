@@ -23,21 +23,22 @@ export class Client {
     options = Options;
     eventsService: EventsService;
 
-    constructor(connectionId: string, nodeId: string) {
+    constructor(serviceImpl: string, connectionId: string, nodeId: string) {
         this.connectionID = connectionId;
         this.nodeId = nodeId;
-        this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
-        //this.eventsService = new EventsServiceFromFile();
+        if(serviceImpl === "PEGA") {
+            this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
+        } else if(serviceImpl=== "FILE"){
+            this.eventsService = new EventsServiceFromFile();
+        } else {
+            throw serviceImpl+" is not a valid implementation type";
+        }
     }
 
     /**
      * Start a event service session and begin polling for new trace events
      */
     private initializeTracer(){
-        if (this.connectionID == "") {
-            throw "EmptyConnectionID";
-        }
-
         this.eventsService.connect()
             .then(()=>{
                 console.log("Connected!");

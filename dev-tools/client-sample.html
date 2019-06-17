@@ -4,7 +4,6 @@
 
 </head>
 <body>
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
     <script src="index.bundle.js"></script>
     <style>
         td {
@@ -14,8 +13,7 @@
     <script>
         var tracer;
         window.onload = function(){
-            //let connectionId = window.prompt("Connection id", "HZLII280ZPEO7SDYSSOCUXO3TVT6AP86XA");
-            tracer = new Tracer("HZLII280ZPEO7SDYSSOCUXO3TVT6AP86XA");
+            tracer = new Tracer("FILE", "", "");
             tracer.registerEventCallback(function(event){
                 let table = document.getElementById("events-table-body");
                 let row = document.createElement("tr");

@@ -7,11 +7,11 @@ const cors = require('cors');
 
 
 app.get('/', cors(), (req, res) => {
-    fs.readFile( './resources/TraceOutput.xml', function(err, data) {
+    fs.readFile( '../resources/TraceOutput.xml', function(err, data) {
         res.send(data)
     });
-})
+});
 
 app.listen(port, () => {
-    console.log("Example app listening on port ${port}!")}
+    console.log("Example app listening on port "+port+"!")}
 );

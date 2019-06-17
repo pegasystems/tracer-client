@@ -1,52 +1,32 @@
 {
-  "name": "tracer-client",
-  "version": "0.0.1",
-  "description": "Javascript API for connecting to the PRPC tracer servlet and retrieving events.",
-  "main": "./dist/module.bundle.js",
-  "scripts": {
-    "build": "npm test && webpack",
-    "test": "tsc && jasmine",
-    "dev": "npm run build && npm run copy-test-server && npm run hot-server",
-    "copy-test-server": "copyfiles ./tools/client-mock-servlet.html -u 1 ./dist/",
-    "copy-test-serve-pega": "copyfiles ./tools/client-pega-servlet.html -u 1 ./dist/",
-    "open-hot-server": "npm run hot-server",
-    "open-localhost": "node -e 'require(\"open\")(\"http://localhost:3200/client-mock-servlet.html\")'",
-    "start-proxy-server": "node tools/tracer-proxy-server",
-    "start-file-server": "node tools/express-mock-tracer-servlet",
-    "hot-server": "webpack-dev-server --content-base dist/ --inline --hot --progress --open"
+  "name": "pega-tracer",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/pegasystems/tracer-client.svg?branch=master)](https://travis-ci.org/pegasystems/tracer-client) [![codecov](https://codecov.io/gh/pegasystems/tracer-client/branch/master/graph/badge.svg)](https://codecov.io/gh/pegasystems/tracer-client)",
+  "main": "tracer-client/webpack.config.js",
+  "directories": {
+    "lib": "lib"
   },
-  "keywords": [
-    "pega",
-    "tracer"
-  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-all": "lerna bootstrap",
+    "build-all": "lerna run build",
+    "start-sample": "npm run copy-index-js && npm run copy-client-sample && npm run start-trace-file-server",
+    "start-trace-file-server": "lerna run start-file-server",
+    "copy-index-js": "copyfiles ./tracer-client/dist/index.bundle.js* -u 2 ./dist/",
+    "copy-client-sample": "copyfiles ./dev-tools/client-sample.html -u 1 ./dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pegasystems/tracer-client.git"
+  },
   "author": "Ryan.Feeney@pega.com",
   "license": "MIT",
-  "dependencies": {
-    "@types/http-proxy": "^1.17.0",
-    "@types/jasmine": "^3.3.13",
-    "@types/node": "^12.0.4",
-    "@types/promise": "^7.1.30",
-    "@types/reflect-metadata": "^0.1.0",
-    "dot": "^1.1.2",
-    "http": "0.0.0",
-    "http-proxy": "^1.17.0",
-    "open": "^6.3.0",
-    "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.2.0"
+  "bugs": {
+    "url": "https://github.com/pegasystems/tracer-client/issues"
   },
+  "homepage": "https://github.com/pegasystems/tracer-client#readme",
   "devDependencies": {
     "copyfiles": "^2.1.0",
-    "cors": "^2.8.5",
-    "cors-anywhere": "^0.4.1",
-    "istanbul": "^0.4.5",
-    "jasmine": "^2.99.0",
-    "jasmine-spec-reporter": "^4.2.1",
-    "jasmine-ts": "^0.3.0",
-    "jquery": "^3.4.1",
-    "ts-loader": "^5.4.4",
-    "typescript": "^3.5.1",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.5.1"
+    "lerna": "^3.15.0"
   }
 }
