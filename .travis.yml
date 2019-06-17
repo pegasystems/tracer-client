@@ -12,7 +12,7 @@ install:
   - npm run install-all
 script:
   - npm run build-all
-  - istanbul cover node_modules/jasmine/bin/jasmine.js
+  - istanbul cover tracer-client/node_modules/jasmine/bin/jasmine.js
   - codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)
