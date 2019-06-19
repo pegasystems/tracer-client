@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TraceEvent } from '../trace-event'
+import {Component, OnInit, EventEmitter} from '@angular/core';
+import {TraceEvent} from '../trace-event'
 import {TracerEventsService} from "../tracer-events.service";
 
 @Component({
@@ -9,22 +9,24 @@ import {TracerEventsService} from "../tracer-events.service";
 })
 export class EventListComponent implements OnInit {
 
-  events : TraceEvent[];
-  displayedColumns: string[] = ['line',
-  'thread',
-  'interaction',
-  'rulesNumber',
-  'stepMethod',
-  'stepPage',
-  'step',
-  'eventType',
-  'elapsed',
-  'ruleName',
-  'ruleset'];
+  events: TraceEvent[];
+  displayedColumns: string[] = [
+    'line',
+    'thread',
+    'interaction',
+    'rulesNumber',
+    'stepMethod',
+    'stepPage',
+    'step',
+    'eventType',
+    'elapsed',
+    'ruleName',
+    'ruleset'];
+
   constructor(eventsService: TracerEventsService) {
     this.events = [];
-    eventsService.getTraceEvents().subscribe((result)=>{
-      result.forEach((traceEvent)=>{
+    eventsService.onTraceEvents().subscribe((result) => {
+      result.forEach((traceEvent) => {
         this.events.push(traceEvent);
       });
     });
@@ -33,15 +35,15 @@ export class EventListComponent implements OnInit {
   ngOnInit() {
   }
 
-  openStepPage(){
+  openStepPage() {
     alert("openStepPage")
   }
 
-  openStepDetail(){
+  openStepDetail() {
     alert("openStepDetail")
   }
 
-  openRule(){
+  openRule() {
     alert("openRule")
   }
 }

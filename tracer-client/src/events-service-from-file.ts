@@ -17,7 +17,7 @@ export class EventsServiceFromFile implements EventsService{
             const request = new XMLHttpRequest();
             request.open("GET", "http://localhost:3000");
             request.onload = () => {
-                var response = request.responseText;
+                let response = request.responseText;
                 let parser = new DOMParser();
                 let xmlDoc:Document = parser.parseFromString(response,"text/xml");
                 let traceLogNode = xmlDoc.getElementsByTagName("tracelog")[0];
@@ -36,6 +36,11 @@ export class EventsServiceFromFile implements EventsService{
             setTimeout(() =>{
                 let eventList = [];
                 for(let i = 0; i<200; i++){
+
+                    if(this.sequenceNumber> this.traceEventNodes.length){
+                        break;
+                    }
+
                     let eventNode = this.traceEventNodes[this.sequenceNumber];
                     let event = new TraceEvent();
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
@@ -45,12 +50,13 @@ export class EventsServiceFromFile implements EventsService{
                     event.stepMethod = Utils.getNodeValue(eventNode, "StepMethod");
                     event.stepStatus = Utils.getNodeValue(eventNode, "StepStatus");
                     event.interaction = Utils.getNodeValue(eventNode, "Interaction");
-                    event.threadname = Utils.getNodeValue(eventNode, "ThreadName");
+                    event.threadName = Utils.getNodeValue(eventNode, "ThreadName");
                     event.sRSName = Utils.getAttributeValue(eventNode,"rsname");
                     event.sRSVersion = Utils.getAttributeValue(eventNode,"rsvers");
                     event.timeStamp = Utils.getNodeValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeValue(eventNode, "PrimaryPageName");
                     eventList.push(event);
+
                     this.sequenceNumber++;
                 }
                 resolve(eventList);

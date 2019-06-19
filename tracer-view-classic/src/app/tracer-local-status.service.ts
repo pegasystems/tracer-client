@@ -9,23 +9,24 @@ export class TracerLocalStatusService {
 
   status: string;
   statusMessage: string;
+  event: TraceEvent;
 
   status$: Observable<string>;
   messages$: Observable<string>;
+
 
   //An array of observers, not observables, strings
   statusMessageObservers: Array<Observer<string>>;
   statusObservers: Array<Observer<string>>;
 
-
   constructor() {
     this.statusObservers = new Array<Observer<string>>();
     this.statusMessageObservers = new Array<Observer<string>>();
-    this.status = "Tracing...";
-    this.statusMessage = "(No message)";
+
 
     //Creates a new observable and each time an observer subscribes to the observable,
-    //push the subscriber into 1 of 2 arrays  of observers of strings (array of messages or array of statuses)
+    //the actions inside are executed. In this case, the observer is pushed into an array of observers
+    //for that observable
     this.status$ = new Observable((statusObserver) => {
       this.statusObservers.push(statusObserver);
     });
@@ -46,9 +47,7 @@ export class TracerLocalStatusService {
     return this.status;
   }
 
-
-
-  //observer.next(stuff) publishes the stuff to all subscribers subscribed to that observable
+  //observer.next(stuff) publishes the next item to all subscribers subscribed to that observable
   setStatusMessage(statusMessage: string): void {
     this.statusMessage = statusMessage;
 
@@ -69,6 +68,7 @@ export class TracerLocalStatusService {
   onStatusUpdate(): Observable<string> {
     return this.status$;
   }
+
 }
 
 
