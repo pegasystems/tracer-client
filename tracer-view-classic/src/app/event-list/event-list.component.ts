@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {TraceEvent} from '../trace-event'
 import {TracerEventsService} from "../tracer-events.service";
+import {PagesService} from "../pages.service";
 
 @Component({
   selector: 'app-event-list',
@@ -9,6 +10,7 @@ import {TracerEventsService} from "../tracer-events.service";
 })
 export class EventListComponent implements OnInit {
 
+  pagesServices: PagesService;
   events: TraceEvent[];
   displayedColumns: string[] = [
     'line',
@@ -23,6 +25,11 @@ export class EventListComponent implements OnInit {
     'ruleName',
     'ruleset'];
 
+
+
+
+
+
   constructor(eventsService: TracerEventsService) {
     this.events = [];
     eventsService.onTraceEvents().subscribe((result) => {
@@ -35,8 +42,11 @@ export class EventListComponent implements OnInit {
   ngOnInit() {
   }
 
+
   openStepPage() {
-    alert("openStepPage")
+    //this.pagesServices.getPageContent(this.events[2].sequenceNumber, this.events[2].primaryPageName);
+
+    alert("openStepPage");
   }
 
   openStepDetail() {

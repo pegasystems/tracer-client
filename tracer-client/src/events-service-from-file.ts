@@ -1,9 +1,10 @@
 import {TraceEvent} from "./trace-event";
 import {EventsService} from "./events-service";
 import {Utils} from "./utils";
+import {Page} from "./page";
 
 export class EventsServiceFromFile implements EventsService{
-    private sequenceNumber: number = 1;
+    private sequenceNumber: number = 0;
     private traceEventNodes: HTMLCollectionOf<Element>;
     constructor(){
 
@@ -50,17 +51,25 @@ export class EventsServiceFromFile implements EventsService{
                     event.stepMethod = Utils.getNodeValue(eventNode, "StepMethod");
                     event.stepStatus = Utils.getNodeValue(eventNode, "StepStatus");
                     event.interaction = Utils.getNodeValue(eventNode, "Interaction");
-                    event.threadName = Utils.getNodeValue(eventNode, "ThreadName");
+                    event.threadname = Utils.getNodeValue(eventNode, "ThreadName");
                     event.sRSName = Utils.getAttributeValue(eventNode,"rsname");
                     event.sRSVersion = Utils.getAttributeValue(eventNode,"rsvers");
                     event.timeStamp = Utils.getNodeValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeValue(eventNode, "PrimaryPageName");
+
+
+                    //if it has primaryPage, set the event primaryPage attribute also
+                    let primaryPage = Utils.getNodeValue(eventNode, "PrimaryPage");
+
+                    if(typeof primaryPage !== null)
+                        event.primaryPage = primaryPage;
+
+
                     eventList.push(event);
 
                     this.sequenceNumber++;
                 }
                 resolve(eventList);
-                this.sequenceNumber++;
             }, 1000);
         });
 
@@ -76,5 +85,14 @@ export class EventsServiceFromFile implements EventsService{
             resolve();
         });
     };
+
     disconnect(){}
+
+
+    getPageContent(eventNumber: number, pageName: string): Promise<Page> {
+
+        return new Promise<Page>((resolve,fail) => {
+            resolve();
+        })
+    }
 }

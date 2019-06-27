@@ -1,17 +1,7 @@
 // THIS SHOULD BE SHARED WITH TRACER CLIENT!!!
-export class TraceEvent {
+import {Page} from "../../../tracer-client/src/page";
 
-  /*line: string;
-  thread: string;
-  interaction: string;
-  rulesNumber: string;
-  stepMethod: string;
-  stepPage: string;
-  step: string;
-  eventType: string;
-  elapsed: string;
-  ruleName: string;
-  ruleset: string;*/
+export class TraceEvent {
   line:string;
   activityNumber : string;
   activityName : string;
@@ -28,7 +18,7 @@ export class TraceEvent {
   aaQueueEvent: boolean;
   hasMessages: boolean;
   interaction: string;
-  threadName: string;
+  threadname: string;
   interactionBytes: string;
   interactionQueryParam: string;
   methodName: string;
@@ -36,6 +26,7 @@ export class TraceEvent {
   stepMethod: string;
   stepNumber: string;
   primaryPageName: string;
+  primaryPage: Page;
   sInsKey: string;
   sKeyName: string;
   sRSName: string;

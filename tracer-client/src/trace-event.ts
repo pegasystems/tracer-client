@@ -1,4 +1,5 @@
 import {Filter, Field, Operator} from "./filter";
+import {Page} from "./page";
 
 
 export class TraceEvent {
@@ -17,7 +18,7 @@ export class TraceEvent {
     aaQueueEvent: boolean;
     hasMessages: boolean;
     interaction: string;
-    threadName: string;
+    threadname: string;
     interactionBytes: string;
     interactionQueryParam: string;
     methodName: string;
@@ -25,6 +26,7 @@ export class TraceEvent {
     stepMethod: string;
     stepNumber: string;
     primaryPageName: string;
+    primaryPage: Page;
     sInsKey: string;
     sKeyName: string;
     sRSName: string;
@@ -43,7 +45,7 @@ export class TraceEvent {
         let targetValue = "";
         switch (field){
             case Field.THREAD:
-                targetValue = this.threadName;
+                targetValue = this.threadname;
                 break;
             case Field.RULESET:
                 targetValue = this.sRSName;

@@ -20,13 +20,13 @@
     <tr *ngFor="let event of events">
       <td style="width:15px;" >&nbsp;</td>
       <td style="width:75px;" (click)="openStepDetail()"  ngClass="event-column" TITLE="Line">{{event.sequenceNumber}}</td>
-      <td style="width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Thread">{{event.threadName}}</td> <!-- Says unresolved but works just fine on angular app !-->
+      <td style="width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Thread">{{event.threadname}}</td>
       <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Int">{{event.interaction}}</td>
       <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.activityName}}</td>
       <td style="width:20%;" (click)="openStepDetail()"  ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</td>
       <td style="width:30%;" (click)="openStepPage()"    ngClass="event-column" TITLE="Step Page">{{event.primaryPageName}}</td>
       <td style="width:50px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Step">{{event.stepNumber}}</td>
-      <td style="width:10%; max-width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Status">{{event.stepStatus}}</td>   <!-- Is correct, resolved but nothing shows, maybe empty statuses? !-->
+      <td style="width:10%; max-width:75px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Status">{{event.adpLoadPageName}}</td>   <!-- Is correct, resolved but nothing shows, maybe empty statuses? !-->
       <td style="width:110px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Event Type">{{event.eventType}}</td>
       <td style="width:100px;" (click)="openStepDetail()" ngClass="event-column" TITLE="Elapsed">{{event.timeStamp}}</td>
       <td style="width:20%;" (click)="openRule()" ngClass="event-column" TITLE="Name">{{event.sRSName}}</td>

@@ -2,9 +2,10 @@ import {Options} from './options'
 import {Utils} from './utils'
 import {TraceEvent} from "./trace-event";
 import {EventsService} from "./events-service"
+import {Page} from "./page";
 
 export class EventsServicePega8 implements EventsService {
-
+    sequenceNumber: number;
     connectionID: string;
     debugConnectionID: string;
     nodeId: string;
@@ -26,6 +27,7 @@ export class EventsServicePega8 implements EventsService {
         this.options = null;
         this.gTracerInitialized = false;
         this.maxEventsPerRequest = 200;
+        this.sequenceNumber = 0;
         this.pyWatchInsKey = "";
         this.pyWatchClassName = "";
         this.serverUrl = "/prweb";
@@ -188,6 +190,8 @@ export class EventsServicePega8 implements EventsService {
                         fail(aMessage);
                         return;
                     }
+
+
                     let traceEventNodes = data.getElementsByTagName("TraceEventHeader");
                     let eventsToAppend = [];
                     for(let i=0; i<traceEventNodes.length; i++){
@@ -199,8 +203,18 @@ export class EventsServicePega8 implements EventsService {
                         traceEvent.eventType = Utils.getNodeValue(node, "EventType");
                         traceEvent.stepMethod = Utils.getNodeValue(node, "StepMethod");
                         traceEvent.stepStatus = Utils.getNodeValue(node, "StepStatus");
+
+                        let primaryPage = Utils.getNodeValue(node, "PrimaryPage");
+
+                        if(typeof primaryPage !== null)
+                            traceEvent.primaryPage = primaryPage;
+
                         eventsToAppend.push(traceEvent);
+
+                        this.sequenceNumber++;
                     }
+
+
                     resolve(eventsToAppend);
                 })
                 .catch((e)=>{fail(e);});
@@ -282,5 +296,13 @@ export class EventsServicePega8 implements EventsService {
             request.onerror = (e)=>{fail(e);};
             request.send(body);
         });
+    }
+
+
+    getPageContent(eventNumber: number, pageName: string): Promise<Page> {
+
+        return new Promise<Page>((resolve,reject) => {
+            resolve();
+        })
     }
 }

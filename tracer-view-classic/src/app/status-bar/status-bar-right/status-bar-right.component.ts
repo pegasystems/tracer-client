@@ -11,7 +11,7 @@ export class StatusBarRightComponent implements OnInit {
   status: string;
 
   constructor(private statusService: TracerLocalStatusService) {
-    this.status = "asdsada"
+    this.status = "Default Status";
   }
 
   ngOnInit() {

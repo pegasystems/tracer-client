@@ -65,7 +65,7 @@ export class TracerEventsService {
       traceEvent.stepMethod = event.stepMethod;
       traceEvent.stepNumber = event.stepNumber;
       traceEvent.stepStatus = event.stepStatus;
-      traceEvent.threadName = event.threadName;
+      traceEvent.threadname = event.threadname;
       traceEvent.timeStamp = event.timeStamp;
 
       traceEvent.childEvents = event.childEvents;
@@ -79,20 +79,18 @@ export class TracerEventsService {
       }
 
       this.statusService.setStatusMessage("The Status Message: " + this.statusCount);
-      this.statusService.setStatus("The Status :" + this.eventCount);
+      this.statusService.setStatus("The Status: " + this.eventCount);
 
       this.eventCount++;
       this.statusCount++;
-
-
-
-
     });
+
+
     this.client.start();
   }
 
-  eventCount: number = 1;
-  statusCount: number = 1;
+  eventCount: number = -1;
+  statusCount: number = -1;
 
 
   onTraceEvents(): Observable<TraceEvent[]> {

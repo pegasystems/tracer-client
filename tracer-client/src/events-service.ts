@@ -1,4 +1,5 @@
 import {TraceEvent} from "./trace-event";
+import {Page} from "./page";
 
 export interface EventsService {
     connect(): Promise<any>;
@@ -7,4 +8,5 @@ export interface EventsService {
     requestTraceEvents(): Promise<any>;
     clear(): void;
     disconnect(force:boolean): void;
+    getPageContent(eventNumber: number, pageName: string): Promise<Page>;
 }
