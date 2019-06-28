@@ -1,0 +1,15 @@
+<table>
+  <!-- Properties array has page name as index and page itself as element, this value will be the actual index
+        and not the element at the index!-->
+  <caption>Properties on page: {{data.page.name}} <!--{{this.page.name}} or {{this.data.name}}   --> </caption>
+ <!-- <tr>
+    <th> pxObjClass Value </th>
+  </tr>-->
+  <tr>
+    <!-- Will be the pxObjClass value from the xml file !-->
+
+    <td>The pxObjClass Data: {{data.page.getPropertyValue("pxObjClass")}}</td>
+  </tr>
+  <!-- Launch Modal when step page column clicked !-->
+</table>
+

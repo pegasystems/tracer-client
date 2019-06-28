@@ -1,12 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-
-
+import {Component, OnInit, Input} from '@angular/core';
 
 import {Page} from "../../../../tracer-client/src/page";
 import {PagesService} from "../pages.service";
-import {Client} from "../../../../tracer-client/src/client";
-import {TraceEvent} from "../../../../tracer-client/src/trace-event";
-import {TracerEventsService} from "../tracer-events.service";
 
 
 @Component({
@@ -19,33 +14,14 @@ import {TracerEventsService} from "../tracer-events.service";
 export class PageViewerComponent implements OnInit {
 
 
-
-  pageService: PagesService;
-  client: Client;
-  page: Page;
+  @Input() page: Page;
+  pageServices: PagesService;
 
   constructor() {
 
 
-
-    this.client.registerEventCallback((event) =>{
-
-      let traceEvent = new TraceEvent();
-
-      traceEvent.primaryPage = event.primaryPageName;
-      traceEvent.sequenceNumber = event.sequenceNumber;
-      traceEvent.primaryPageName = event.primaryPageName;
-
-      this.page = this.pageService.getPageContent(traceEvent.sequenceNumber,traceEvent.primaryPageName);
-
-
-      //be able to represe
-
-    });
-
-
+   // this.page = this.pageServices.getPageContent(2,'s');
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

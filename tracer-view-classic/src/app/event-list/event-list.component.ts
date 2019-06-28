@@ -1,17 +1,26 @@
-import {Component, OnInit, EventEmitter} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
+
 import {TraceEvent} from '../trace-event'
+import { Page} from "../../../../tracer-client/src/page";
 import {TracerEventsService} from "../tracer-events.service";
-import {PagesService} from "../pages.service";
+
+export interface DialogData{
+  page: Page;
+}
+
+
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.css']
 })
+
 export class EventListComponent implements OnInit {
 
-  pagesServices: PagesService;
   events: TraceEvent[];
+
   displayedColumns: string[] = [
     'line',
     'thread',
@@ -26,11 +35,7 @@ export class EventListComponent implements OnInit {
     'ruleset'];
 
 
-
-
-
-
-  constructor(eventsService: TracerEventsService) {
+  constructor(eventsService: TracerEventsService, public dialog: MatDialog) {
     this.events = [];
     eventsService.onTraceEvents().subscribe((result) => {
       result.forEach((traceEvent) => {
@@ -39,21 +44,65 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-
-  openStepPage() {
+  //Update this function to launch a modal
+  //Contents don't matter right now
+  //Later, pass in a traceEvent as a parameter for all these three events
+  openStepPage(event: TraceEvent):void {
     //this.pagesServices.getPageContent(this.events[2].sequenceNumber, this.events[2].primaryPageName);
 
-    alert("openStepPage");
+    const ref = this.dialog.open(DialogOverviewExampleDialog, {
+      width: "350px",
+      data: {page: event.primaryPage}
+    });
+
+    ref.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
+
+    alert("openStepPage " + event.primaryPage.properties["pxObjClass"]);
   }
 
-  openStepDetail() {
+  openStepDetail():void {
     alert("openStepDetail")
   }
 
-  openRule() {
+  openRule():void  {
     alert("openRule")
   }
 }
+
+
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

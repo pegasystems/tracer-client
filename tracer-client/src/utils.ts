@@ -14,7 +14,7 @@ export class Utils {
         return queryString;
     }
 
-    static getNodeValue(data: any, nodeName: string) {
+    static getNodeStringValue(data: any, nodeName: string) {
 
         if(!data){
             return "";
@@ -54,6 +54,18 @@ export class Utils {
             }
         } else {
             return -1;
+        }
+    }
+
+    static getNodeObjectValue(data: any, nodeName: string) {
+        if(!data){
+            return {};
+        }
+        let matchingNode = data.getElementsByTagName(nodeName);
+        if (matchingNode.length > 0 && matchingNode[0] != undefined) {
+            return matchingNode[0];
+        } else {
+            return {};
         }
     }
 }

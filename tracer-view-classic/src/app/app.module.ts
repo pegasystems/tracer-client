@@ -1,14 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { PopupModule} from 'ng2-opd-popup';
 
 import { AppComponent } from './app.component';
 import {ToolbarComponent} from "./toolbar/toolbar.component";
 import {StatusBarComponent} from "./status-bar/status-bar.component";
-import {EventListComponent} from "./event-list/event-list.component";
+import {DialogOverviewExampleDialog, EventListComponent} from "./event-list/event-list.component";
 import {StatusBarLeftComponent} from "./status-bar/status-bar-left/status-bar-left.component";
 import {StatusBarRightComponent} from "./status-bar/status-bar-right/status-bar-right.component";
 import { PageViewerComponent } from './page-viewer/page-viewer.component';
+
 
 @NgModule({
   declarations: [
@@ -18,13 +22,18 @@ import { PageViewerComponent } from './page-viewer/page-viewer.component';
     EventListComponent,
     StatusBarLeftComponent,
     StatusBarRightComponent,
-    PageViewerComponent
+    PageViewerComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogOverviewExampleDialog]
 })
-export class AppModule { }
+
+export class AppModule {}

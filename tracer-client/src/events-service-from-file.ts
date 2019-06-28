@@ -36,7 +36,7 @@ export class EventsServiceFromFile implements EventsService{
         return new Promise<any>((resolve, fail)=>{
             setTimeout(() =>{
                 let eventList = [];
-                for(let i = 0; i<200; i++){
+                for(let i = 0; i<2; i++){
 
                     if(this.sequenceNumber> this.traceEventNodes.length){
                         break;
@@ -44,33 +44,26 @@ export class EventsServiceFromFile implements EventsService{
 
                     let eventNode = this.traceEventNodes[this.sequenceNumber];
                     let event = new TraceEvent();
+                    event.primaryPage = new Page(Utils.getNodeObjectValue(eventNode, "PrimaryPageContent"));
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
-                    event.activityName = Utils.getNodeValue(eventNode, "ActivityName");
-                    event.stepNumber = Utils.getNodeValue(eventNode, "StepNumber");
-                    event.eventType = Utils.getNodeValue(eventNode, "EventType");
-                    event.stepMethod = Utils.getNodeValue(eventNode, "StepMethod");
-                    event.stepStatus = Utils.getNodeValue(eventNode, "StepStatus");
-                    event.interaction = Utils.getNodeValue(eventNode, "Interaction");
-                    event.threadname = Utils.getNodeValue(eventNode, "ThreadName");
+                    event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");
+                    event.stepNumber = Utils.getNodeStringValue(eventNode, "StepNumber");
+                    event.eventType = Utils.getNodeStringValue(eventNode, "EventType");
+                    event.stepMethod = Utils.getNodeStringValue(eventNode, "StepMethod");
+                    event.stepStatus = Utils.getNodeStringValue(eventNode, "StepStatus");
+                    event.interaction = Utils.getNodeStringValue(eventNode, "Interaction");
+                    event.threadname = Utils.getNodeStringValue(eventNode, "ThreadName");
                     event.sRSName = Utils.getAttributeValue(eventNode,"rsname");
                     event.sRSVersion = Utils.getAttributeValue(eventNode,"rsvers");
-                    event.timeStamp = Utils.getNodeValue(eventNode, "Elapsed");
-                    event.primaryPageName = Utils.getNodeValue(eventNode, "PrimaryPageName");
-
-
-                    //if it has primaryPage, set the event primaryPage attribute also
-                    let primaryPage = Utils.getNodeValue(eventNode, "PrimaryPage");
-
-                    if(typeof primaryPage !== null)
-                        event.primaryPage = primaryPage;
-
+                    event.timeStamp = Utils.getNodeStringValue(eventNode, "Elapsed");
+                    event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
 
                     eventList.push(event);
 
                     this.sequenceNumber++;
                 }
                 resolve(eventList);
-            }, 1000);
+            }, 3000);
         });
 
     }

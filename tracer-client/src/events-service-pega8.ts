@@ -183,9 +183,9 @@ export class EventsServicePega8 implements EventsService {
             this.traceServletRequest({queryParams: params})
                 .then((res)=>{
                     let data = res;
-                    let cmdStatus = Utils.getNodeValue(data,"CmdStatus");
+                    let cmdStatus = Utils.getNodeStringValue(data,"CmdStatus");
                     if (cmdStatus.indexOf("error") >= 0) {
-                        let cmdResponse = Utils.getNodeValue(data,"CmdResponse");
+                        let cmdResponse = Utils.getNodeStringValue(data,"CmdResponse");
                         let aMessage =  "Please restart Tracer because " + cmdResponse;
                         fail(aMessage);
                         return;
@@ -198,13 +198,13 @@ export class EventsServicePega8 implements EventsService {
                         let node = traceEventNodes[i];
                         let traceEvent = new TraceEvent();
                         traceEvent.sequenceNumber = Utils.getNodeIntValue(node, "Sequence");
-                        traceEvent.activityName = Utils.getNodeValue(node, "ActivityName");
-                        traceEvent.stepNumber = Utils.getNodeValue(node, "StepNumber");
-                        traceEvent.eventType = Utils.getNodeValue(node, "EventType");
-                        traceEvent.stepMethod = Utils.getNodeValue(node, "StepMethod");
-                        traceEvent.stepStatus = Utils.getNodeValue(node, "StepStatus");
+                        traceEvent.activityName = Utils.getNodeStringValue(node, "ActivityName");
+                        traceEvent.stepNumber = Utils.getNodeStringValue(node, "StepNumber");
+                        traceEvent.eventType = Utils.getNodeStringValue(node, "EventType");
+                        traceEvent.stepMethod = Utils.getNodeStringValue(node, "StepMethod");
+                        traceEvent.stepStatus = Utils.getNodeStringValue(node, "StepStatus");
 
-                        let primaryPage = Utils.getNodeValue(node, "PrimaryPage");
+                        let primaryPage = Utils.getNodeStringValue(node, "PrimaryPage");
 
                         if(typeof primaryPage !== null)
                             traceEvent.primaryPage = primaryPage;

@@ -57,6 +57,7 @@ export class TracerEventsService {
       traceEvent.interactionQueryParam = event.interactionQueryParam;
       traceEvent.methodName = event.methodName;
       traceEvent.primaryPageName = event.primaryPageName;
+      traceEvent.primaryPage = event.primaryPage;
       traceEvent.sequenceNumber = event.sequenceNumber;
       traceEvent.sInsKey = event.sInsKey;
       traceEvent.sKeyName = event.sKeyName;
