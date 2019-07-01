@@ -1,9 +1,12 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 
-import {TraceEvent} from '../trace-event'
-import { Page} from "../../../../tracer-client/src/page";
+
 import {TracerEventsService} from "../tracer-events.service";
+import {TraceEvent} from '../trace-event'
+import {PagesService} from "../pages.service";
+import { Page} from "../../../../tracer-client/src/page";
+
 
 export interface DialogData{
   page: Page;
@@ -19,8 +22,8 @@ export interface DialogData{
 
 export class EventListComponent implements OnInit {
 
+  pageService: PagesService;
   events: TraceEvent[];
-
   displayedColumns: string[] = [
     'line',
     'thread',
@@ -52,14 +55,16 @@ export class EventListComponent implements OnInit {
   openStepPage(event: TraceEvent):void {
     //this.pagesServices.getPageContent(this.events[2].sequenceNumber, this.events[2].primaryPageName);
 
+
+
+    //let localPg = this.pageService.getPageContent(2,"pxObjClass");
+
     const ref = this.dialog.open(DialogOverviewExampleDialog, {
-      width: "350px",
+      width: "500px",
+      height: "500px",
       data: {page: event.primaryPage}
     });
 
-    ref.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
 
 
     alert("openStepPage " + event.primaryPage.properties["pxObjClass"]);

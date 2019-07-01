@@ -1,4 +1,10 @@
 export class Utils {
+
+
+    static counter: number = 0;
+
+    static match: any;
+
     static getQueryString(queryParameters: any): string {
         let first = true;
         let queryString = "";
@@ -16,7 +22,7 @@ export class Utils {
 
     static getNodeStringValue(data: any, nodeName: string) {
 
-        if(!data){
+        if (!data) {
             return "";
         }
         let matchingNode = data.getElementsByTagName(nodeName);
@@ -28,7 +34,7 @@ export class Utils {
     }
 
     static getAttributeValue(node: Element, attrName: string) {
-        if(!node){
+        if (!node) {
             return "";
         }
         let attrNode = node.getAttributeNode(attrName);
@@ -58,14 +64,24 @@ export class Utils {
     }
 
     static getNodeObjectValue(data: any, nodeName: string) {
-        if(!data){
+        if (!data) {
             return {};
         }
         let matchingNode = data.getElementsByTagName(nodeName);
+
+        if(this.counter === 0)
+            this.match = matchingNode;
+
+
         if (matchingNode.length > 0 && matchingNode[0] != undefined) {
             return matchingNode[0];
         } else {
             return {};
         }
+
+
+        this.counter++;
     }
+
+
 }

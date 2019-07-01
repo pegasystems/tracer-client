@@ -160,6 +160,7 @@ export class Options {
 
     applyDefaults() {
         this.parseValuesFromJSON(JSON.stringify(this.defaults));
+
     }
 
     defaults = {

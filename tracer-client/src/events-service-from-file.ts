@@ -36,7 +36,7 @@ export class EventsServiceFromFile implements EventsService{
         return new Promise<any>((resolve, fail)=>{
             setTimeout(() =>{
                 let eventList = [];
-                for(let i = 0; i<2; i++){
+                for(let i = 0; i<200; i++){
 
                     if(this.sequenceNumber> this.traceEventNodes.length){
                         break;
@@ -44,6 +44,7 @@ export class EventsServiceFromFile implements EventsService{
 
                     let eventNode = this.traceEventNodes[this.sequenceNumber];
                     let event = new TraceEvent();
+
                     event.primaryPage = new Page(Utils.getNodeObjectValue(eventNode, "PrimaryPageContent"));
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
                     event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");

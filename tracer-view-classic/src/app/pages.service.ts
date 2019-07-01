@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {Observable,Observer} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Observable, Observer} from "rxjs";
 
 
 import {Page} from "../../../tracer-client/src/page";
@@ -12,17 +12,14 @@ import {TracerEventsService} from "./tracer-events.service";
 
 
 export class PagesService {
-  page:Page;
+
 
   constructor() {}
 
-  getPageContent(eventNumber:number, pageName:string): Page {
-    let pageArray = this.page.properties;
 
-    let page = pageArray[pageName];
-
-    return page;
-  }
-
-
+ /* getPageContent(eventNumber: number, pageName: string):  Page {
+    let pg = new Page("sadsadsa");
+    pg.properties[pageName] = "getPageContentReturn";
+    return pg;
+  }*/
 }

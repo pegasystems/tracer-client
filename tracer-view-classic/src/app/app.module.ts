@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { PopupModule} from 'ng2-opd-popup';
 
 import { AppComponent } from './app.component';
 import {ToolbarComponent} from "./toolbar/toolbar.component";

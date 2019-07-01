@@ -14,7 +14,7 @@ import {PagesService} from "../pages.service";
 export class PageViewerComponent implements OnInit {
 
 
-  @Input() page: Page;
+ // @Input() page: Page;
   pageServices: PagesService;
 
   constructor() {
