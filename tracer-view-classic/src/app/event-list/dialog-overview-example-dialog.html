@@ -1,13 +1,14 @@
 <table>
   <!-- Properties array has page name as index and page itself as element, this value will be the actual index
         and not the element at the index!-->
-  <!--<caption>{{data.page.name}} </caption>-->
- <!-- <tr>
-    <th> pxObjClass Value </th>
-  </tr>-->
-  <tr>
-    <!-- Will be the pxObjClass value from the xml file !-->
-    <td>{{data.page.getPropertyValue("data")}}</td>
+  <caption>Step Page Name: {{data.page.name}}</caption>
+
+
+
+
+  <!--Right now, embedded pages are considered apart of the same page/property due to inherent property of textContext-->
+  <tr *ngFor="let tag of data.page.tagList">
+    <td> {{tag}}'s property is {{data.page.getPropertyValue(tag)}}</td>
   </tr>
 </table>
 

@@ -67,7 +67,7 @@ export class EventListComponent implements OnInit {
 
 
 
-    alert("openStepPage " + event.primaryPage.properties["pxObjClass"]);
+    alert("openStepPage");
   }
 
   openStepDetail():void {

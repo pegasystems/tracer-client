@@ -36,16 +36,20 @@ export class EventsServiceFromFile implements EventsService{
         return new Promise<any>((resolve, fail)=>{
             setTimeout(() =>{
                 let eventList = [];
-                for(let i = 0; i<200; i++){
+                for(let i = 0; i<50; i++){
 
-                    if(this.sequenceNumber> this.traceEventNodes.length){
+                    if(this.sequenceNumber > this.traceEventNodes.length){
                         break;
                     }
 
                     let eventNode = this.traceEventNodes[this.sequenceNumber];
                     let event = new TraceEvent();
 
-                    event.primaryPage = new Page(Utils.getNodeObjectValue(eventNode, "PrimaryPageContent"));
+
+                    //traceEvents = type Element, list containing all traceEvents is of type element.
+                        //Object passed into page constructor represents a single event and the page data
+                        //is stored into an HTMLcollection
+
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
                     event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");
                     event.stepNumber = Utils.getNodeStringValue(eventNode, "StepNumber");
@@ -58,6 +62,8 @@ export class EventsServiceFromFile implements EventsService{
                     event.sRSVersion = Utils.getAttributeValue(eventNode,"rsvers");
                     event.timeStamp = Utils.getNodeStringValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
+
+                    event.primaryPage = new Page(Utils.getNodeObjectValue(eventNode, "PrimaryPageContent"),event.primaryPageName);
 
                     eventList.push(event);
 

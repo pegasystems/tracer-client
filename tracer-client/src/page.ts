@@ -1,69 +1,68 @@
-import {Utils} from './utils' ;
-
 export class Page {
 
     //create an associative array similar to one in options class, has names of the properties as index
-    //Only have attributes and no methods (POJO)
+    //Only have attributes and no methods (POJO) - It now has a method
     properties: any;
+    tagList: any;
     name: string;
 
-    constructor(element: Element) {
+    static c: number = 0;
 
 
-        //Have to loop throughout the xml file for each <pageData> node at the top level only
-        //Repeating indexes in the yml file are children of the top level page
+    /* Element passed in has primaryPageContent as Top level tag and pagedata as second level tag
+        console.log(element);*/
+    constructor(element: Element, name: string) {
 
         this.properties = {};
-        //Parse the element and set all values present in the node into the respective indexes for the properties array
+        this.tagList = [];
+        this.name = name;
+
+        //Sets pagedata as top level tag, page data contains all information needed
+
+
+        element = element.getElementsByTagName("pagedata")[0];
+
+        //For each child tag in primary pagedata tag
+        element.childNodes.forEach((value: Element, index: number) => {
+
+            //If the child node does not have any data, this statement is not being hit so far
+            if (value === undefined) {
+                debugger;
+            }
+
+            //TextContent is considered the child of a tag/node
+            //The "text" childNodes of element don't have any children, Don't know their values?
+          if (value.childNodes.length === 0) {
+                return;
+            }
+
+            //If the textContent is falsy (null, false, undefined, empty string), return a string
+            //Non empty text contents are returned and the default value isn't displayed even though I can't
+            //see anything for text content in the console
+            //Returned value of empty content exists and is type string
+
+            let elementTextContents = value.textContent;
+
+
+            let tag = value.tagName;
+
+            this.tagList.push(tag);
+            this.properties[tag] = elementTextContents;
+
+             console.log("Tag Value:" + tag + " Text Contents: " + elementTextContents + " Index: " + index + " Type: " + typeof elementTextContents);
+        });
 
 
 
 
-        //Latest Commit: Issues/22 7/1/2019
-        //I wanted see what the contents of the element looked like. The object that was passed in is the
-            //MatchingNode[0] object returned by "getNodeObjectValue"
-                //Research on the Element API has led me to believe that the attributes of the Element type
-                    //below in the if conditional will be needed to populate the page properties tab. I also check to see if attributes exist using the ".hasAttributes" method
-                        //In the test array, I fill in the indexes of the array with the tags of the "primary page/MatchingNode[0]/Element passed in"
-                            //that's supposed to represent the contents of the primary page.
-                                //After clicking a step property after serving the angular project
-        //The modal that pops up displays all empty objects and a false to imply that the primaryPage has no attributes
-
-        let test: any;
-
-        test = {};
+        //The 191st page is not of type element and "getElementsByTagName" is not a property. Could be null
 
 
-        if (element.getAttributeNames) {
-            test[0] = element.attributes;
-            test[1] = element.classList;
-            test[2] = element.className;
-            test[3] = element.getAttributeNames();
-            test[4] = element.hasAttributes();
-
-            test[5] = JSON.stringify(Utils.match[0]);
-            test[6] = JSON.stringify(Utils.match);
-        }
+        Page.c++;
+        console.log(Page.c);
 
 
-        this.properties["data"] = JSON.stringify(test);
-        this.properties["pxObjClass"] = "Tenzin's Test";
-        this.name = "";
-
-
-        /* this.client.registerEventCallback((event) => {
-                    let traceEvent = new TraceEvent();
-
-                    this.properties = [];
-
-                    if (typeof traceEvent.primaryPage !== null) {
-                        this.name = traceEvent.primaryPageName;
-                        this.properties[this.name] = traceEvent.primaryPage;
-                    }
-                });*/
-        //if there's page data node
-        //look up the pxObjClass
-        //Get the pxObjClass working
+        debugger;
     }
 
 
