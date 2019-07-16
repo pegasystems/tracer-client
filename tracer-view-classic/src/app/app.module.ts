@@ -28,7 +28,7 @@ import { PageViewerComponent } from './page-viewer/page-viewer.component';
     BrowserModule,
     HttpClientModule,
     MaterialModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
