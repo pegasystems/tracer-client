@@ -28,8 +28,7 @@
     "http-proxy": "^1.17.0",
     "open": "^6.3.0",
     "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.2.0",
-    "tracer-client":"0.0.1"
+    "ts-node": "^8.2.0"
   },
   "devDependencies": {
     "copyfiles": "^2.1.0",

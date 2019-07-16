@@ -8,6 +8,6 @@
     "outDir": "./spec/build/"
   },
   "include": [
-    "./src/*"
+    "src/*"
   ]
 }

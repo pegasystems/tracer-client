@@ -45,4 +45,5 @@ export class TraceEvent {
   getStyle(): number {
     return -1;
   }
+
 }
