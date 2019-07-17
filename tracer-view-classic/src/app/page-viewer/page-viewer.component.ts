@@ -3,6 +3,7 @@ import {Page} from "../../../../tracer-client/src/page";
 import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource} from '@angular/material/tree';
 import {debug} from "util";
+import {Property} from "../../../../tracer-client/src/property";
 
 /*export interface Page {
   page: Page;
@@ -60,12 +61,9 @@ export class PageViewerComponent implements OnInit {
 
   ngOnInit() {
     let propertyList = [];
-    for(let x in this.page.properties){
-      propertyList.push({
-        "name" : x,
-        "value" : this.page.properties[x]
-      })
-    }
+    this.page.properties.forEach((prop: Property)=>{
+      propertyList.push(prop);
+    });
     debugger;
     this.dataSource.data = propertyList;
     debugger;
