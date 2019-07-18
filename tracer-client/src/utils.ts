@@ -1,4 +1,4 @@
-import {getTypeScriptInstance} from "ts-loader/dist/types/instances";
+//import {getTypeScriptInstance} from "ts-loader/dist/types/instances";
 import {match} from "minimatch";
 
 export class Utils {

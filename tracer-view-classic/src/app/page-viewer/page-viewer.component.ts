@@ -5,10 +5,6 @@ import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource} from '
 import {debug} from "util";
 import {Property} from "../../../../tracer-client/src/property";
 
-/*export interface Page {
-  page: Page;
-  children?: Page[];
-}*/
 
 /**
  * Food data with nested structure.
@@ -37,6 +33,7 @@ interface ExampleFlatNode {
 export class PageViewerComponent implements OnInit {
   @Input() page: Page;
 
+
   private _transformer = (node: PropertyNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -64,8 +61,6 @@ export class PageViewerComponent implements OnInit {
     this.page.properties.forEach((prop: Property)=>{
       propertyList.push(prop);
     });
-    debugger;
     this.dataSource.data = propertyList;
-    debugger;
   }
 }

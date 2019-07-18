@@ -13,7 +13,11 @@ export class Property {
 
     // Element passed in has primaryPageContent as Top level tag and pagedata as second level tag
 
-    constructor() {
+    constructor(name: string, value?:string, type?:string, children?: Property[]) {
 
+        this.name = name;
+        this.value = value;
+        this.type = type;
+        this.children = children;
     }
 }

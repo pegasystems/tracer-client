@@ -1,11 +1,4 @@
-<!--<table>
-  &lt;!&ndash; Properties array has page name as index and page itself as element, this value will be the actual index
-        and not the element at the index!&ndash;&gt;
-  <caption>Step Page Name: {{data.page.name}}</caption>
 
-  &lt;!&ndash;Right now, embedded pages are considered apart of the same page/property due to inherent property of textContext&ndash;&gt;
-  <tr *ngFor="let tag of data.page.tagList">
-    <td> {{tag}}'s property is {{data.page.getPropertyValue(tag)}}</td>
-  </tr>
-</table>-->
 <app-page-viewer [page]="targetPage"></app-page-viewer>
+
+
