@@ -62,9 +62,7 @@ export class EventsServiceFromFile implements EventsService{
                     event.sRSVersion = Utils.getAttributeValue(eventNode,"rsvers");
                     event.timeStamp = Utils.getNodeStringValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
-
-                    event.primaryPage = new Page(Utils.getNodeObjectValue(eventNode, "PrimaryPageContent"),event.primaryPageName);
-
+                    event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
                     eventList.push(event);
 
                     this.sequenceNumber++;

@@ -327,7 +327,7 @@ describe("Client", function() {
   ]*/
 
   beforeEach(function() {
-    page = new Page("", {}, true);
+    // page = new Page("", {}, true);
   });
   
   it("has the expected public API", function(){
@@ -347,17 +347,14 @@ describe("Client", function() {
     page.parseFromXML(element);*/
 
     Parser.parseString(xml, function (err, result) {
-      console.log(result);
+      // console.log(result);
     });
 
 
   });
 
   it("can use the output of xml2js", function(){
-      Parser.parseString(xml3, function (err, result) {
-          page.normalizePageDataModel(result, page.properties);
-          // console.log(JSON.stringify(page));
-      });
+    let page = new Page("name",xml3);
   })
 });
 

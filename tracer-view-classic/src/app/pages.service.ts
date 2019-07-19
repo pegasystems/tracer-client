@@ -26,7 +26,7 @@ export class PagesService {
 
  /* getPageContent(eventNumber: number, pageName: string):  Page {
     let pg = new Page("sadsadsa");
-    pg.properties[pageName] = "getPageContentReturn";
+    pg.children[pageName] = "getPageContentReturn";
     return pg;
   }*/
 }

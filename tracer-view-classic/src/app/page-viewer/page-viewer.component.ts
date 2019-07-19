@@ -58,7 +58,7 @@ export class PageViewerComponent implements OnInit {
 
   ngOnInit() {
     let propertyList = [];
-    this.page.properties.forEach((prop: Property)=>{
+    this.page.children.forEach((prop: Property)=>{
       propertyList.push(prop);
     });
     this.dataSource.data = propertyList;
