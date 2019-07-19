@@ -3,6 +3,10 @@ tbody tr {
   margin-bottom: 1px;
 }
 
+thead {
+  font-weight: bold;
+}
+
 thead tr td {
 
   background-color: #e1e2dc;
@@ -23,7 +27,6 @@ tbody {
 
 table {
   font-size: 8pt;
-  font-weight: bold;
   font-family: arial;
   text-align: left;
   color: black;
