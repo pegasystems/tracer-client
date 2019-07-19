@@ -2,6 +2,7 @@ export class Property {
 
     name: string;
     value: string;
+    index: string;
     type: string; // Scalar, page, list, group
     children: Property[];
 
@@ -18,6 +19,7 @@ export class Property {
         this.name = name;
         this.value = value;
         this.type = type;
-        this.children = children;
+        this.index = "";
+        this.children = children || [];
     }
 }
