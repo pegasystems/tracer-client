@@ -44,8 +44,8 @@ export class EventListComponent implements OnInit {
   //Pass in a traceEvent as a parameter for all these three events
   openStepPage(event: TraceEvent):void {
     this.dialog.open(PageDialogComponent, {
-      width: "500px",
-      height: "500px",
+      width: "800px",
+      height: "600px",
       data: {page: event.primaryPage}
     });
   }

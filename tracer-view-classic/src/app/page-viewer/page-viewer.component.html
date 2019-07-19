@@ -3,16 +3,18 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button disabled></button>
-    <b>{{node.name}}</b>: {{node.value}}
+    <span [ngClass]="'name'">{{node.name}}</span>
+    <span [ngClass]="'subscript'" *ngIf="node.subscript!=''">({{node.subscript}})</span>:&nbsp;
+    <span [ngClass]="'value'">{{node.value}}</span>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'toggle ' + node.name">
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
       <mat-icon class="mat-icon-rtl-mirror">
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
-    <b>{{node.name}}</b>
+    <span [ngClass]="'name'">{{node.name}}</span>
+    <span [ngClass]="'subscript'" *ngIf="node.subscript!=''">({{node.subscript}})</span>
   </mat-tree-node>
 </mat-tree>

@@ -32,7 +32,13 @@ export class Page {
         }
         for(let propName in page){
             let property = page[propName];
+
+            // xml2js adds tags with the name '$'. Treat as attributes but otherwise ignore
             let attributes = (property[0] || {})["$"] || {};
+            if(propName == "$"){
+                continue;
+            }
+
             if(attributes.REPEATINGTYPE == 'PageList'){
                 // TODO This code is almost identical to Page group. Should be refactored.
                 let pagelist = new Property(propName, "", "pagelist");

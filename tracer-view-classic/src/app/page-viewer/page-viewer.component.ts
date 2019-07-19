@@ -13,6 +13,7 @@ import {Property} from "../../../../tracer-client/src/property";
 interface PropertyNode {
   name: string;
   value: string;
+  index: string;
   children?: PropertyNode[];
 }
 
@@ -21,6 +22,7 @@ interface PropertyNode {
 interface ExampleFlatNode {
   expandable: boolean;
   name: string;
+  subscript: string;
   value: string;
   level: number;
 }
@@ -39,6 +41,7 @@ export class PageViewerComponent implements OnInit {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       value: node.value,
+      subscript: node.index,
       level: level,
     };
   };
@@ -62,5 +65,6 @@ export class PageViewerComponent implements OnInit {
       propertyList.push(prop);
     });
     this.dataSource.data = propertyList;
+    this.treeControl.expandAll();
   }
 }

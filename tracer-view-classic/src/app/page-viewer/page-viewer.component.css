@@ -1,0 +1,13 @@
+.mat-tree-node {
+  min-height: 1px;
+  height: 20px;
+}
+
+.name, .subscript  {
+  font-weight: bold;
+}
+
+.value {
+  color: gray;
+  white-space: nowrap;
+}
