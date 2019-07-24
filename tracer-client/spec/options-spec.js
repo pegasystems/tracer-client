@@ -5,7 +5,9 @@ const {Options} = require('./build/options');
 
 describe("Options Class", function () {
 
-    var filter;
+
+    //Gets an error if the object is created in the beforeEach block
+    let options;
 
     beforeEach(function () {
         options = new Options();
@@ -16,7 +18,6 @@ describe("Options Class", function () {
     });
 
 
-    //Needs to be fixed
     it("Clear Function returns an empty array", function () {
 
         options.applyDefaults();

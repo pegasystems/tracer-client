@@ -1,3 +1,9 @@
+<!--
+<button (click)="tree.treeControl.collapseAll()">Collapse All</button>
+<button (click)="tree.treeControl.expandAll()">Expand All</button>
+-->
+
+
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
   <!-- This is the tree node template for leaf nodes -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
@@ -18,3 +24,4 @@
     <span [ngClass]="'subscript'" *ngIf="node.subscript!=''">({{node.subscript}})</span>
   </mat-tree-node>
 </mat-tree>
+

@@ -63,7 +63,11 @@ export class EventsServiceFromFile implements EventsService{
                     event.timeStamp = Utils.getNodeStringValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
                     event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
+
+                   /* event.timeStamp = Number.parseFloat(event.timeStamp).toFixed(3);   NAN shows up for non numbers */
+
                     eventList.push(event);
+
 
                     this.sequenceNumber++;
                 }

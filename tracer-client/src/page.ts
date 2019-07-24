@@ -5,45 +5,65 @@ import * as Parser from "xml2js";
 export class Page {
 
     children: Property[];
-    tagList: String[];
     name: string;
+
 
     // Element passed in has primaryPageContent as Top level tag and pagedata as second level tag
     constructor(name: string, xmlString: string) {
+
+/*
+        if (name === "pyDisplayHarness")
+            return;*/
+
+
         this.name = name;
         this.children = [];
-        let that = this;
+        let that = this
+
         Parser.parseString(xmlString, function (err, result) {
             that.normalizePageDataModel(result, that.children);
         });
+
+        debugger;
+
+
+
     }
 
     /**
      * @param page is a typeless JS Object which represents a clipboard page
      * @param properties the list to append children on the current page to.
      */
-    private normalizePageDataModel(page: any, properties: Property[]){
-        if(!page){
+    private normalizePageDataModel(page: any, properties: Property[]) {
+
+        if (!page) {
             return;
         }
         // If there is a top level node called pagedata ignore it.
-        if(page.pagedata){
+        if (page.pagedata) {
             page = page.pagedata;
         }
-        for(let propName in page){
+
+
+        //Create property and initialize its value with respective property name in page object
+        for (let propName in page) {
+
             let property = page[propName];
 
             // xml2js adds tags with the name '$'. Treat as attributes but otherwise ignore
             let attributes = (property[0] || {})["$"] || {};
-            if(propName == "$"){
+
+            if (propName == "$") {
                 continue;
             }
 
-            if(attributes.REPEATINGTYPE == 'PageList'){
+
+            if (attributes.REPEATINGTYPE == 'PageList') {
+
                 // TODO This code is almost identical to Page group. Should be refactored.
                 let pagelist = new Property(propName, "", "pagelist");
-                if(property[0] && property[0].rowdata){
-                    property[0].rowdata.forEach((entry: any, index: number)=>{
+                if (property[0] && property[0].rowdata) {
+                    property[0].rowdata.forEach((entry: any, index: number) => {
                         //console.log(entry)
                         let attributes = entry["$"];
                         let pageListEntry = new Property(propName, "", "page", []);
@@ -53,11 +73,11 @@ export class Page {
                     });
                 }
                 properties.push(pagelist)
-            } else if(attributes.REPEATINGTYPE == 'PageGroup'){
+            } else if (attributes.REPEATINGTYPE == 'PageGroup') {
                 // TODO This code is almost identical to Page list. Should be refactored.
                 let pagelist = new Property(propName, "", "pagegroup");
-                if(property[0] && property[0].rowdata){
-                    property[0].rowdata.forEach((entry: any, index: number)=>{
+                if (property[0] && property[0].rowdata) {
+                    property[0].rowdata.forEach((entry: any, index: number) => {
                         //console.log(entry)
                         let attributes = entry["$"];
                         let pageListEntry = new Property(propName, "", "page", []);
@@ -67,11 +87,13 @@ export class Page {
                     });
                 }
                 properties.push(pagelist)
-            } else if(attributes.REPEATINGTYPE == 'ValueList'){
+            } else if (attributes.REPEATINGTYPE === 'PropertyList') {
                 properties.push(new Property(propName, "", "valuelist"))
-            } else if(attributes.REPEATINGTYPE == 'ValueGroup'){
-                properties.push(new Property(propName, "", "valueroup"))
-            } else if(typeof property[0] === 'string' && property[0] != "\n") {
+
+            } else if (attributes.REPEATINGTYPE === 'PropertyGroup') {
+                properties.push(new Property(propName, "", "valuegroup"))
+
+            } else if (typeof property[0] === 'string' && property[0] != "\n") {
                 // This is a scalar
                 let value = property[0];
                 properties.push(new Property(propName, value, "scalar"));
@@ -79,11 +101,10 @@ export class Page {
                 // This is a page
                 let page = new Property(propName, "", "page");
                 // If this page doesn't have any children, it's one child will be a new line string;
-                if(property[0] && typeof property[0] === "object"){
+                if (property[0] && typeof property[0] === "object") {
                     this.normalizePageDataModel(property[0], page.children)
                 }
                 properties.push(page);
-
             }
         }
     }

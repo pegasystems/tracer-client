@@ -4,6 +4,7 @@ import {TracerEventsService} from "../tracer-events.service";
 import {TraceEvent} from '../trace-event'
 import { Page} from "../../../../tracer-client/src/page";
 import {PageDialogComponent} from "./page-dialog/page-dialog.component";
+import {TraceEventViewerComponent} from "../trace-event-viewer/trace-event-viewer.component";
 
 export interface DialogData{
   page: Page;
@@ -44,17 +45,23 @@ export class EventListComponent implements OnInit {
   //Pass in a traceEvent as a parameter for all these three events
   openStepPage(event: TraceEvent):void {
     this.dialog.open(PageDialogComponent, {
-      width: "800px",
+      width: "100%",
       height: "600px",
       data: {page: event.primaryPage}
     });
   }
 
-  openStepDetail():void {
-    alert("openStepDetail")
+  openStepDetail(event: TraceEvent):void {
+    this.dialog.open(TraceEventViewerComponent, {
+      width: "1000px",
+      height: "1000px",
+      data: {event: event}
+  });
   }
 
-  openRule():void  {
+
+
+  openRule(event: TraceEvent):void  {
     alert("openRule")
   }
 }

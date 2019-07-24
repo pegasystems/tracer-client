@@ -13,6 +13,7 @@ import {StatusBarRightComponent} from "./status-bar/status-bar-right/status-bar-
 import { PageViewerComponent } from './page-viewer/page-viewer.component';
 import { PageDialogComponent } from './event-list/page-dialog/page-dialog.component';
 import {MatTreeModule} from "@angular/material";
+import { TraceEventViewerComponent } from './trace-event-viewer/trace-event-viewer.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatTreeModule} from "@angular/material";
     StatusBarLeftComponent,
     StatusBarRightComponent,
     PageViewerComponent,
-    PageDialogComponent
+    PageDialogComponent,
+    TraceEventViewerComponent
   ],
   imports: [
     BrowserModule,
