@@ -72,6 +72,7 @@ export class TracerEventsService {
       traceEvent.childEvents = event.childEvents;
       traceEvent.parentEvent = event.parentEvent;
 
+      debugger;
 
       eventArray.push(traceEvent);
 

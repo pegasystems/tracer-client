@@ -10,12 +10,6 @@ export class Page {
 
     // Element passed in has primaryPageContent as Top level tag and pagedata as second level tag
     constructor(name: string, xmlString: string) {
-
-/*
-        if (name === "pyDisplayHarness")
-            return;*/
-
-
         this.name = name;
         this.children = [];
         let that = this
@@ -23,11 +17,6 @@ export class Page {
         Parser.parseString(xmlString, function (err, result) {
             that.normalizePageDataModel(result, that.children);
         });
-
-        debugger;
-
-
-
     }
 
     /**

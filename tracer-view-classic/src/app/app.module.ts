@@ -12,8 +12,8 @@ import {StatusBarLeftComponent} from "./status-bar/status-bar-left/status-bar-le
 import {StatusBarRightComponent} from "./status-bar/status-bar-right/status-bar-right.component";
 import { PageViewerComponent } from './page-viewer/page-viewer.component';
 import { PageDialogComponent } from './event-list/page-dialog/page-dialog.component';
-import {MatTreeModule} from "@angular/material";
 import { TraceEventViewerComponent } from './trace-event-viewer/trace-event-viewer.component';
+import { TraceEventDialogComponent } from './event-list/trace-event-dialog/trace-event-dialog.component';
 
 
 @NgModule({
@@ -26,18 +26,18 @@ import { TraceEventViewerComponent } from './trace-event-viewer/trace-event-view
     StatusBarRightComponent,
     PageViewerComponent,
     PageDialogComponent,
-    TraceEventViewerComponent
+    TraceEventViewerComponent,
+    TraceEventDialogComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     MaterialModule,
-    MatTreeModule,
     BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [PageDialogComponent]
+  entryComponents: [PageDialogComponent, TraceEventDialogComponent, TraceEventViewerComponent]
 })
 
 export class AppModule {}

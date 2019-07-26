@@ -67,14 +67,6 @@ export class Utils {
     }
 
 
-    //Latest Commit: Issues/22 7/1/2019
-    //I have two class variables, "counter:number" and "match:any". I wanted to see what the structure of MatchingNode[0]
-    //looked like since it represents the contents of the primary page
-    //So during the first time this method is called, I set the class variable match to the object
-    //"matchingNode" that represents the contents of the primary page that is returned by the method
-    //"getElementsByTagName"
-
-
 
     static getNodeObjectValue(data: any, nodeName: string) {
         if (!data) {

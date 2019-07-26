@@ -2,13 +2,21 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {TracerEventsService} from "../tracer-events.service";
 import {TraceEvent} from '../trace-event'
-import { Page} from "../../../../tracer-client/src/page";
 import {PageDialogComponent} from "./page-dialog/page-dialog.component";
-import {TraceEventViewerComponent} from "../trace-event-viewer/trace-event-viewer.component";
+import {TraceEventDialogComponent} from "./trace-event-dialog/trace-event-dialog.component";
+import { Page} from "../../../../tracer-client/src/page";
 
-export interface DialogData{
+
+export interface PageDialogData{
   page: Page;
 }
+
+export interface TraceEventDialogData{
+  event: TraceEvent;
+}
+
+
+
 
 @Component({
   selector: 'app-event-list',
@@ -45,16 +53,16 @@ export class EventListComponent implements OnInit {
   //Pass in a traceEvent as a parameter for all these three events
   openStepPage(event: TraceEvent):void {
     this.dialog.open(PageDialogComponent, {
-      width: "100%",
+      width: "1000px",
       height: "600px",
       data: {page: event.primaryPage}
     });
   }
 
   openStepDetail(event: TraceEvent):void {
-    this.dialog.open(TraceEventViewerComponent, {
+    this.dialog.open(TraceEventDialogComponent, {
       width: "1000px",
-      height: "1000px",
+      height: "600px",
       data: {event: event}
   });
   }

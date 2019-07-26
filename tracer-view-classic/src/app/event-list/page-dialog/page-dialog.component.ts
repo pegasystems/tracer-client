@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {DialogData} from "../event-list.component";
+import {PageDialogData} from "../event-list.component";
 import {Page} from "../../../../../tracer-client/src/page";
 
 @Component({
@@ -11,9 +11,7 @@ import {Page} from "../../../../../tracer-client/src/page";
 export class PageDialogComponent implements OnInit {
   targetPage : Page;
 
-  constructor(
-    public dialogRef: MatDialogRef<PageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(public dialogRef: MatDialogRef<PageDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: PageDialogData) {
     this.targetPage = data.page;
   }
 
@@ -23,5 +21,4 @@ export class PageDialogComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

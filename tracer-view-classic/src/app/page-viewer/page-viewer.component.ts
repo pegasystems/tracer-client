@@ -3,21 +3,15 @@ import {Page} from "../../../../tracer-client/src/page";
 import {FlatTreeControl, NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource} from '@angular/material/tree';
 
-
 import {Property} from "../../../../tracer-client/src/property";
 
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optiona list of children.
- */
 export class PropertyNode {
   name: string;
   value: string;
   index: string;
   children?: PropertyNode[];
 }
-
 
 /** Flat node with expandable and level information */
 export class ExampleFlatNode {
@@ -27,25 +21,6 @@ export class ExampleFlatNode {
   level: number;
   subscript: string;
 }
-
-/*@Injectable()
-export class FileDatabase {
-  dataChange: BehaviorSubject<PropertyNode[]> = new BehaviorSubject<PropertyNode[]>([]);
-
-  get data(): PropertyNode[] { return this.dataChange.value; }
-
-  constructor(page:Page,xmlString: string) {
-    this.initialize(page, xmlString);
-  }
-
-  initialize(page: Page, xmlString:string) {
-    // Notify the change.
-    // @ts-ignore
-    this.dataChange.next(data);
-  }
-
-}*/
-
 
 @Component({
   selector: 'app-page-viewer',
@@ -60,16 +35,6 @@ export class PageViewerComponent implements OnInit {
 
 
   private _transformer = (node: PropertyNode, level: number) => {
-
-    /* let flatNode = new ExampleFlatNode();
-
-     flatNode.name = node.name;
-     flatNode.value = node.value;
-     flatNode.expandable = !!node.children;
-     flatNode.subscript = node.index;
-     flatNode.level = level;
-
-     return flatNode;*/
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
@@ -80,11 +45,6 @@ export class PageViewerComponent implements OnInit {
   };
 
 
-  /*  treeControl: FlatTreeControl<ExampleFlatNode>;
-
-     treeFlattener: MatTreeFlattener<PropertyNode, ExampleFlatNode>;
-
-     dataSource: MatTreeFlatDataSource<PropertyNode, ExampleFlatNode>;*/
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level, node => node.expandable);
 
@@ -94,29 +54,7 @@ export class PageViewerComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(/*database: FileDataBase*/) {
-   /* this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
-      this._isExpandable, this._getChildren);
-    this.treeControl = new FlatTreeControl<ExampleFlatNode>(this._getLevel, this._isExpandable);
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-    database.dataChange.subscribe(data => {
-      this.dataSource.data = data;
-    });*/
-  }
-
-
-  /*  private _getLevel = (node: ExampleFlatNode) => {
-      return node.level;
-    };
-
-    private _isExpandable = (node: ExampleFlatNode) => {
-      return node.expandable;
-    };
-
-    private _getChildren = (node: PropertyNode): Observable<PropertyNode[]> => {
-      return observableOf(node.children);
-    }*/
+  constructor() {}
 
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -129,7 +67,6 @@ export class PageViewerComponent implements OnInit {
     this.dataSource.data = propertyList;
 
   }
-
 
   /*Tried to use to expand all tree nodes upon a step page window appearing */
   @ViewChild('tree', {static: false}) tree;

@@ -1,5 +1,6 @@
 import {Filter, Field, Operator} from "./filter";
 import {Page} from "./page";
+import {TraceEventProperty} from "./trace-event-property";
 
 
 export class TraceEvent {

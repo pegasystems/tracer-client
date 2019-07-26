@@ -1,36 +1,44 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule, MatTable} from '@angular/material/table';
 
 import {TraceEvent} from "../../../../tracer-client/src/trace-event";
-
-
-
-export class TraceEventRow{
-  name: string;
-  value:string;
-}
-
-const ELEMENT_DATA: TraceEventRow[] = [
-  {name: "stuff", value:"sadsa"},
-  {name: "sadsada", value: "234324"}
-];
-
+import {TraceEventProperty} from "../../../../tracer-client/src/trace-event-property";
 
 @Component({
-  selector: 'app-traceevent-viewer',
+  selector: 'app-trace-event-viewer',
   templateUrl: './trace-event-viewer.component.html',
   styleUrls: ['./trace-event-viewer.component.css']
 })
 
 export class TraceEventViewerComponent implements OnInit {
+
   @Input() traceEvent: TraceEvent;
 
-  displayedColumns: string[] = ["name", "value"];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ["Property Name", "Property Value"];
+  propertyList: TraceEventProperty[];
 
-  constructor() { }
 
-  ngOnInit() {
+  dataSource = new MatTableDataSource<TraceEventProperty>(this.propertyList);
+
+
+  constructor() {
   }
 
+  //no drop shadow, and full modal width
+
+  ngOnInit() {
+    this.propertyList = [];
+    for (let prop in this.traceEvent) {
+      if (this.traceEvent[prop] && typeof this.traceEvent[prop] !== "object") {
+        this.propertyList.push(new TraceEventProperty(prop, this.traceEvent[prop]));
+      }
+    }
+
+    this.dataSource.data = this.propertyList;
+  }
+
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

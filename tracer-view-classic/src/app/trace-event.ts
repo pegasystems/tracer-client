@@ -1,5 +1,6 @@
 // THIS SHOULD BE SHARED WITH TRACER CLIENT!!!
 import {Page} from "../../../tracer-client/src/page";
+import {TraceEventProperty} from "../../../tracer-client/src/trace-event-property";
 
 export class TraceEvent {
   line:string;
@@ -36,6 +37,7 @@ export class TraceEvent {
   endSequenceNumber: string;
   childEvents: Array<TraceEvent>;
   parentEvent: TraceEvent;
+  traceEventProperties: TraceEventProperty[];
 
 
 
