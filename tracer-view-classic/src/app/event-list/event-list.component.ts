@@ -11,12 +11,6 @@ export interface PageDialogData{
   page: Page;
 }
 
-export interface TraceEventDialogData{
-  event: TraceEvent;
-}
-
-
-
 
 @Component({
   selector: 'app-event-list',
