@@ -53,21 +53,20 @@ export class EventsServiceFromFile implements EventsService {
                     let event = new TraceEvent();
 
 
-                    //line and boolean properties not obtained
+
+                    //Right now, event.alertLabel -> is elapsed time
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
                     event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");
-                    event.stepNumber = Utils.getNodeStringValue(eventNode, "StepNumber");
+                    event.stepNumber = Utils.getAttributeValue(eventNode, "step")
                     event.eventType = Utils.getNodeStringValue(eventNode, "EventType");
                     event.stepMethod = Utils.getNodeStringValue(eventNode, "StepMethod");
                     event.stepStatus = Utils.getNodeStringValue(eventNode, "mStepStatus");
                     event.interaction = Utils.getNodeStringValue(eventNode, "Interaction");
-                    event.threadname = Utils.getNodeStringValue(eventNode, "ThreadName");
+                    event.threadName = Utils.getNodeStringValue(eventNode, "ThreadName");
                     event.sRSName = Utils.getAttributeValue(eventNode, "rsname");
                     event.sRSVersion = Utils.getAttributeValue(eventNode, "rsvers");
-                    event.timeStamp = Utils.getNodeStringValue(eventNode, "Elapsed");
                     event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
                     event.activityNumber = Utils.getNodeStringValue(eventNode, "ActivityNumber");
-                    event.alertLabel = Utils.getNodeStringValue(eventNode, "AlertLabel");
                     event.DBTData = Utils.getNodeStringValue(eventNode, "DBTData");
                     event.eventKey = Utils.getNodeStringValue(eventNode, "EventKey");
                     event.eventName = Utils.getNodeStringValue(eventNode, "EventName");
@@ -78,12 +77,23 @@ export class EventsServiceFromFile implements EventsService {
                     event.interactionBytes = Utils.getNodeStringValue(eventNode, "InteractionBytes");
                     event.interactionQueryParam = Utils.getNodeStringValue(eventNode, "InteractionQueryParam");
                     event.methodName = Utils.getNodeStringValue(eventNode, "MethodName");
-                    event.sInsKey = Utils.getNodeStringValue(eventNode, "inskey");
-                    event.sKeyName = Utils.getNodeStringValue(eventNode, "keyname");
+                    event.sInsKey = Utils.getAttributeValue(eventNode, "inskey");
+                    event.sKeyName = Utils.getAttributeValue(eventNode, "keyname");
                     event.endSequenceNumber = Utils.getNodeStringValue(eventNode, "EndSequence");
+                    event.timeStamp = Utils.getNodeStringValue(eventNode, "DateTime");
+
                     event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
 
+                    let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed"))/1000;
+
+                    if(elapsedTime) {
+                        event.alertLabel = elapsedTime.toString();
+                    }
+
+
+                    debugger;
                     eventList.push(event);
+
                     this.sequenceNumber++;
                 }
                 resolve(eventList);

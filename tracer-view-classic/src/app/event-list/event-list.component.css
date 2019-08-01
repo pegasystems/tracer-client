@@ -25,10 +25,10 @@ tbody {
 
 table {
   font-size: 8pt;
-  font-family: arial;
   text-align: left;
   color: black;
   height: 100%;
-  width: 100%;
+  width: 1000px;
+  font-family: Arial;
 }
 

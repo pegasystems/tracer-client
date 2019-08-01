@@ -19,7 +19,7 @@ export class TraceEvent {
   aaQueueEvent: boolean;
   hasMessages: boolean;
   interaction: string;
-  threadname: string;
+  threadName: string;
   interactionBytes: string;
   interactionQueryParam: string;
   methodName: string;
@@ -32,6 +32,7 @@ export class TraceEvent {
   sKeyName: string;
   sRSName: string;
   sRSVersion: string;
+  elapsed:number;
   timeStamp: string;
   sequenceNumber: number;
   endSequenceNumber: string;

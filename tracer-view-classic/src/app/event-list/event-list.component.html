@@ -12,7 +12,7 @@
     <td ngClass="event-column" TITLE="Status">Status</td>
     <td ngClass="event-column" TITLE="Event Type">Event Type</td>
     <td ngClass="event-column" TITLE="Elapsed">Elapsed</td>
-    <td ngClass="event-column" TITLE="Name">Name</td>
+    <td ngClass="event-column" TITLE="Name">Key Name</td>
     <td ngClass="event-column" TITLE="RuleSet">RuleSet Name</td>
     <td ngClass="event-column" TITLE="RuleSet">RuleSet Version</td>
   </tr>
@@ -20,20 +20,25 @@
   <tbody ngClass="table-body">
     <tr *ngFor="let event of events">
       <td style="width:15px; overflow:auto" >&nbsp;</td>
-      <td style="width:75px;" (click)="openStepDetail(event)"  ngClass="event-column" TITLE="Line">{{event.sequenceNumber}}</td>
-      <td style="width:75px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Thread">{{event.threadname}}</td>
+      <td style="width:25px;" (click)="openStepDetail(event)"  ngClass="event-column" TITLE="Line">{{event.sequenceNumber}}</td>
+      <td style="width:75px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Thread">{{event.threadName}}</td>
       <td style="width:50px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Int">{{event.interaction}}</td>
       <td style="width:50px;" (click)="openStepDetail(event)" ngClass="event-column"TITLE="Rule#" ALIGN="LEFT" >{{event.activityNumber}}</td>
-      <td style="width:20%;" (click)="openStepDetail(event)"  ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</td>
-      <td style="width:30%;" (click)="openStepPage(event)"    ngClass="event-column" TITLE="Step Page">{{event.primaryPageName}}</td>
+      <td style="overflow: auto; width:20%;" (click)="openStepDetail(event)"  ngClass="event-column" TITLE="Step Method">{{event.stepMethod}}</td>
+      <td style="overflow: auto; width:20%;" (click)="openStepPage(event)"    ngClass="event-column" TITLE="Step Page">{{event.primaryPageName}}</td>
       <td style="width:50px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Step">{{event.stepNumber}}</td>
       <td style="width:10%; max-width:75px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Status">{{event.stepStatus}}</td>
-      <td style="width:110px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Event Type">{{event.eventType}}</td>
-      <td style="width:100px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Elapsed">{{event.timeStamp}}</td>
-      <td style="width:20%;" (click)="openRule(event)" ngClass="event-column" TITLE="Name">{{event.activityName}}</td>
+      <td style="width:100px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Event Type">{{event.eventType}}</td>
+      <td style="width:100px;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="Elapsed">{{event.alertLabel}}</td>
+      <td style="width:20%; color:blue;" (click)="openRule(event)" ngClass="event-column" TITLE="Name">{{event.sKeyName}}</td>
       <td style="width:20%;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="RuleSet"> {{event.sRSName}} </td>
       <td style="width:20%;" (click)="openStepDetail(event)" ngClass="event-column" TITLE="RuleSet"> {{event.sRSVersion}}</td>
     </tr>
   </tbody>
 </table>
 
+
+
+<!--Activity Number and Rule Number the Same, step Number is different
+Changes made to the trace Event class don't seem to be reflected in the web developer console, using stepNumber as a place holder
+for TraceEvent property "elasped" and -->

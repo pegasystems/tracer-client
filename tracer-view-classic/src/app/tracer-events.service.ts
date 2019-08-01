@@ -5,13 +5,9 @@ import {TracerLocalStatusService} from "./tracer-local-status.service";
 import {Client} from "../../../tracer-client/src/client";
 
 //import * as Tracer from "tracer-client";
-
-
 @Injectable({
   providedIn: 'root'
 })
-
-
 
 export class TracerEventsService {
   client: Client;
@@ -22,7 +18,16 @@ export class TracerEventsService {
   eventObservers: Array<Observer<TraceEvent[]>>;
 
   constructor(private statusService: TracerLocalStatusService) {
-    this.client = new Client("FILE", "", "");
+
+    let connectionID = localStorage.getItem("connectionId");
+    let nodeID = localStorage.getItem("nodeId");
+
+    if(!connectionID || !nodeID) {
+      this.client = new Client("FILE", "", "");
+    }
+    else {
+      this.client = new Client("PEGA", connectionID, nodeID);
+    }
 
 
     this.eventObservers = new Array<Observer<TraceEvent[]>>();
@@ -66,7 +71,7 @@ export class TracerEventsService {
       traceEvent.stepMethod = event.stepMethod;
       traceEvent.stepNumber = event.stepNumber;
       traceEvent.stepStatus = event.stepStatus;
-      traceEvent.threadname = event.threadname;
+      traceEvent.threadName = event.threadName;
       traceEvent.timeStamp = event.timeStamp;
 
       traceEvent.childEvents = event.childEvents;

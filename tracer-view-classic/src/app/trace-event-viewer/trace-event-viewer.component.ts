@@ -16,24 +16,24 @@ export class TraceEventViewerComponent implements OnInit {
 
   displayedColumns: string[] = ["Property Name", "Property Value"];
   propertyList: TraceEventProperty[];
-
-
   dataSource = new MatTableDataSource<TraceEventProperty>(this.propertyList);
+  constructor() {}
 
 
-  constructor() {
-  }
-
-  //no drop shadow, and full modal width
 
   ngOnInit() {
     this.propertyList = [];
     for (let prop in this.traceEvent) {
       if (this.traceEvent[prop] && typeof this.traceEvent[prop] !== "object") {
-        this.propertyList.push(new TraceEventProperty(prop, this.traceEvent[prop]));
+        let name = prop;
+        if (!prop.includes("sRS") && !prop.includes("sIns") && !prop.includes("sKey")) {
+          name = prop.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
+            return str.toUpperCase();
+          })
+        }
+        this.propertyList.push(new TraceEventProperty(name, this.traceEvent[prop]));
       }
     }
-
     this.dataSource.data = this.propertyList;
   }
 

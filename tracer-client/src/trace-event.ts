@@ -1,7 +1,5 @@
 import {Filter, Field, Operator} from "./filter";
 import {Page} from "./page";
-import {TraceEventProperty} from "./trace-event-property";
-
 
 export class TraceEvent {
     activityNumber : string;
@@ -19,7 +17,7 @@ export class TraceEvent {
     aaQueueEvent: boolean;
     hasMessages: boolean;
     interaction: string;
-    threadname: string;
+    threadName: string;
     interactionBytes: string;
     interactionQueryParam: string;
     methodName: string;
@@ -46,7 +44,7 @@ export class TraceEvent {
         let targetValue = "";
         switch (field){
             case Field.THREAD:
-                targetValue = this.threadname;
+                targetValue = this.threadName;
                 break;
             case Field.RULESET:
                 targetValue = this.sRSName;

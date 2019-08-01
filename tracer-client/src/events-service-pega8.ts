@@ -195,23 +195,49 @@ export class EventsServicePega8 implements EventsService {
                     let traceEventNodes = data.getElementsByTagName("TraceEventHeader");
                     let eventsToAppend = [];
                     for(let i=0; i<traceEventNodes.length; i++){
-                        let node = traceEventNodes[i];
-                        let traceEvent = new TraceEvent();
-                        traceEvent.sequenceNumber = Utils.getNodeIntValue(node, "Sequence");
-                        traceEvent.activityName = Utils.getNodeStringValue(node, "ActivityName");
-                        traceEvent.stepNumber = Utils.getNodeStringValue(node, "StepNumber");
-                        traceEvent.eventType = Utils.getNodeStringValue(node, "EventType");
-                        traceEvent.stepMethod = Utils.getNodeStringValue(node, "StepMethod");
-                        traceEvent.stepStatus = Utils.getNodeStringValue(node, "StepStatus");
+                        let eventNode = traceEventNodes[i];
+                        let event = new TraceEvent();
 
-                        let primaryPage = Utils.getNodeStringValue(node, "PrimaryPage");
 
-                        if(typeof primaryPage !== null)
-                            traceEvent.primaryPage = primaryPage;
+                        event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
+                        event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");
+                        event.stepNumber = Utils.getAttributeValue(eventNode, "step")
+                        event.eventType = Utils.getNodeStringValue(eventNode, "EventType");
+                        event.stepMethod = Utils.getNodeStringValue(eventNode, "StepMethod");
+                        event.stepStatus = Utils.getNodeStringValue(eventNode, "mStepStatus");
+                        event.interaction = Utils.getNodeStringValue(eventNode, "Interaction");
+                        event.threadName = Utils.getNodeStringValue(eventNode, "ThreadName");
+                        event.sRSName = Utils.getAttributeValue(eventNode, "rsname");
+                        event.sRSVersion = Utils.getAttributeValue(eventNode, "rsvers");
+                        event.primaryPageName = Utils.getNodeStringValue(eventNode, "PrimaryPageName");
+                        event.activityNumber = Utils.getNodeStringValue(eventNode, "ActivityNumber");
+                        event.DBTData = Utils.getNodeStringValue(eventNode, "DBTData");
+                        event.eventKey = Utils.getNodeStringValue(eventNode, "EventKey");
+                        event.eventName = Utils.getNodeStringValue(eventNode, "EventName");
+                        event.eventNode = Utils.getNodeStringValue(eventNode, "NodeName");
+                        event.adpTracerKey = Utils.getNodeStringValue(eventNode, "ADPTracerKey");
+                        event.adpTracerRackKey = Utils.getNodeStringValue(eventNode, "ADPTracerRackKey");
+                        event.adpLoadPageName = Utils.getNodeStringValue(eventNode, "ADPLoadPageName");
+                        event.interactionBytes = Utils.getNodeStringValue(eventNode, "InteractionBytes");
+                        event.interactionQueryParam = Utils.getNodeStringValue(eventNode, "InteractionQueryParam");
+                        event.methodName = Utils.getNodeStringValue(eventNode, "MethodName");
+                        event.sInsKey = Utils.getAttributeValue(eventNode, "inskey");
+                        event.sKeyName = Utils.getAttributeValue(eventNode, "keyname");
+                        event.endSequenceNumber = Utils.getNodeStringValue(eventNode, "EndSequence");
+                        event.timeStamp = Utils.getNodeStringValue(eventNode, "DateTime");
 
-                        eventsToAppend.push(traceEvent);
+                        event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
+
+                        let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed"))/1000;
+
+                        if(elapsedTime) {
+                            event.alertLabel = elapsedTime.toString();
+                        }
+
+                        eventsToAppend.push(event);
 
                         this.sequenceNumber++;
+
                     }
 
 
