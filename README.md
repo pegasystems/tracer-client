@@ -30,11 +30,11 @@ After pulling the project, run the following command into Angular project direct
 ng build --prod
 ```
 The three files will be generated in the dist subfolder of the Angular project. There will be three files titled "main", "polyfill"
-"runtime", use the ECMAScript 5 version of the files instead of the 2015 version of the files. There will be an additional css file with the three relevant generated files. 
+"runtime", use the ECMAScript 5 version of the files instead of the 2015 version of the files. There will be an additional css file generated with the three relevant generated files. 
 
 Login into Dev Studio lu-84 system and add the NG-Tracer branch. 
 
-In the "Text File" section of the NG-Tracer branch, there are 4 files titled with the suffic "webwb pztracer-ng". Copy and paste the contents of the ECMAScript 5 version of files generated into their correct text file in the branch. 
+In the "Text File" section of the NG-Tracer branch, there are 4 files titled with the prefix "webwb pztracer-ng". Copy and paste the contents of the ECMAScript 5 version of files generated into their correct text file in the branch. 
 
   To save the changes to the content of a text file, click the the blue "Check out" button in the top right corner and to save the
   changes made, clicke the blue "Save" button that has replaced the "Check out" button. Then click the gray "Check in" button
