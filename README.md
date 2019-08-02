@@ -26,7 +26,7 @@ npm build-all
 
 After pulling the project, run the following command into Angular project directory
 ```
-//Generates the necessary artifacts, the --prod tag only generates the three necessary files to be used in Pega
+//Generates the artifacts containing the Angular project's source code, the --prod tag only generates the three necessary files to be used in Pega
 ng build --prod
 ```
 The three files will be generated in the dist subfolder of the Angular project. There will be three files titled "main", "polyfill"
