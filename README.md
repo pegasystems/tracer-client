@@ -56,7 +56,7 @@ Checkout and save and then checkin the changes the same way the the four previou
 In the bottom tab of the page where the "Tracer" button normally is, there will be a new button titled "NG Tracer" right next to it, click it and it will emulate how the original tracer works. 
 
 
-##Project-Structure
+## Project-Structure
 This is roughly how the sub projects are structured
 ![Project structure](https://user-images.githubusercontent.com/83574/59567501-b88a0000-903c-11e9-98b7-df1dbd4a65c6.png "Project structure")
 
