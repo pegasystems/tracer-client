@@ -1,18 +1,21 @@
 language: node_js
 node_js:
-  - "8"
+  - "10"
 cache:
   directories:
-    - node_modules
 install:
   - npm install -g codecov
   - npm install -g istanbul
   - npm install -g typescript
   - npm ci
-  - npm run install-all
+  - cd tracer-view-classic
+  - npm ci
+  - cd ../dev-tools
+  - npm ci
+  - cd ../tracer-client
+  - npm ci
+  - cd ..
 script:
   - npm run build-all
-  - istanbul cover tracer-client/node_modules/jasmine/bin/jasmine.js
-  - codecov
 after_success:
   - bash <(curl -s https://codecov.io/bash)
