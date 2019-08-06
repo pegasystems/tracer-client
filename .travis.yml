@@ -1,12 +1,8 @@
 language: node_js
 node_js:
-  - "8"
+  - "10"
 cache:
   directories:
-    - node_modules
-    - tracer-view-classic/node_modules
-    - tracer-client/node_modules
-    - dev-tools/node_modules
 install:
   - npm install -g codecov
   - npm install -g istanbul
