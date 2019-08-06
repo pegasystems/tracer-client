@@ -9,7 +9,12 @@ install:
   - npm install -g istanbul
   - npm install -g typescript
   - npm ci
-  - npm run install-all
+  - cd tracer-view-classic
+  - npm ci
+  - cd ../dev-tools
+  - npm ci
+  - cd ../tracer-client
+  - npm ci
 script:
   - npm run build-all
   - istanbul cover tracer-client/node_modules/jasmine/bin/jasmine.js
