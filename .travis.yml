@@ -18,6 +18,7 @@ install:
   - npm ci
   - cd ../tracer-client
   - npm ci
+  - cd ..
 script:
   - npm run build-all
 after_success:
