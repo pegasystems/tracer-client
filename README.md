@@ -24,7 +24,7 @@ npm build-all
 ```
 
 
-## Project-Structure
+## Project structure
 This is roughly how the sub projects are structured
 ![Project structure](https://user-images.githubusercontent.com/83574/59567501-b88a0000-903c-11e9-98b7-df1dbd4a65c6.png "Project structure")
 
