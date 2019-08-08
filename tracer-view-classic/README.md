@@ -1,27 +1,73 @@
-# TracerViewClassic
+# Tracer View Classic
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
+Tracer view classic is a UI for the tracer using the tracer-client interface which tries to demonstrate all of the existing features of the tracer in a very familiar interface.
 
-## Development server
+As this project begins to diverge from the existing tracer we'll likely rename it.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Local development
+This project comes bundled with a sample trace output file so you can start development without a Pega environemnt.
+To do so, execute the following commants
+```
+// after cloning the repository
 
-## Code scaffolding
+npm install
+npm run install-all
+npm start-trace-file-server
+cd tracer-view-classic
+ng serve
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+// navigate to localhost:4200
+```
 
-## Build
+## Using this project in a Pega environment
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+There is a branch we have been using that allows us to load the project output into the Dev Studio. 
 
-## Running unit tests
+This branch is not yet available for distribution but for posterity, or if some one would like to replicate it,
+ the branch 
+has the following structure:
+  - *Harness*: pzTracerViewer
+    - *Text File*: pztracer-ng-styles.css
+    - *Section*: pzTracerViewer
+      - *Section*: pzTracerViewerSessionConfig
+        - Text file: pztracer-ng-main-es5.js
+        - Text File: pztracer-ng-pollyfills-es5.js
+        - Text file: pztracer-ng-runtime-es5.js
+      - *Section*: pzTracerViewerMain
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+*Note: It is important that the session config code executes before the compiled angular text files.*
 
-## Running end-to-end tests
+#### pzTracerViewerMain
+```
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<app-root></app-root>
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+#### pzTracerVeiwerSessionConfig
+```
+<script>
+  localStorage.connectionId = "<pega:reference mode="normal" name="pxRequestor.pxClientConnection"/>";
+    localStorage.nodeId = "<pega:reference mode="normal" name="pxProcess.pxSystemNodeID"/>";
+</script>
+<pega:static type="script" app="webwb" >
+	<pega:bundle name="pztracer-ng" />
+</pega:static>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Updating the NG-Tracer branch with the latest build from source
+Run the following command in the tracer-view-classic sub-project. 
+```
+ng build --prod
+```
+The compiled angular application will be generated in the project's `dist` folder. There should be three 
+javascript files titled `main`, `polyfill` and `runtime`; use the ECMAScript 5 version of the files 
+instead of the 2015 version of the files. There will be an additional css file generated in the same 
+directory. 
+
+Copy the contents of these four generated files into the text file rules within the Dev Studio with the 
+corresponding names.
