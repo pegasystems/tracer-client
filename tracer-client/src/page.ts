@@ -12,7 +12,7 @@ export class Page {
     constructor(name: string, xmlString: string) {
         this.name = name;
         this.children = [];
-        let that = this
+        let that = this;
 
         Parser.parseString(xmlString, function (err, result) {
             that.normalizePageDataModel(result, that.children);

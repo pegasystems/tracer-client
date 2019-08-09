@@ -19,8 +19,8 @@ export class EventsServicePega8 implements EventsService {
     servletUrl: string;
     SESSION_TYPE: string;
 
-    constructor(aConnectionID: string, aNodeId?: string){
-        this.connectionID= aConnectionID;
+    constructor(aConnectionID: string, aNodeId?: string) {
+        this.connectionID = aConnectionID;
         this.debugConnectionID = aConnectionID;
         this.nodeId = aNodeId || "";
         this.hostName = "";
@@ -36,48 +36,48 @@ export class EventsServicePega8 implements EventsService {
         this.SESSION_TYPE = "STANDARD";
     }
 
-    connect(): Promise<any>{
-        return new Promise<any>((resolve, fail)=>{
-            if(!this.gTracerInitialized) {
-            this.getSettings()
+    connect(): Promise<any> {
+        return new Promise<any>((resolve, fail) => {
+            if (!this.gTracerInitialized) {
+                this.getSettings()
                 // .then(()=>{
                 //     return this.initializeWebTierRequestor();
                 // })
-                .then((res)=>{
-                    return this.initializeTracerRequestor();
-                })
-                .then(() => {
-                    return this.startConnection();
-                })
-                .then(()=>{
-                    return this.startTrace();
-                })
-                .then(()=>{
-                    return this.postOptions();
-                })
-                .then(()=>{
-                    resolve();
-                })
-                .catch((e)=>{
-                    console.log("Something went wrong: "+ e);
-                });
-        } else {
-            resolve()
-        }
+                    .then((res) => {
+                        return this.initializeTracerRequestor();
+                    })
+                    .then(() => {
+                        return this.startConnection();
+                    })
+                    .then(() => {
+                        return this.startTrace();
+                    })
+                    .then(() => {
+                        return this.postOptions();
+                    })
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch((e) => {
+                        console.log("Something went wrong: " + e);
+                    });
+            } else {
+                resolve()
+            }
         });
     }
 
     private getSettings(): Promise<Options> {
         this.options = new Options(this.connectionID);
-        let options=  this.options;
-        return new Promise((resolve,reject) => {
+        let options = this.options;
+        return new Promise((resolve, reject) => {
             options.applyDefaults();
             resolve(options);
         });
     }
 
     private initializeWebTierRequestor(): Promise<any> {
-        return new Promise<any>((resolve, fail)=>{
+        return new Promise<any>((resolve, fail) => {
             let formData = new FormData();
             formData.append("UserIdentifier", "feenr");
             formData.append("password", "install"); // number 123456 is immediately converted to a string "123456"
@@ -86,107 +86,125 @@ export class EventsServicePega8 implements EventsService {
                 excludeServlet: true,
                 formData: formData
             })
-                .then(()=>{resolve()})
-                .catch((e)=>{fail(e)})
+                .then(() => {
+                    resolve()
+                })
+                .catch((e) => {
+                    fail(e)
+                })
         });
     }
 
     private initializeTracerRequestor(): Promise<any> {
-        return new Promise<any>((resolve, reject)=>{
+        return new Promise<any>((resolve, reject) => {
             this.traceServletRequest({})
-                .then((res)=>{resolve(res)})
-                .catch((error)=>{reject(error)});
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((error) => {
+                    reject(error)
+                });
         });
     }
 
     private startConnection(): Promise<any> {
-        return new Promise<any>((resolve, fail)=>{
+        return new Promise<any>((resolve, fail) => {
             let params = {};
-            if (this.SESSION_TYPE=="RULEWATCH"){
+            if (this.SESSION_TYPE == "RULEWATCH") {
                 params = {
-                    pzDebugRequest : "connect",
-                    pzCommandSession : this.connectionID,
-                    pzDebugConnection : this.connectionID,
-                    pySessionType : this.SESSION_TYPE,
-                    pyWatchInsKey : escape(this.pyWatchInsKey),
-                    pyWatchClassName : escape(this.pyWatchClassName)
+                    pzDebugRequest: "connect",
+                    pzCommandSession: this.connectionID,
+                    pzDebugConnection: this.connectionID,
+                    pySessionType: this.SESSION_TYPE,
+                    pyWatchInsKey: escape(this.pyWatchInsKey),
+                    pyWatchClassName: escape(this.pyWatchClassName)
                 }
             } else {
                 params = {
-                    pzDebugRequest : "connect",
-                    pzCommandSession : this.connectionID,
-                    pzDebugConnection : this.connectionID,
-                    pySessionType : this.SESSION_TYPE
+                    pzDebugRequest: "connect",
+                    pzCommandSession: this.connectionID,
+                    pzDebugConnection: this.connectionID,
+                    pySessionType: this.SESSION_TYPE
                 }
             }
             this.traceServletRequest({queryParams: params})
-                .then((res)=>{resolve(res)})
-                .catch((e)=>{fail(e)});
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((e) => {
+                    fail(e)
+                });
         });
     }
 
-    private startTrace(): Promise<any>{
-        return new Promise<any>((resolve, fail)=>{
+    private startTrace(): Promise<any> {
+        return new Promise<any>((resolve, fail) => {
             let query = {
-                pzDebugRequest : "TraceApp",
-                pzMaxEvents : this.maxEventsPerRequest,
-                pzForceDisconnect : "Y",
-                pzCommandSession : this.connectionID,
-                pzDebugConnection : this.connectionID
+                pzDebugRequest: "TraceApp",
+                pzMaxEvents: this.maxEventsPerRequest,
+                pzForceDisconnect: "Y",
+                pzCommandSession: this.connectionID,
+                pzDebugConnection: this.connectionID
             }
-            this.traceServletRequest({ queryParams: query})
-                .then((res)=>{resolve(res)})
-                .catch((e)=>{fail(e)});
+            this.traceServletRequest({queryParams: query})
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((e) => {
+                    fail(e)
+                });
         });
     }
 
     postOptions(): Promise<any> {
         let options = this.options;
-        return new Promise<any>((resolve, fail)=>{
+        return new Promise<any>((resolve, fail) => {
             let strPostData = options.getQueryFormData();
-            let query = {
-
-            };
+            let query = {};
             this.traceServletRequest({
                 queryParams: query,
                 method: "POST",
                 formData: strPostData,
             })
-                .then((res)=>{resolve(res)})
-                .catch((e)=>{fail(e)});
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((e) => {
+                    fail(e)
+                });
         });
     };
 
-    getTraceEvent(sequenceNumber: number) : Promise<TraceEvent>{
+    getTraceEvent(sequenceNumber: number): Promise<TraceEvent> {
         this.traceServletRequest({
             queryParams: {
-                pzDebugRequest : "getEvent",
-                pzCommandSession : this.debugConnectionID,
-                pzDebugConnection : this.connectionID,
-                pzEvent : sequenceNumber
+                pzDebugRequest: "getEvent",
+                pzCommandSession: this.debugConnectionID,
+                pzDebugConnection: this.connectionID,
+                pzEvent: sequenceNumber
             }
         });
         return null;
     }
 
-    requestTraceEvents(): Promise<any>{
-        return new Promise<any>((resolve, fail)=>{
+    requestTraceEvents(): Promise<any> {
+        return new Promise<any>((resolve, fail) => {
             let params = {
-                pzDebugRequest : "Trace",
-                    MaxEvents : "200",
-                    pzCommandSession : this.debugConnectionID,
-                    pzDebugConnection : this.connectionID,
-                    pzXmlOnly : "true",
-                    pzSessionType : this.SESSION_TYPE
+                pzDebugRequest: "Trace",
+                MaxEvents: "200",
+                pzCommandSession: this.debugConnectionID,
+                pzDebugConnection: this.connectionID,
+                pzXmlOnly: "true",
+                pzSessionType: this.SESSION_TYPE
             };
 
             this.traceServletRequest({queryParams: params})
-                .then((res)=>{
+                .then((res) => {
                     let data = res;
-                    let cmdStatus = Utils.getNodeStringValue(data,"CmdStatus");
+                    let cmdStatus = Utils.getNodeStringValue(data, "CmdStatus");
                     if (cmdStatus.indexOf("error") >= 0) {
-                        let cmdResponse = Utils.getNodeStringValue(data,"CmdResponse");
-                        let aMessage =  "Please restart Tracer because " + cmdResponse;
+                        let cmdResponse = Utils.getNodeStringValue(data, "CmdResponse");
+                        let aMessage = "Please restart Tracer because " + cmdResponse;
                         fail(aMessage);
                         return;
                     }
@@ -194,7 +212,7 @@ export class EventsServicePega8 implements EventsService {
 
                     let traceEventNodes = data.getElementsByTagName("TraceEventHeader");
                     let eventsToAppend = [];
-                    for(let i=0; i<traceEventNodes.length; i++){
+                    for (let i = 0; i < traceEventNodes.length; i++) {
                         let eventNode = traceEventNodes[i];
                         let event = new TraceEvent();
 
@@ -228,9 +246,9 @@ export class EventsServicePega8 implements EventsService {
 
                         event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
 
-                        let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed"))/1000;
+                        let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed")) / 1000;
 
-                        if(elapsedTime) {
+                        if (elapsedTime) {
                             event.alertLabel = elapsedTime.toString();
                         }
 
@@ -243,28 +261,30 @@ export class EventsServicePega8 implements EventsService {
 
                     resolve(eventsToAppend);
                 })
-                .catch((e)=>{fail(e);});
+                .catch((e) => {
+                    fail(e);
+                });
         });
     }
 
-    clear(){
+    clear() {
         // send a request to server to reset activity counter.
         this.traceServletRequest({
             queryParams: {
-                pzDebugRequest : "settings",
-                pzSetCmd : "ResetCounter",
-                pzDebugConnection : this.connectionID
+                pzDebugRequest: "settings",
+                pzSetCmd: "ResetCounter",
+                pzDebugConnection: this.connectionID
             }
         });
     }
 
-    disconnect(force:boolean){
+    disconnect(force: boolean) {
         let params: any = {
-            pzDebugRequest : "disconnect",
-            pzDebugConnection : this.connectionID,
-            pzXmlOnly : "true"
+            pzDebugRequest: "disconnect",
+            pzDebugConnection: this.connectionID,
+            pzXmlOnly: "true"
         };
-        if(force){
+        if (force) {
             params["pzForceDisconnect"] = "Y"
         }
         this.traceServletRequest({
@@ -272,63 +292,83 @@ export class EventsServicePega8 implements EventsService {
         });
     }
 
-    private getURL(queryParameters?: any, excludeServlet?:boolean){
+    private getURL(queryParameters?: any, excludeServlet?: boolean) {
         let queryString = "";
-        if(!queryParameters){
+        if (!queryParameters) {
             queryParameters = {};
         }
         queryParameters.pzNodeID = this.nodeId;
-        if(queryParameters){
+        if (queryParameters) {
             queryString = Utils.getQueryString(queryParameters)
         }
-        if(excludeServlet){
+        if (excludeServlet) {
             return this.serverUrl + queryString;
         }
         return this.serverUrl + this.servletUrl + queryString;
     }
 
-    private traceServletRequest(request: any): Promise<Document>{
+    private traceServletRequest(request: any): Promise<Document> {
         let queryParams = request.queryParams;
         let url = this.getURL(queryParams, request.excludeServlet || false);
-        let method =  request.method || "GET";
+        let method = request.method || "GET";
         let body = request.body || request.formData || {};
 
-        return new Promise<Document>((resolve, fail)=>{
+        return new Promise<Document>((resolve, fail) => {
             const request = new XMLHttpRequest();
             request.open(method, url);
             request.setRequestHeader("authorization", "Basic " + btoa("feenr:install"));
             request.onload = () => {
                 var response = request.responseText;
                 let parser = new DOMParser();
-                let xmlDoc:Document = parser.parseFromString(response,"text/xml");
+                let xmlDoc: Document = parser.parseFromString(response, "text/xml");
 
                 let status = "";
                 let cmdStatusNode = xmlDoc.getElementsByTagName("CmdStatus")[0];
-                if(cmdStatusNode) {
+                if (cmdStatusNode) {
                     status = cmdStatusNode.textContent;
                 }
                 let serverResponse = "";
                 let serverResponseNode = xmlDoc.getElementsByTagName("CmdResponse")[0];
-                if(serverResponseNode){
+                if (serverResponseNode) {
                     serverResponse = serverResponseNode.textContent;
                 }
 
                 // if(status == "success"){
-                    resolve(xmlDoc);
+                resolve(xmlDoc);
                 // } else {
                 //     fail(status+":"+serverResponse);
                 // }
             };
-            request.onerror = (e)=>{fail(e);};
+            request.onerror = (e) => {
+                fail(e);
+            };
             request.send(body);
         });
     }
 
-
     getPageContent(eventNumber: number, pageName: string): Promise<Page> {
 
-        return new Promise<Page>((resolve,reject) => {
-            resolve();
+        return new Promise<Page>((resolve, reject) => {
+            this.traceServletRequest({
+                method: "GET",
+                excludeServlet: false,
+                queryParams: {
+                    pzDebugRequest: "getEvent",
+                    pzEvent: "%20" + eventNumber + "%20",
+                    pzCommandSession: this.debugConnectionID,
+                    pzDebugConnection: this.connectionID,
+                    pzNodeID: this.nodeId,
+                    pzTraceEventNodeID: this.nodeId,
+                    pySessionType: this.SESSION_TYPE,
+                }
+            })
+                .then((xmlDoc) => {
+                    let page:Page = new Page(pageName,xmlDoc.getElementsByTagName("pagedata")[0].outerHTML);
+                    resolve(page)
+                })
+                .catch((e) => {
+                    reject(e)
+                })
         })
     }
 }

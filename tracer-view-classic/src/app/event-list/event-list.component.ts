@@ -33,7 +33,7 @@ export class EventListComponent implements OnInit {
     'ruleset'];
 
 
-  constructor(eventsService: TracerEventsService, public dialog: MatDialog) {
+  constructor(public eventsService: TracerEventsService, public dialog: MatDialog) {
     this.events = [];
     eventsService.onTraceEvents().subscribe((result) => {
       result.forEach((traceEvent) => {
@@ -46,10 +46,12 @@ export class EventListComponent implements OnInit {
 
   //Pass in a traceEvent as a parameter for all these three events
   openStepPage(event: TraceEvent):void {
-    this.dialog.open(PageDialogComponent, {
-      width: "1000px",
-      height: "600px",
-      data: {page: event.primaryPage}
+    this.eventsService.getPageContent(event.sequenceNumber, "").subscribe((page) => {
+      this.dialog.open(PageDialogComponent, {
+        width: "1000px",
+        height: "600px",
+        data: {page: page}
+      });
     });
   }
 

@@ -2,11 +2,12 @@ import {TraceEvent} from "./trace-event";
 import {EventsService} from "./events-service";
 import {Utils} from "./utils";
 import {Page} from "./page";
-import {TraceEventProperty} from "./trace-event-property";
+
 
 export class EventsServiceFromFile implements EventsService {
     private sequenceNumber: number = 0;
     private traceEventNodes: HTMLCollectionOf<Element>;
+
 
     traceEvent: TraceEvent;
 
@@ -53,7 +54,6 @@ export class EventsServiceFromFile implements EventsService {
                     let event = new TraceEvent();
 
 
-
                     //Right now, event.alertLabel -> is elapsed time
                     event.sequenceNumber = Utils.getNodeIntValue(eventNode, "Sequence");
                     event.activityName = Utils.getNodeStringValue(eventNode, "ActivityName");
@@ -82,16 +82,12 @@ export class EventsServiceFromFile implements EventsService {
                     event.endSequenceNumber = Utils.getNodeStringValue(eventNode, "EndSequence");
                     event.timeStamp = Utils.getNodeStringValue(eventNode, "DateTime");
 
-                    event.primaryPage = new Page(event.primaryPageName, Utils.getNodeObjectValue(eventNode, "PrimaryPageContent").innerHTML);
-
                     let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed"))/1000;
 
                     if(elapsedTime) {
                         event.alertLabel = elapsedTime.toString();
                     }
 
-
-                    debugger;
                     eventList.push(event);
 
                     this.sequenceNumber++;
@@ -119,9 +115,14 @@ export class EventsServiceFromFile implements EventsService {
 
 
     getPageContent(eventNumber: number, pageName: string): Promise<Page> {
+        let event: Element = this.traceEventNodes.item(eventNumber);
 
-        return new Promise<Page>((resolve, fail) => {
-            resolve();
-        })
-    }
+        let name = Utils.getNodeStringValue(event, "PrimaryPageName");
+
+        let page:Page = new Page(name, Utils.getNodeObjectValue(event,"PrimaryPageContent").innerHTML);
+               return new Promise<Page>((resolve, fail) => {
+                   resolve(page);
+               });
+
+       }
 }

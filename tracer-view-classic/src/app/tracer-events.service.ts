@@ -3,6 +3,7 @@ import {TraceEvent} from './trace-event';
 import {Observable,Observer} from "rxjs";
 import {TracerLocalStatusService} from "./tracer-local-status.service";
 import {Client} from "../../../tracer-client/src/client";
+import {Page} from "../../../tracer-client/src/page";
 
 //import * as Tracer from "tracer-client";
 @Injectable({
@@ -77,7 +78,7 @@ export class TracerEventsService {
       traceEvent.childEvents = event.childEvents;
       traceEvent.parentEvent = event.parentEvent;
 
-      debugger;
+
 
       eventArray.push(traceEvent);
 
@@ -90,6 +91,8 @@ export class TracerEventsService {
 
       this.eventCount++;
       this.statusCount++;
+
+
     });
 
 
@@ -103,6 +106,15 @@ export class TracerEventsService {
   onTraceEvents(): Observable<TraceEvent[]> {
     return this.event$;
   }
+
+  getPageContent(eventNumber: number, pageName:string): Observable<Page>{
+    return new Observable((subscriber) => {
+      this.client.eventsService.getPageContent(eventNumber,pageName).then((page) => {
+        subscriber.next(page)
+      });
+    });
+  }
+
 
 }
 
