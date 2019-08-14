@@ -17,10 +17,10 @@ all subprojects run the following commands
 npm install 
 
 // Download dependencies for all projects
-npm install-all
+npm run install-all
 
 // Build all child projects
-npm build-all
+npm run build-all
 ```
 
 
