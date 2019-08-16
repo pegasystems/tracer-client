@@ -82,6 +82,10 @@ export class EventsServiceFromFile implements EventsService {
                     event.endSequenceNumber = Utils.getNodeStringValue(eventNode, "EndSequence");
                     event.timeStamp = Utils.getNodeStringValue(eventNode, "DateTime");
 
+                    event.primaryPage = new Page(name,Utils.getNodeObjectValue(event,"PrimarypageContent").innerHTML);
+
+
+                    debugger;
                     let elapsedTime = parseFloat(Utils.getNodeStringValue(eventNode, "Elapsed"))/1000;
 
                     if(elapsedTime) {
@@ -116,13 +120,11 @@ export class EventsServiceFromFile implements EventsService {
 
     getPageContent(eventNumber: number, pageName: string): Promise<Page> {
         let event: Element = this.traceEventNodes.item(eventNumber);
-
         let name = Utils.getNodeStringValue(event, "PrimaryPageName");
 
         let page:Page = new Page(name, Utils.getNodeObjectValue(event,"PrimaryPageContent").innerHTML);
                return new Promise<Page>((resolve, fail) => {
                    resolve(page);
                });
-
        }
 }

@@ -347,7 +347,6 @@ export class EventsServicePega8 implements EventsService {
     }
 
     getPageContent(eventNumber: number, pageName: string): Promise<Page> {
-
         return new Promise<Page>((resolve, reject) => {
             this.traceServletRequest({
                 method: "GET",

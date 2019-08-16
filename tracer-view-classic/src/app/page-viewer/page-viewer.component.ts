@@ -71,7 +71,7 @@ export class PageViewerComponent implements OnInit {
   /*Tried to use to expand all tree nodes upon a step page window appearing */
   @ViewChild('tree', {static: false}) tree;
   ngAfterViewInit() {
-    this.tree.treeControl.expandAll();
+    this.treeControl.expandAll();
   }
 }
   

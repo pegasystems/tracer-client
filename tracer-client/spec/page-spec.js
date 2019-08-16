@@ -539,8 +539,6 @@ describe("Page Spec Class", function () {
 
         let valueGroupChildren = topLevelPage.children[0];
 
-        console.log(valueGroupChildren.children.length);
-
         if(valueGroupChildren.name !== "ValueGroup" || valueGroupChildren.children.length || valueGroupChildren.value !== "" || valueGroupChildren.type !== "valuegroup"){
             flag = false;
         }

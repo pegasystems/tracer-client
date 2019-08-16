@@ -2,12 +2,6 @@
 import {match} from "minimatch";
 
 export class Utils {
-
-
-    static counter: number = 0;
-
-    static match: any;
-
     static getQueryString(queryParameters: any): string {
         let first = true;
         let queryString = "";
@@ -75,10 +69,7 @@ export class Utils {
 
 
         //MatchingNode is of type HTMLCollection and that is returned
-
         let matchingNode = data.getElementsByTagName(nodeName);
-        if (this.counter === 0)
-            this.match = data;
         if (matchingNode.length > 0 && matchingNode[0] != undefined) {
             return matchingNode[0];
         }
@@ -86,7 +77,6 @@ export class Utils {
         else {
             return {};
         }
-        this.counter++;
     }
 
 

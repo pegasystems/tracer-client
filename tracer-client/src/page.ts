@@ -24,7 +24,6 @@ export class Page {
      * @param properties the list to append children on the current page to.
      */
     private normalizePageDataModel(page: any, properties: Property[]) {
-
         if (!page) {
             return;
         }
@@ -32,8 +31,6 @@ export class Page {
         if (page.pagedata) {
             page = page.pagedata;
         }
-
-
         //Create property and initialize its value with respective property name in page object
         for (let propName in page) {
 
@@ -45,8 +42,6 @@ export class Page {
             if (propName == "$") {
                 continue;
             }
-
-
             if (attributes.REPEATINGTYPE == 'PageList') {
 
                 // TODO This code is almost identical to Page group. Should be refactored.
