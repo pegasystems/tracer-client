@@ -5,15 +5,19 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
-import {ToolbarComponent} from "./toolbar/toolbar.component";
-import {StatusBarComponent} from "./status-bar/status-bar.component";
-import {EventListComponent} from "./event-list/event-list.component";
-import {StatusBarLeftComponent} from "./status-bar/status-bar-left/status-bar-left.component";
-import {StatusBarRightComponent} from "./status-bar/status-bar-right/status-bar-right.component";
-import { PageViewerComponent } from './page-viewer/page-viewer.component';
-import { PageDialogComponent } from './event-list/page-dialog/page-dialog.component';
-import { TraceEventViewerComponent } from './trace-event-viewer/trace-event-viewer.component';
-import { TraceEventDialogComponent } from './event-list/trace-event-dialog/trace-event-dialog.component';
+import {ToolbarComponent} from "./components/toolbar/toolbar.component";
+import {StatusBarComponent} from "./components/status-bar/status-bar.component";
+import {EventListComponent} from "./components/event-list/event-list.component";
+import {StatusBarLeftComponent} from "./components/status-bar/status-bar-left/status-bar-left.component";
+import {StatusBarRightComponent} from "./components/status-bar/status-bar-right/status-bar-right.component";
+import { PageViewerComponent } from './components/page-viewer/page-viewer.component';
+import { PageDialogComponent } from './components/event-list/page-dialog/page-dialog.component';
+import { TraceEventViewerComponent } from './components/trace-event-viewer/trace-event-viewer.component';
+import { TraceEventDialogComponent } from './components/event-list/trace-event-dialog/trace-event-dialog.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsDialogComponent } from './components/toolbar/settings-dialog/settings-dialog.component';
+import { ConnectionsDialogComponent } from './components/toolbar/connections-dialog/connections-dialog.component';
+import { SaveDialogComponent } from './components/toolbar/save-dialog/save-dialog.component';
 
 
 @NgModule({
@@ -28,6 +32,10 @@ import { TraceEventDialogComponent } from './event-list/trace-event-dialog/trace
     PageDialogComponent,
     TraceEventViewerComponent,
     TraceEventDialogComponent,
+    SettingsComponent,
+    SettingsDialogComponent,
+    ConnectionsDialogComponent,
+    SaveDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +45,7 @@ import { TraceEventDialogComponent } from './event-list/trace-event-dialog/trace
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [PageDialogComponent, TraceEventDialogComponent, TraceEventViewerComponent]
+  entryComponents: [SaveDialogComponent, SettingsDialogComponent, ConnectionsDialogComponent, PageDialogComponent, TraceEventDialogComponent, TraceEventViewerComponent]
 })
 
 export class AppModule {}

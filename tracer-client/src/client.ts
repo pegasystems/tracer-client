@@ -3,6 +3,7 @@ import {EventsServicePega8} from './events-service-pega8';
 import {EventsServiceFromFile} from "./events-service-from-file";
 import {Options} from './options';
 import {EventsService} from "./events-service";
+import {EventsServiceImputStream} from "./events-service-imput-stream";
 
 export class Client {
     /**
@@ -30,6 +31,8 @@ export class Client {
             this.eventsService = new EventsServicePega8(this.connectionID, this.nodeId);
         } else if(serviceImpl=== "FILE"){
             this.eventsService = new EventsServiceFromFile();
+        } else if(serviceImpl=== "INPUT_STREAM"){
+            this.eventsService = new EventsServiceImputStream();
         } else {
             throw serviceImpl+" is not a valid implementation type";
         }

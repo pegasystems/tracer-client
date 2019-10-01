@@ -2,12 +2,10 @@ import {TraceEvent} from "./trace-event";
 import {EventsService} from "./events-service";
 import {Utils} from "./utils";
 import {Page} from "./page";
-import {TraceEventProperty} from "./trace-event-property";
 
 export class EventsServiceFromFile implements EventsService {
     private sequenceNumber: number = 0;
     private traceEventNodes: HTMLCollectionOf<Element>;
-
     traceEvent: TraceEvent;
 
     constructor() {
@@ -113,6 +111,10 @@ export class EventsServiceFromFile implements EventsService {
             resolve();
         });
     };
+
+    getToolbarState(): Promise<import("./toolbar-state").ToolbarState> {
+        throw new Error("Method not implemented.");
+    }
 
     disconnect() {
     }

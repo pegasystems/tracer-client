@@ -18,7 +18,6 @@ export class EventsServicePega8 implements EventsService {
     serverUrl: string;
     servletUrl: string;
     SESSION_TYPE: string;
-
     constructor(aConnectionID: string, aNodeId?: string){
         this.connectionID= aConnectionID;
         this.debugConnectionID = aConnectionID;
@@ -322,6 +321,10 @@ export class EventsServicePega8 implements EventsService {
             request.onerror = (e)=>{fail(e);};
             request.send(body);
         });
+    }
+
+    getToolbarState(): Promise<import("./toolbar-state").ToolbarState> {
+        throw new Error("Method not implemented.");
     }
 
 
