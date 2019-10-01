@@ -24,7 +24,9 @@ export class Client {
     options = Options;
     eventsService: EventsService;
 
-    constructor(serviceImpl: string, connectionId: string, nodeId: string) {
+    // The parameters for this constructor are really smelly. We should really move the optional parameters into
+    // settings, or passed in as an arguments array or something.
+    constructor(serviceImpl: string, connectionId: string, nodeId: string, stream: ReadableStream) {
         this.connectionID = connectionId;
         this.nodeId = nodeId;
         if(serviceImpl === "PEGA") {
@@ -32,7 +34,7 @@ export class Client {
         } else if(serviceImpl=== "FILE"){
             this.eventsService = new EventsServiceFromFile();
         } else if(serviceImpl=== "INPUT_STREAM"){
-            this.eventsService = new EventsServiceImputStream();
+            this.eventsService = new EventsServiceImputStream(stream);
         } else {
             throw serviceImpl+" is not a valid implementation type";
         }

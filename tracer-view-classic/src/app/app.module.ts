@@ -18,6 +18,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsDialogComponent } from './components/toolbar/settings-dialog/settings-dialog.component';
 import { ConnectionsDialogComponent } from './components/toolbar/connections-dialog/connections-dialog.component';
 import { SaveDialogComponent } from './components/toolbar/save-dialog/save-dialog.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SaveDialogComponent } from './components/toolbar/save-dialog/save-dialo
     BrowserModule,
     HttpClientModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -24,10 +24,10 @@ export class TracerEventsService {
     let nodeID = localStorage.getItem("nodeId");
 
     if(!connectionID || !nodeID) {
-      this.client = new Client("FILE", "", "");
+      this.client = new Client("FILE", "", "", null);
     }
     else {
-      this.client = new Client("PEGA", connectionID, nodeID);
+      this.client = new Client("PEGA", connectionID, nodeID, null);
     }
 
 
@@ -105,8 +105,9 @@ export class TracerEventsService {
     return this.event$;
   }
 
-  changeImplementation(implementation: string) {
-    this.client = new Client(implementation, "", "");
+  changeImplementation(implementation: string, connectionId, nodeId, stream) {
+    this.client = new Client(implementation, connectionId, nodeId, stream);
+    this.client.start();
   }
 
 }

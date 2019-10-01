@@ -1,1 +1,14 @@
-<p>connections-dialog works!</p>
+<label id="example-radio-group-label">Events Source</label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="serviceImplementation">
+  <mat-radio-button class="example-radio-button" *ngFor="let impl of serviceImplementations" [value]="impl">
+    {{impl}}
+  </mat-radio-button>
+</mat-radio-group>
+<div *ngIf="serviceImplementation === 'INPUT_STREAM'">
+  <input id="sourceFile" type="file"/>
+  <button (click)="parseFile()">Parse file</button>
+</div>
+
