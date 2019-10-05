@@ -9,7 +9,6 @@ export class TracerService {
 
   clear(){
     this.output("clear");
-
   }
 
   play(){
@@ -19,16 +18,6 @@ export class TracerService {
 
   pause(){
     this.output("pause");
-
-  }
-
-  breakpoints(){
-    this.output("breakpoints");
-
-  }
-
-  watchVariables(){
-    this.output("watchVariables");
 
   }
 

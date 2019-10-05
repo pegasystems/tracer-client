@@ -7,3 +7,10 @@
 .example-radio-button {
   margin: 5px;
 }
+
+.mat-dialog-content {
+  height: 450px;
+}
+.mat-dialog-actions {
+  float: right;
+}

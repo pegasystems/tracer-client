@@ -17,6 +17,9 @@ export class TracerEventsService {
   event$: Observable<TraceEvent[]>;
   eventObservers: Array<Observer<TraceEvent[]>>;
 
+  clear$: Observable<void>;
+  clearObservers: Array<Observer<void>>;
+
   constructor(private statusService: TracerLocalStatusService) {
 
     // This is our cheap way of determining whether this was launched from Dev Studio
@@ -32,13 +35,40 @@ export class TracerEventsService {
 
 
     this.eventObservers = new Array<Observer<TraceEvent[]>>();
-
     this.event$ = new Observable((eventObserver)=>{
       this.eventObservers.push(eventObserver);
     });
 
+    this.clearObservers = new Array<Observer<void>>();
+    this.clear$ = new Observable((clearObserver)=>{
+      this.clearObservers.push(clearObserver);
+    });
 
-    this.client.registerEventCallback((event) => {
+    this.addOnTraceEventCAllback(this.client);
+
+    this.client.start();
+  }
+
+  eventCount: number = -1;
+  statusCount: number = -1;
+
+
+  onTraceEvents(): Observable<TraceEvent[]> {
+    return this.event$;
+  }
+
+  onClear(): Observable<void> {
+    return this.clear$;
+  }
+
+  changeImplementation(implementation: string, connectionId, nodeId, stream) {
+    this.client = new Client(implementation, connectionId, nodeId, stream);
+    this.addOnTraceEventCAllback(this.client);
+    this.client.start();
+  }
+
+  addOnTraceEventCAllback(client: Client){
+    client.registerEventCallback((event) => {
 
       let traceEvent = new TraceEvent();
       let eventArray: TraceEvent [] = [];
@@ -92,24 +122,7 @@ export class TracerEventsService {
       this.eventCount++;
       this.statusCount++;
     });
-
-
-    this.client.start();
   }
-
-  eventCount: number = -1;
-  statusCount: number = -1;
-
-
-  onTraceEvents(): Observable<TraceEvent[]> {
-    return this.event$;
-  }
-
-  changeImplementation(implementation: string, connectionId, nodeId, stream) {
-    this.client = new Client(implementation, connectionId, nodeId, stream);
-    this.client.start();
-  }
-
 }
 
 

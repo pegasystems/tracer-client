@@ -5,6 +5,8 @@ tbody tr {
 
 thead {
   font-weight: bold;
+  position: relative;
+  top: 0px;
 }
 
 thead tr td {
@@ -28,7 +30,7 @@ table {
   text-align: left;
   color: black;
   height: 100%;
-  width: 1000px;
+  width: 100%;
   font-family: Arial;
 }
 

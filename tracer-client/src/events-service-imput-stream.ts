@@ -117,16 +117,14 @@ export class EventsServiceImputStream implements EventsService {
      fetchFromStream(stream: ReadableStream) {
         return new Promise<string>((resolve, fail) => {
             const reader = stream.getReader();
-            let charsReceived = 0;
-            let result = "";
+            let stringOut = "";
             reader.read().then(function processText({done, value}): any {
                 if (done) {
                     console.log("Stream complete");
-                    resolve(result);
+                    resolve(stringOut);
                 } else {
                     // value for fetch streams is a Uint8Array
-                    charsReceived += value.length;
-                    result += value;
+                    stringOut += new TextDecoder("utf-8").decode(value);
                     return reader.read().then(processText);
                 }
 

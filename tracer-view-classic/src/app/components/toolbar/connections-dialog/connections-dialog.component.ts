@@ -1,7 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {PageDialogData} from "../../event-list/event-list.component";
-import {EventsService} from "../../../../../../tracer-client/src/events-service";
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
 import {TracerEventsService} from "../../../services/tracer-events/tracer-events.service";
 
 @Component({
@@ -10,8 +8,11 @@ import {TracerEventsService} from "../../../services/tracer-events/tracer-events
   styleUrls: ['./connections-dialog.component.css']
 })
 export class ConnectionsDialogComponent implements OnInit {
-  serviceImplementation: string = 'PEGA';
-  serviceImplementations: string[] = ['PEGA', 'FILE', 'INPUT_STREAM'];
+  serviceImplementation: string = 'INPUT_STREAM';
+  serviceImplementations: string[] = ['PEGA', 'INPUT_STREAM'];
+  fileName: string = "";
+  fileInput: HTMLInputElement;
+
   constructor(public dialogRef: MatDialogRef<ConnectionsDialogComponent>, private eventsService: TracerEventsService) {
   }
 
@@ -20,13 +21,20 @@ export class ConnectionsDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fileInput = <HTMLInputElement>document.getElementById("sourceFile");
   }
 
   parseFile(){
-    debugger;
-    let fileInput = <HTMLInputElement>document.getElementById("sourceFile");
+    this.fileInput = <HTMLInputElement>document.getElementById("sourceFile");
     // @ts-ignore
-    let stream: ReadableStream = fileInput.files[0].stream();
+    let stream: ReadableStream = this.fileInput.files[0].stream();
     this.eventsService.changeImplementation(this.serviceImplementation,"","", stream);
+    this.dialogRef.close();
+  }
+
+  setFileName(){
+    debugger;
+    this.fileInput = <HTMLInputElement>document.getElementById("sourceFile");
+    this.fileName = this.fileInput.files[0].name;
   }
 }
