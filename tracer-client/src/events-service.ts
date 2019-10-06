@@ -1,5 +1,6 @@
 import {TraceEvent} from "./trace-event";
 import {Page} from "./page";
+import {ToolbarState} from "./toolbar-state";
 
 export interface EventsService {
     connect(): Promise<any>;
@@ -9,4 +10,5 @@ export interface EventsService {
     clear(): void;
     disconnect(force:boolean): void;
     getPageContent(eventNumber: number, pageName: string): Promise<Page>;
+    getToolbarState(): Promise<ToolbarState>;
 }

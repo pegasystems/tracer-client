@@ -21,4 +21,5 @@ app-event-list {
   bottom: 110px;
   top: 44px;
   overflow-y: scroll;
+  width: 100%;
 }
