@@ -1,44 +1,59 @@
-import {TraceEvent} from "./trace-event";
 import {EventsService} from "./events-service";
-import {Utils} from "./utils";
+import {ToolbarState} from "./toolbar-state";
 import {Page} from "./page";
+import {TraceEvent} from "./trace-event";
+import {Utils} from "./utils";
 
-export class EventsServiceFromFile implements EventsService {
+export class EventsServiceImputStream implements EventsService {
     private sequenceNumber: number = 0;
     private traceEventNodes: HTMLCollectionOf<Element>;
     traceEvent: TraceEvent;
-
-    constructor() {
-
+    private stream: ReadableStream;
+    constructor(stream: ReadableStream){
+        this.stream = stream;
     }
 
-    clear() {
-        this.sequenceNumber = 1;
+    clear(): void {
+        throw new Error("Method not implemented.");
     }
 
     connect(): Promise<any> {
         return new Promise<Document>((resolve, fail) => {
-            const request = new XMLHttpRequest();
-            request.open("GET", "http://localhost:3000");
-            request.onload = () => {
-                let response = request.responseText;
+            this.fetchFromStream(this.stream).then((result)=>{
                 let parser = new DOMParser();
-                let xmlDoc: Document = parser.parseFromString(response, "text/xml");
+                let xmlDoc: Document = parser.parseFromString(result, "text/xml");
                 let traceLogNode = xmlDoc.getElementsByTagName("tracelog")[0];
                 if (traceLogNode) {
                     this.traceEventNodes = traceLogNode.getElementsByTagName("TraceEvent");
                 }
                 resolve();
-            };
-            request.onerror = (e) => {
-                fail(e);
-            };
-            request.send(null);
+            });
         });
+    }
+
+    disconnect(force: boolean): void {
+        throw new Error("Method not implemented.");
+    }
+
+    getPageContent(eventNumber: number, pageName: string): Promise<Page> {
+        throw new Error("Method not implemented.");
+    }
+
+    getToolbarState(): Promise<ToolbarState> {
+        throw new Error("Method not implemented.");
+    }
+
+    getTraceEvent(sequenceNumber: number): Promise<TraceEvent> {
+        throw new Error("Method not implemented.");
+    }
+
+    postOptions(): Promise<any> {
+        throw new Error("Method not implemented.");
     }
 
     requestTraceEvents(): Promise<any> {
         return new Promise<any>((resolve, fail) => {
+            // There is no need for this set timeout. It was added to simulate the real tracer while demoing
             setTimeout(() => {
                 let eventList = [];
                 for (let i = 0; i < 200; i++) {
@@ -95,35 +110,25 @@ export class EventsServiceFromFile implements EventsService {
                     this.sequenceNumber++;
                 }
                 resolve(eventList);
-            }, 3000);
-        });
-
-    }
-
-    getTraceEvent(sequenceNumber: number): Promise<TraceEvent> {
-        return new Promise<any>((resolve, fail) => {
-            resolve();
+            }, 10);
         });
     }
 
-    postOptions(): Promise<any> {
-        return new Promise<any>((resolve, fail) => {
-            resolve();
+     fetchFromStream(stream: ReadableStream) {
+        return new Promise<string>((resolve, fail) => {
+            const reader = stream.getReader();
+            let stringOut = "";
+            reader.read().then(function processText({done, value}): any {
+                if (done) {
+                    console.log("Stream complete");
+                    resolve(stringOut);
+                } else {
+                    // value for fetch streams is a Uint8Array
+                    stringOut += new TextDecoder("utf-8").decode(value);
+                    return reader.read().then(processText);
+                }
+
+            });
         });
-    };
-
-    getToolbarState(): Promise<import("./toolbar-state").ToolbarState> {
-        throw new Error("Method not implemented.");
-    }
-
-    disconnect() {
-    }
-
-
-    getPageContent(eventNumber: number, pageName: string): Promise<Page> {
-
-        return new Promise<Page>((resolve, fail) => {
-            resolve();
-        })
     }
 }

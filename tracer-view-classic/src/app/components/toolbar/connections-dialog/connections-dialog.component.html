@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Events Source</h1>
+<div mat-dialog-content>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="serviceImplementation">
+    <mat-radio-button class="example-radio-button" *ngFor="let impl of serviceImplementations" [value]="impl">
+      {{impl}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <div *ngIf="serviceImplementation === 'INPUT_STREAM'">
+
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+    <input (change)="setFileName()" hidden #fileInput type="file" id="sourceFile">
+    <div *ngIf="fileName !=''">File chosen: {{fileName}}</div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="parseFile()">Connect to source</button>
+</div>
